@@ -1,0 +1,28 @@
+{
+  "name": "my-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@9.15.2",
+  "scripts": {
+    "dev": "turbo run dev",
+    "dev:frontend": "turbo run dev --filter=ss-frontend",
+    "dev:backend": "turbo run dev --filter=ss-backend",
+    "build": "turbo run build",
+    "build:frontend": "turbo run build --filter=ss-frontend",
+    "build:backend": "turbo run build --filter=ss-backend",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "launch": "turbo run dev --parallel",
+    "clean": "rm -rf node_modules apps/*/node_modules .turbo apps/*/.turbo apps/*/.next apps/*/dist && pnpm install"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/express-serve-static-core": "^4.17.35",
+    "@types/node": "^22.13.4",
+    "turbo": "^2.3.3"
+  },
+  "dependencies": {
+    "@types/pg": "^8.11.11",
+    "pg": "^8.13.3"
+  }
+}

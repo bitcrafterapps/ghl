@@ -1,0 +1,193 @@
+// Site Configuration - Replace tokens with actual values
+// This file is the single source of truth for all site content
+
+export const siteConfig = {
+  // Company Information
+  company: {
+    name: "Crystal Clear Pools",
+    slug: "crystal-clear-pools",
+    phone: "5552468100",
+    email: "info@crystalclearpools.com",
+    address: "456 Palm Avenue",
+    city: "Scottsdale",
+    state: "AZ",
+    stateFullName: "Arizona",
+    zip: "85251",
+    license: "ROC-234567",
+    yearsInBusiness: "12",
+  },
+
+  // Branding
+  branding: {
+    logoUrl: "",
+    faviconUrl: "",
+    primaryColor: "#0891b2",
+    secondaryColor: "#0e7490",
+    accentColor: "#f59e0b",
+    fontHeading: "Inter",
+    fontBody: "Inter",
+  },
+
+  // Industry Configuration
+  industry: {
+    type: "Pool Service",
+    slug: "pool-service",
+    serviceNoun: "Pool Experts",
+    serviceVerb: "pool service",
+    emergencyService: true,
+    schemaType: "HomeAndConstructionBusiness",
+  },
+
+  // Service Area
+  serviceArea: {
+    areas: "Scottsdale, Phoenix, Paradise Valley, Fountain Hills, Cave Creek, Carefree, Mesa, Tempe".split(",").map(s => s.trim()),
+    radius: "30",
+    primaryCity: "Scottsdale",
+  },
+
+  // Social Links
+  social: {
+    facebook: "",
+    instagram: "",
+    google: "",
+    yelp: "",
+    bbb: "",
+    nextdoor: "",
+  },
+
+  // GHL Integration
+  ghl: {
+    calendarEmbed: "",
+    formEmbed: "",
+    chatWidget: "",
+    trackingId: "",
+  },
+
+  // SEO & Analytics
+  seo: {
+    googleAnalyticsId: "",
+    googleTagManagerId: "",
+    facebookPixelId: "",
+    metaDescription: "Crystal Clear Pools offers professional pool cleaning, maintenance, and repair services in Scottsdale, AZ. Keep your pool sparkling year-round. Free estimates!",
+    metaKeywords: "pool service scottsdale, pool cleaning, pool maintenance, pool repair, swimming pool service arizona",
+  },
+
+  // Site URL
+  siteUrl: "",
+
+  // Review Stats
+  reviews: {
+    rating: "4.8",
+    count: "210",
+    googleReviewLink: "https://g.page/r/example/review",
+  },
+
+  // Business Hours
+  hours: {
+    weekdays: "7:00 AM - 6:00 PM",
+    saturday: "8:00 AM - 4:00 PM",
+    sunday: "Closed",
+    emergencyNote: "Emergency service available for equipment failures",
+  },
+};
+
+// Services Configuration
+export const services: any[] = [
+  {
+    "name": "Weekly Pool Cleaning",
+    "slug": "weekly-pool-cleaning",
+    "shortDescription": "Regular weekly cleaning to keep your pool crystal clear and swim-ready all year.",
+    "description": "Our comprehensive weekly cleaning service includes skimming, brushing, vacuuming, chemical balancing, and equipment checks. We handle everything so you can just enjoy your pool.",
+    "icon": "🏊",
+    "image": ""
+  },
+  {
+    "name": "Pool Equipment Repair",
+    "slug": "pool-equipment-repair",
+    "shortDescription": "Expert repair services for pumps, filters, heaters, and all pool equipment.",
+    "description": "From pump failures to filter issues, our certified technicians diagnose and repair all types of pool equipment. We carry parts for most major brands and offer same-day service when possible.",
+    "icon": "🔧",
+    "image": ""
+  },
+  {
+    "name": "Green Pool Recovery",
+    "slug": "green-pool-recovery",
+    "shortDescription": "Transform your green, algae-filled pool back to crystal clear in days.",
+    "description": "Don't drain your green pool! Our proven recovery process eliminates algae and restores water clarity. We've rescued thousands of neglected pools and can save yours too.",
+    "icon": "🌿",
+    "image": ""
+  },
+  {
+    "name": "Pool Tile Cleaning",
+    "slug": "pool-tile-cleaning",
+    "shortDescription": "Remove calcium buildup and restore the beauty of your pool tile.",
+    "description": "Our bead blasting and acid washing techniques safely remove stubborn calcium deposits, stains, and discoloration from your pool tile and waterline without damaging surfaces.",
+    "icon": "✨",
+    "image": ""
+  },
+  {
+    "name": "Pool Resurfacing",
+    "slug": "pool-resurfacing",
+    "shortDescription": "Revitalize your pool with professional resurfacing and refinishing services.",
+    "description": "Whether you need plaster repair, pebble finish, or a complete resurface, we transform worn and stained pool surfaces into beautiful, durable finishes that last for years.",
+    "icon": "🎨",
+    "image": ""
+  },
+  {
+    "name": "Salt System Installation",
+    "slug": "salt-system-installation",
+    "shortDescription": "Convert to a salt water pool for softer water and easier maintenance.",
+    "description": "Enjoy the benefits of salt water swimming! We install and service salt chlorine generators from leading brands. Say goodbye to harsh chlorine and hello to silky smooth water.",
+    "icon": "🧂",
+    "image": ""
+  }
+];
+
+// Testimonials
+export const testimonials: any[] = [
+  {
+    "name": "Jennifer Martinez",
+    "location": "Scottsdale, AZ",
+    "text": "Crystal Clear Pools has maintained our pool for 5 years now. They're always on time, professional, and our pool has never looked better. Highly recommend!",
+    "rating": 5,
+    "service": "Weekly Pool Cleaning"
+  },
+  {
+    "name": "Robert Thompson",
+    "location": "Paradise Valley, AZ",
+    "text": "We bought a house with a neglected green pool. Crystal Clear had it sparkling in just 4 days! Amazing transformation and fair pricing.",
+    "rating": 5,
+    "service": "Green Pool Recovery"
+  },
+  {
+    "name": "Lisa Chen",
+    "location": "Phoenix, AZ",
+    "text": "Our pool pump died on a Saturday before a party. They came out same day and had us back up and running. Lifesavers! Great emergency service.",
+    "rating": 5,
+    "service": "Pool Equipment Repair"
+  }
+];
+
+// FAQ Items
+export const faqItems: any[] = [
+  {
+    "question": "How often should I have my pool professionally cleaned?",
+    "answer": "For most Arizona pools, we recommend weekly service during the swimming season and bi-weekly during cooler months. This keeps chemicals balanced and prevents algae growth in our hot climate."
+  },
+  {
+    "question": "Can you fix my green pool without draining it?",
+    "answer": "In most cases, yes! Our green pool recovery process can restore even severely neglected pools without draining. This saves water, money, and gets you swimming faster than a drain and refill."
+  },
+  {
+    "question": "Do you service salt water pools?",
+    "answer": "Absolutely! We service both traditional chlorine and salt water pools. We can also convert your existing pool to a salt system if you're interested in making the switch."
+  }
+];
+
+// Gallery Images
+export const galleryImages: any[] = [];
+
+// Team Members (optional)
+export const teamMembers: any[] = [];
+
+export default siteConfig;

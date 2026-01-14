@@ -1,0 +1,199 @@
+{
+  "company": {
+    "name": "Acme Plumbing",
+    "slug": "acme-plumbing",
+    "phone": "5551234567",
+    "email": "info@acmeplumbing.com",
+    "address": "123 Main Street",
+    "city": "Austin",
+    "state": "TX",
+    "stateFullName": "Texas",
+    "zip": "78701",
+    "license": "PLBR12345",
+    "yearsInBusiness": "15"
+  },
+  "branding": {
+    "logoUrl": "/logo.png",
+    "faviconUrl": "/favicon.ico",
+    "primaryColor": "#2563eb",
+    "secondaryColor": "#1e40af",
+    "accentColor": "#f59e0b",
+    "fontHeading": "Poppins",
+    "fontBody": "Inter"
+  },
+  "industry": {
+    "type": "Plumbing",
+    "slug": "plumbing",
+    "serviceNoun": "Services",
+    "serviceVerb": "repair",
+    "emergencyService": true,
+    "schemaType": "Plumber"
+  },
+  "serviceArea": {
+    "areas": "Austin, Round Rock, Cedar Park, Georgetown, Pflugerville, Leander, Lakeway, Bee Cave, Dripping Springs, Kyle",
+    "radius": "30",
+    "primaryCity": "Austin"
+  },
+  "social": {
+    "facebook": "https://facebook.com/acmeplumbing",
+    "instagram": "https://instagram.com/acmeplumbing",
+    "google": "https://g.page/acmeplumbing",
+    "yelp": "https://yelp.com/biz/acme-plumbing-austin",
+    "bbb": "",
+    "nextdoor": ""
+  },
+  "ghl": {
+    "calendarEmbed": "",
+    "formEmbed": "",
+    "chatWidget": "",
+    "trackingId": ""
+  },
+  "seo": {
+    "googleAnalyticsId": "G-XXXXXXXXXX",
+    "googleTagManagerId": "GTM-XXXXXXX",
+    "facebookPixelId": "",
+    "metaDescription": "Acme Plumbing provides professional plumbing services in Austin, TX. 15+ years experience. Licensed & insured. Call for a free estimate!",
+    "metaKeywords": "plumbing, Austin, Texas, drain cleaning, water heater repair, leak detection, pipe repair"
+  },
+  "siteUrl": "https://acmeplumbing.com",
+  "reviews": {
+    "rating": "4.9",
+    "count": "287",
+    "googleReviewLink": "https://g.page/acmeplumbing/review"
+  },
+  "hours": {
+    "weekdays": "8:00 AM - 6:00 PM",
+    "saturday": "9:00 AM - 4:00 PM",
+    "sunday": "Closed",
+    "emergencyNote": "24/7 Emergency Service Available"
+  },
+  "services": [
+    {
+      "name": "Drain Cleaning",
+      "slug": "drain-cleaning",
+      "shortDescription": "Professional drain cleaning and unclogging services.",
+      "description": "Our expert plumbers use advanced equipment to clear even the toughest clogs. We handle kitchen drains, bathroom drains, and main sewer lines.",
+      "icon": "🚿",
+      "image": "/images/services/drain-cleaning.jpg"
+    },
+    {
+      "name": "Water Heater Repair",
+      "slug": "water-heater-repair",
+      "shortDescription": "Expert water heater repair and maintenance.",
+      "description": "Fast, reliable water heater repair services. We work on all brands and types including tankless, gas, and electric water heaters.",
+      "icon": "🔥",
+      "image": "/images/services/water-heater.jpg"
+    },
+    {
+      "name": "Leak Detection",
+      "slug": "leak-detection",
+      "shortDescription": "Advanced leak detection technology.",
+      "description": "Using state-of-the-art equipment, we locate hidden leaks without damaging your property. Save money and prevent water damage.",
+      "icon": "💧",
+      "image": "/images/services/leak-detection.jpg"
+    },
+    {
+      "name": "Pipe Repair",
+      "slug": "pipe-repair",
+      "shortDescription": "Reliable pipe repair and replacement.",
+      "description": "From minor repairs to complete repiping, our licensed plumbers deliver quality workmanship you can trust.",
+      "icon": "🔧",
+      "image": "/images/services/pipe-repair.jpg"
+    },
+    {
+      "name": "Sewer Line Services",
+      "slug": "sewer-line-services",
+      "shortDescription": "Complete sewer line inspection and repair.",
+      "description": "Video camera inspection, trenchless repair, and full sewer line replacement. We handle all your sewer needs.",
+      "icon": "🏗️",
+      "image": "/images/services/sewer-line.jpg"
+    },
+    {
+      "name": "Water Heater Installation",
+      "slug": "water-heater-installation",
+      "shortDescription": "New water heater installation services.",
+      "description": "Expert installation of tankless, gas, and electric water heaters. We help you choose the right system for your home.",
+      "icon": "✨",
+      "image": "/images/services/water-heater-install.jpg"
+    }
+  ],
+  "testimonials": [
+    {
+      "name": "John D.",
+      "location": "Austin, TX",
+      "rating": 5,
+      "text": "Acme Plumbing saved the day! They came out on a Sunday when our water heater burst and had it replaced within hours. Professional, fair pricing, and great communication.",
+      "service": "Water Heater Replacement"
+    },
+    {
+      "name": "Sarah M.",
+      "location": "Round Rock, TX",
+      "rating": 5,
+      "text": "I've used Acme for years and they never disappoint. Always on time, explain everything clearly, and stand behind their work. Highly recommend!",
+      "service": "Drain Cleaning"
+    },
+    {
+      "name": "Mike R.",
+      "location": "Cedar Park, TX",
+      "rating": 5,
+      "text": "They found a leak that another plumber missed using their camera equipment. Fixed it the same day and the price was exactly what they quoted. Will definitely call them again.",
+      "service": "Leak Detection"
+    }
+  ],
+  "faq": [
+    {
+      "question": "What should I do in a plumbing emergency?",
+      "answer": "First, locate and turn off your main water shut-off valve to prevent flooding. Then call us immediately—we offer 24/7 emergency plumbing services and typically arrive within 60 minutes."
+    },
+    {
+      "question": "How can I prevent clogged drains?",
+      "answer": "Avoid putting grease, coffee grounds, and food scraps down drains. Use drain screens, and schedule annual drain cleaning to keep pipes clear. If you notice slow draining, address it early before it becomes a full clog."
+    },
+    {
+      "question": "When should I replace my water heater?",
+      "answer": "Most water heaters last 10-15 years. Signs you need replacement include rust-colored water, strange noises, leaks around the base, or inconsistent hot water. We offer free assessments to help you decide."
+    },
+    {
+      "question": "Do you offer financing?",
+      "answer": "Yes! We offer flexible financing options for larger projects like water heater installations and repiping. Ask about our 0% interest options for qualified customers."
+    },
+    {
+      "question": "Are you licensed and insured?",
+      "answer": "Absolutely. We're fully licensed (License #PLBR12345), bonded, and insured. All our plumbers are background-checked and trained to the highest standards."
+    }
+  ],
+  "gallery": [
+    {
+      "src": "/images/gallery/project-1.jpg",
+      "alt": "Water heater installation in Austin home",
+      "title": "Tankless Water Heater Install",
+      "category": "Water Heaters"
+    },
+    {
+      "src": "/images/gallery/project-2.jpg",
+      "alt": "Bathroom renovation plumbing",
+      "title": "Complete Bathroom Replumb",
+      "category": "Remodeling"
+    },
+    {
+      "src": "/images/gallery/project-3.jpg",
+      "alt": "Commercial drain cleaning",
+      "title": "Restaurant Drain Service",
+      "category": "Commercial"
+    }
+  ],
+  "team": [
+    {
+      "name": "Mike Thompson",
+      "role": "Owner / Master Plumber",
+      "bio": "15 years of experience serving the Austin area.",
+      "image": "/images/team/mike.jpg"
+    },
+    {
+      "name": "Carlos Rivera",
+      "role": "Senior Technician",
+      "bio": "Specializes in water heater systems and gas lines.",
+      "image": "/images/team/carlos.jpg"
+    }
+  ]
+}

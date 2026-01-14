@@ -1,0 +1,5 @@
+
+
+> ss-backend@1.00.17 build /Users/sandyfriedman/___products/signalstack/apps/backend
+> tsc && cp -r db/migrations dist/db/
+

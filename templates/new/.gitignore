@@ -1,0 +1,76 @@
+# Dependencies
+node_modules
+**/node_modules
+.pnp
+.pnp.js
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# Next.js
+.next/
+**/out/
+**/build/
+**/.next/
+
+# Vercel
+.vercel
+**/.vercel
+
+# Environment files
+.env
+.env.local
+.env*.local
+**/.env
+**/.env.local
+**/.env*.local
+**/.env.prod
+**/.env*.prod
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+**/*.log
+.pnpm-debug.log*
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+**/.DS_Store
+
+# Build outputs
+dist/
+**/dist/
+build/
+**/build/
+
+# Cache
+.cache/
+**/.cache
+.npm
+.eslintcache
+**/.eslintcache
+
+# Test coverage
+coverage/
+**/coverage/
+
+# Misc
+*.pem
+.DS_Store
+*.tsbuildinfo
+next-env.d.ts
+**/next-env.d.ts
+
+
+.cursorrules.vercel
+.cursorrules.next
+
+docs/PRD2.md
+docs/prompts/

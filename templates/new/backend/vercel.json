@@ -1,0 +1,75 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "index.ts",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+          "db/**/*",
+          "routes/**/*",
+          "middleware/**/*",
+          "config/**/*",
+          "services/**/*",
+          "utils/**/*",
+          "types/**/*",
+          "lib/**/*",
+          "api/**/*",
+          "drizzle.config.ts"
+        ],
+        "maxLambdaSize": "50mb",
+        "memory": 1024,
+        "maxDuration": 10
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/health/ping",
+      "dest": "index.ts",
+      "methods": ["GET"],
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "no-store"
+      }
+    },
+    {
+      "src": "/api/health",
+      "dest": "index.ts",
+      "methods": ["GET"],
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "no-store"
+      }
+    },
+    {
+      "src": "/api-docs",
+      "dest": "index.ts",
+      "methods": ["GET"],
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "text/html",
+        "Cache-Control": "no-store"
+      }
+    },
+    {
+      "src": "/api-docs/(.*)",
+      "dest": "index.ts",
+      "methods": ["GET"],
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "text/html",
+        "Cache-Control": "no-store"
+      }
+    },
+    {
+      "src": "/(.*)",
+      "dest": "index.ts",
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,PATCH,OPTIONS",
+        "Access-Control-Allow-Headers": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+      }
+    }
+  ]
+} 

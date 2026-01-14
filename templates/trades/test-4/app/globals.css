@@ -1,0 +1,634 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+
+    /* Theme Variables - Light Mode Defaults */
+    --header-bg: #3b82f6;
+    /* blue-500 */
+    --header-border: #2563eb;
+    /* blue-600 */
+    --header-text-secondary: #bfdbfe;
+    /* blue-200 */
+
+    --subheader-bg: #eff6ff;
+    /* blue-50 */
+    --subheader-border: #bfdbfe;
+    /* blue-200 */
+    --subheader-text-primary: #172554;
+    /* blue-950 */
+    --subheader-text-secondary: #1d4ed8;
+    /* blue-700 */
+
+    --btn-primary-bg: #2563eb;
+    /* blue-600 */
+    --btn-primary-hover: #1d4ed8;
+    /* blue-700 */
+    --btn-primary-text: #ffffff;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+
+    /* Theme Variables - Dark Mode Overrides */
+    --header-bg: linear-gradient(to right, rgba(8, 47, 73, 0.95), rgba(23, 37, 84, 0.95), rgba(8, 51, 68, 0.95));
+    --header-border: rgba(30, 64, 175, 0.3);
+    --header-text-secondary: rgb(212, 212, 216);
+    /* zinc-300 */
+
+    --subheader-bg: linear-gradient(to right, rgba(12, 74, 110, 0.9), rgba(30, 58, 138, 0.9), rgba(22, 78, 99, 0.9));
+    --subheader-border: rgba(30, 64, 175, 0.3);
+    --subheader-text-primary: #ffffff;
+    --subheader-text-secondary: rgb(161, 161, 170);
+    /* zinc-400 */
+
+    --btn-primary-bg: linear-gradient(to right, #0284c7, #2563eb);
+    --btn-primary-hover: linear-gradient(to right, #0ea5e9, #3b82f6);
+    --btn-primary-text: #ffffff;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+html {
+  @apply h-full bg-gray-900;
+}
+
+body {
+  @apply h-full bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900;
+}
+
+.bg-gray-800\/50 {
+  background-color: rgb(31 41 55 / 0.5);
+}
+
+.backdrop-blur-sm {
+  backdrop-filter: blur(4px);
+}
+
+.text-gray-300 {
+  color: rgb(209 213 219);
+}
+
+.text-blue-400 {
+  color: rgb(96 165 250);
+}
+
+.border-gray-700 {
+  border-color: rgb(55 65 81);
+}
+
+/* Light theme styles - only for main content */
+.light-theme {
+  --content-bg: #ffffff;
+  --content-secondary-bg: #f9fafb;
+  --content-text: #111827;
+  --content-secondary-text: #374151;
+  --content-muted-text: #6b7280;
+  --content-border: #e5e7eb;
+  --content-card-bg: #ffffff;
+  --content-input-bg: #ffffff;
+  --content-input-border: #d1d5db;
+  --content-hover-bg: #f3f4f6;
+  --content-label: #1f2937;
+  --content-placeholder: #9ca3af;
+  --content-form-bg: #f9fafb;
+  --content-form-text: #111827;
+
+  /* UI elements that always stay the same */
+  --ui-bg: #1C1C1C;
+  --ui-secondary-bg: #222222;
+  --ui-sidebar: #0A0A0A;
+  --ui-card: #2A2A2A;
+  --ui-text: #ffffff;
+  --ui-secondary-text: #A1A1A1;
+  --ui-muted-text: #909296;
+  --ui-border: #3A3A3A;
+  --ui-accent: #205ab2;
+}
+
+/* Dark theme styles - for all UI elements */
+.dark-theme {
+  --content-bg: #1C1C1C;
+  --content-secondary-bg: #222222;
+  --content-text: #ffffff;
+  --content-secondary-text: #A1A1A1;
+  --content-muted-text: #909296;
+  --content-border: #3A3A3A;
+  --content-card-bg: #2A2A2A;
+  --content-input-bg: #1C1C1C;
+  --content-input-border: #3A3A3A;
+  --content-hover-bg: #2A2A2A;
+  --content-label: #A1A1A1;
+  --content-placeholder: #6b7280;
+  --content-form-bg: #2A2A2A;
+  --content-form-text: #ffffff;
+
+  /* UI elements that always stay the same */
+  --ui-bg: #1C1C1C;
+  --ui-secondary-bg: #222222;
+  --ui-sidebar: #0A0A0A;
+  --ui-card: #2A2A2A;
+  --ui-text: #ffffff;
+  --ui-secondary-text: #A1A1A1;
+  --ui-muted-text: #909296;
+  --ui-border: #3A3A3A;
+  --ui-accent: #205ab2;
+}
+
+/* Main content classes that change with theme */
+.main-content {
+  @apply transition-colors duration-200;
+  background-color: var(--content-bg);
+  color: var(--content-text);
+}
+
+.content-card {
+  @apply transition-colors duration-200;
+  background-color: var(--content-card-bg);
+  color: var(--content-text);
+  border-color: var(--content-border);
+}
+
+.content-text {
+  @apply transition-colors duration-200;
+  color: var(--content-text);
+}
+
+.content-text-secondary {
+  @apply transition-colors duration-200;
+  color: var(--content-secondary-text);
+}
+
+.content-text-muted {
+  @apply transition-colors duration-200;
+  color: var(--content-muted-text);
+}
+
+.content-border {
+  @apply transition-colors duration-200;
+  border-color: var(--content-border);
+}
+
+.content-input {
+  @apply transition-colors duration-200;
+  background-color: var(--content-input-bg);
+  border-color: var(--content-input-border);
+  color: var(--content-text);
+}
+
+.content-input:focus {
+  border-color: var(--ui-accent);
+}
+
+/* Hover effects for content */
+.content-hover-effect:hover {
+  background-color: var(--content-hover-bg);
+}
+
+/* Apply theme variables */
+.theme-aware-bg {
+  @apply transition-colors duration-200;
+  background-color: var(--bg-primary);
+}
+
+.theme-aware-bg-secondary {
+  @apply transition-colors duration-200;
+  background-color: var(--bg-secondary);
+}
+
+.theme-aware-bg-sidebar {
+  @apply transition-colors duration-200;
+  background-color: var(--bg-sidebar);
+}
+
+.theme-aware-bg-card {
+  @apply transition-colors duration-200;
+  background-color: var(--bg-card);
+}
+
+.theme-aware-text {
+  @apply transition-colors duration-200;
+  color: var(--text-primary);
+}
+
+.theme-aware-text-secondary {
+  @apply transition-colors duration-200;
+  color: var(--text-secondary);
+}
+
+.theme-aware-text-muted {
+  @apply transition-colors duration-200;
+  color: var(--text-muted);
+}
+
+.theme-aware-border {
+  @apply transition-colors duration-200;
+  border-color: var(--border-color);
+}
+
+.theme-aware-input {
+  @apply transition-colors duration-200;
+  background-color: var(--input-bg);
+  border-color: var(--input-border);
+  color: var(--text-primary);
+}
+
+.theme-aware-input:focus {
+  border-color: var(--accent-color);
+}
+
+/* Utility classes for main areas */
+.card {
+  @apply transition-colors duration-200;
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.sidebar {
+  @apply transition-colors duration-200;
+  background-color: var(--bg-sidebar);
+  color: var(--text-primary);
+}
+
+/* Hover effect */
+.hover-effect {
+  @apply transition-colors duration-200;
+}
+
+.hover-effect:hover {
+  background-color: var(--hover-bg);
+}
+
+/* Add these new classes after the existing content classes */
+
+/* Form element styling */
+.content-form {
+  @apply transition-colors duration-200;
+  background-color: var(--content-form-bg);
+  color: var(--content-form-text);
+  border-color: var(--content-border);
+}
+
+.content-label {
+  @apply transition-colors duration-200;
+  color: var(--content-label);
+}
+
+.content-input {
+  @apply transition-colors duration-200;
+  background-color: var(--content-input-bg);
+  border-color: var(--content-input-border);
+  color: var(--content-text);
+}
+
+.content-input::placeholder {
+  color: var(--content-placeholder);
+}
+
+.content-input:focus {
+  border-color: var(--ui-accent);
+  outline-color: var(--ui-accent);
+}
+
+/* Primary color classes */
+.primary-blue {
+  --ui-accent: #205ab2;
+  --ui-accent-rgb: 32, 90, 178;
+}
+
+.primary-purple {
+  --ui-accent: #7c3aed;
+  --ui-accent-rgb: 124, 58, 237;
+}
+
+.primary-green {
+  --ui-accent: #16a34a;
+  --ui-accent-rgb: 22, 163, 74;
+}
+
+.primary-red {
+  --ui-accent: #dc2626;
+  --ui-accent-rgb: 220, 38, 38;
+}
+
+.primary-orange {
+  --ui-accent: #ea580c;
+  --ui-accent-rgb: 234, 88, 12;
+}
+
+.primary-teal {
+  --ui-accent: #0d9488;
+  --ui-accent-rgb: 13, 148, 136;
+}
+
+.primary-pink {
+  --ui-accent: #ec4899;
+  --ui-accent-rgb: 236, 72, 153;
+}
+
+.primary-yellow {
+  --ui-accent: #eab308;
+  --ui-accent-rgb: 234, 179, 8;
+}
+
+.primary-indigo {
+  --ui-accent: #4f46e5;
+  --ui-accent-rgb: 79, 70, 229;
+}
+
+.primary-cyan {
+  --ui-accent: #06b6d4;
+  --ui-accent-rgb: 6, 182, 212;
+}
+
+/* Apply primary color to elements that use the accent color */
+.accent-bg {
+  background-color: var(--ui-accent);
+}
+
+.accent-bg-light {
+  background-color: rgba(var(--ui-accent-rgb, 32, 90, 178), 0.1);
+}
+
+.accent-text {
+  color: var(--ui-accent);
+}
+
+.accent-border {
+  border-color: var(--ui-accent);
+}
+
+.accent-ring {
+  --tw-ring-color: var(--ui-accent);
+}
+
+/* Z-index management */
+.headlessui-menu-items {
+  z-index: 100 !important;
+}
+
+[data-headlessui-state="open"] {
+  z-index: 100;
+}
+
+[data-headlessui-state="open"]+* {
+  z-index: 90;
+}
+
+/* Dashboard icon should stay behind menus */
+.dashboard-icon {
+  z-index: 0;
+}
+
+/* Update existing elements to use the accent color */
+.content-input:focus {
+  border-color: var(--ui-accent);
+  --tw-ring-color: var(--ui-accent);
+}
+
+/* Color selector styles */
+.color-selector {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  overflow-x: auto;
+  padding: 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+  -webkit-overflow-scrolling: touch;
+}
+
+.color-selector::-webkit-scrollbar {
+  height: 6px;
+}
+
+.color-selector::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.color-selector::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.5);
+  border-radius: 20px;
+}
+
+.color-option {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  border: 2px solid transparent;
+  flex-shrink: 0;
+}
+
+.color-option:hover {
+  transform: scale(1.1);
+}
+
+.color-option.active {
+  border-color: white;
+  box-shadow: 0 0 0 2px var(--ui-accent);
+}
+
+.color-option.active::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 9999px;
+  background-color: white;
+}
+
+/* =====================================================
+   PUBLIC PAGE STYLES - Tokenized for create-site.js
+   ===================================================== */
+
+/* Container utility for public pages */
+.container-custom {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+/* Section padding for consistent spacing */
+.section-padding {
+  @apply py-16 lg:py-24;
+}
+
+/* Font families */
+.font-heading {
+  font-family: var(--font-heading), ui-sans-serif, system-ui, sans-serif;
+}
+
+.font-body {
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Primary color utilities - will be tokenized */
+:root {
+
+  /* These will be replaced by the create-site.js script */
+  --color-primary: {
+      {
+      PRIMARY_COLOR
+    }
+  }
+
+  ;
+
+  --color-secondary: {
+      {
+      SECONDARY_COLOR
+    }
+  }
+
+  ;
+
+  --color-accent: {
+      {
+      ACCENT_COLOR
+    }
+  }
+
+  ;
+}
+
+/* Primary color classes for public pages */
+.bg-primary {
+  background-color: var(--color-primary, #2563eb);
+}
+
+.text-primary {
+  color: var(--color-primary, #2563eb);
+}
+
+.border-primary {
+  border-color: var(--color-primary, #2563eb);
+}
+
+.hover\:bg-primary:hover {
+  background-color: var(--color-primary, #2563eb);
+}
+
+.hover\:text-primary:hover {
+  color: var(--color-primary, #2563eb);
+}
+
+/* Primary color with opacity */
+.bg-primary\/5 {
+  background-color: color-mix(in srgb, var(--color-primary, #2563eb) 5%, transparent);
+}
+
+.bg-primary\/10 {
+  background-color: color-mix(in srgb, var(--color-primary, #2563eb) 10%, transparent);
+}
+
+.bg-primary\/20 {
+  background-color: color-mix(in srgb, var(--color-primary, #2563eb) 20%, transparent);
+}
+
+/* Ring color for focus states */
+.focus\:ring-primary:focus {
+  --tw-ring-color: var(--color-primary, #2563eb);
+}
+
+/* GHL Form/Calendar container styling */
+.ghl-form-container iframe,
+.ghl-calendar-container iframe {
+  width: 100%;
+  min-height: 500px;
+  border: none;
+  border-radius: 0.75rem;
+}
+
+/* Prose styling for content pages */
+.prose {
+  max-width: 65ch;
+}
+
+.prose p {
+  margin-bottom: 1.25rem;
+}
+
+.prose h2 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.prose h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.prose ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.prose li {
+  margin-bottom: 0.5rem;
+}
+
+/* Line clamp utilities */
+.line-clamp-4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

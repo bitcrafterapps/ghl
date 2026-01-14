@@ -1,0 +1,165 @@
+{
+  "company": {
+    "name": "Test 4",
+    "slug": "test-4",
+    "phone": "232343",
+    "email": "sandy@friedman.com",
+    "address": "123 Main",
+    "city": "Irivne",
+    "state": "CA",
+    "stateFullName": "California",
+    "zip": "92688",
+    "license": "3443",
+    "yearsInBusiness": "12"
+  },
+  "branding": {
+    "logoUrl": "",
+    "faviconUrl": "",
+    "primaryColor": "#2563eb",
+    "secondaryColor": "#1e40af",
+    "accentColor": "#f59e0b",
+    "fontHeading": "Poppins",
+    "fontBody": "Inter"
+  },
+  "industry": {
+    "type": "Electrical",
+    "slug": "electrical",
+    "serviceNoun": "Services",
+    "serviceVerb": "repair",
+    "emergencyService": true,
+    "schemaType": "Electrician",
+    "services": [
+      {
+        "name": "Electrical Repairs",
+        "slug": "electrical-repairs",
+        "shortDescription": "Safe and reliable electrical repair services."
+      },
+      {
+        "name": "Panel Upgrades",
+        "slug": "panel-upgrades",
+        "shortDescription": "Electrical panel upgrade and replacement."
+      },
+      {
+        "name": "Lighting Installation",
+        "slug": "lighting-installation",
+        "shortDescription": "Indoor and outdoor lighting installation."
+      },
+      {
+        "name": "Outlet & Switch Installation",
+        "slug": "outlet-switch-installation",
+        "shortDescription": "New outlet and switch installation."
+      },
+      {
+        "name": "Ceiling Fan Installation",
+        "slug": "ceiling-fan-installation",
+        "shortDescription": "Professional ceiling fan installation."
+      },
+      {
+        "name": "Electrical Inspections",
+        "slug": "electrical-inspections",
+        "shortDescription": "Comprehensive electrical safety inspections."
+      }
+    ],
+    "faq": [
+      {
+        "question": "What are signs of electrical problems?",
+        "answer": "Warning signs include flickering lights, frequent breaker trips, burning smells, sparking outlets, and warm switch plates."
+      },
+      {
+        "question": "How often should I have an electrical inspection?",
+        "answer": "We recommend an inspection every 3-5 years for homes, or whenever you purchase a new home."
+      },
+      {
+        "question": "Do you handle emergency electrical work?",
+        "answer": "Yes! We provide 24/7 emergency electrical services."
+      }
+    ]
+  },
+  "serviceArea": {
+    "areas": "Irivne",
+    "radius": "30",
+    "primaryCity": "Irivne"
+  },
+  "social": {
+    "facebook": "",
+    "instagram": "",
+    "google": "",
+    "yelp": "",
+    "bbb": "",
+    "nextdoor": ""
+  },
+  "ghl": {
+    "calendarEmbed": "",
+    "formEmbed": "",
+    "chatWidget": "",
+    "trackingId": ""
+  },
+  "seo": {
+    "googleAnalyticsId": "",
+    "googleTagManagerId": "",
+    "facebookPixelId": "",
+    "metaDescription": "Test 4 provides professional electrical services in Irivne, CA. 12+ years experience. Licensed & insured. Call for a free estimate!",
+    "metaKeywords": "electrical, Irivne, CA, electrical repairs, panel upgrades, lighting installation, outlet & switch installation, ceiling fan installation, electrical inspections"
+  },
+  "siteUrl": "https://test-4.com",
+  "reviews": {
+    "rating": "4.9",
+    "count": "100",
+    "googleReviewLink": ""
+  },
+  "hours": {
+    "weekdays": "8:00 AM - 6:00 PM",
+    "saturday": "9:00 AM - 4:00 PM",
+    "sunday": "Closed",
+    "emergencyNote": "24/7 Emergency Service Available"
+  },
+  "services": [
+    {
+      "name": "Electrical Repairs",
+      "slug": "electrical-repairs",
+      "shortDescription": "Safe and reliable electrical repair services."
+    },
+    {
+      "name": "Panel Upgrades",
+      "slug": "panel-upgrades",
+      "shortDescription": "Electrical panel upgrade and replacement."
+    },
+    {
+      "name": "Lighting Installation",
+      "slug": "lighting-installation",
+      "shortDescription": "Indoor and outdoor lighting installation."
+    },
+    {
+      "name": "Outlet & Switch Installation",
+      "slug": "outlet-switch-installation",
+      "shortDescription": "New outlet and switch installation."
+    },
+    {
+      "name": "Ceiling Fan Installation",
+      "slug": "ceiling-fan-installation",
+      "shortDescription": "Professional ceiling fan installation."
+    },
+    {
+      "name": "Electrical Inspections",
+      "slug": "electrical-inspections",
+      "shortDescription": "Comprehensive electrical safety inspections."
+    }
+  ],
+  "testimonials": [],
+  "faq": [
+    {
+      "question": "What are signs of electrical problems?",
+      "answer": "Warning signs include flickering lights, frequent breaker trips, burning smells, sparking outlets, and warm switch plates."
+    },
+    {
+      "question": "How often should I have an electrical inspection?",
+      "answer": "We recommend an inspection every 3-5 years for homes, or whenever you purchase a new home."
+    },
+    {
+      "question": "Do you handle emergency electrical work?",
+      "answer": "Yes! We provide 24/7 emergency electrical services."
+    }
+  ],
+  "gallery": [],
+  "team": []
+}
