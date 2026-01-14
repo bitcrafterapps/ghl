@@ -1,4 +1,37 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,12 +41,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const multer_1 = __importDefault(require("multer"));
+const multer_1 = __importStar(require("multer"));
 const gallery_image_service_1 = require("../../services/gallery-image.service");
 const user_service_1 = require("../../services/user.service");
 const auth_middleware_1 = require("../../middleware/v1/auth.middleware");
@@ -37,6 +67,21 @@ const upload = (0, multer_1.default)({
         }
     }
 });
+// Multer error handling middleware
+const handleMulterError = (err, req, res, next) => {
+    if (err instanceof multer_1.MulterError) {
+        logger.error('Multer error:', err);
+        if (err.code === 'LIMIT_FILE_SIZE') {
+            return res.status(400).json((0, response_types_1.createErrorResponse)('FILE_TOO_LARGE', 'File size exceeds the 10MB limit'));
+        }
+        return res.status(400).json((0, response_types_1.createErrorResponse)('UPLOAD_ERROR', err.message));
+    }
+    else if (err) {
+        logger.error('Upload error:', err);
+        return res.status(400).json((0, response_types_1.createErrorResponse)('UPLOAD_ERROR', err.message || 'Failed to upload file'));
+    }
+    next();
+};
 // Middleware to log requests
 router.use((req, _res, next) => {
     logger.debug(`Gallery Images endpoint accessed: ${req.method} ${req.path}`);
@@ -104,10 +149,20 @@ router.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () 
  * POST /api/v1/gallery-images
  * Upload a new gallery image
  */
-router.post('/', auth_middleware_1.authenticate, upload.single('image'), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post('/', auth_middleware_1.authenticate, (req, res, next) => {
+    // Use multer with custom error handling
+    upload.single('image')(req, res, (err) => {
+        if (err) {
+            return handleMulterError(err, req, res, next);
+        }
+        next();
+    });
+}, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
         logger.debug('Uploading new gallery image');
+        logger.debug('Request body:', req.body);
+        logger.debug('File received:', req.file ? `${req.file.originalname} (${req.file.size} bytes)` : 'No file');
         // Check if user has admin privileges
         const currentUser = yield user_service_1.UserService.getUserById(req.user.userId);
         if (!currentUser || !currentUser.roles.some(role => ['Admin', 'Site Admin'].includes(role))) {
@@ -115,6 +170,7 @@ router.post('/', auth_middleware_1.authenticate, upload.single('image'), (req, r
             return res.status(403).json((0, response_types_1.createErrorResponse)('FORBIDDEN', 'You do not have permission to upload gallery images'));
         }
         if (!req.file) {
+            logger.error('No file in request');
             return res.status(400).json((0, response_types_1.createErrorResponse)('VALIDATION_ERROR', 'No image file provided'));
         }
         const metadata = {
@@ -127,6 +183,7 @@ router.post('/', auth_middleware_1.authenticate, upload.single('image'), (req, r
             status: req.body.status,
             companyId: req.body.companyId ? parseInt(req.body.companyId) : undefined
         };
+        logger.debug('Metadata prepared:', metadata);
         const image = yield gallery_image_service_1.GalleryImageService.uploadImage(req.file.buffer, req.file.originalname, req.file.mimetype, metadata, req.user.userId);
         logger.debug(`Gallery image uploaded with ID: ${image.id}`);
         return res.status(201).json((0, response_types_1.createSuccessResponse)(image));

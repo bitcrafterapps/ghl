@@ -48,6 +48,22 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 // API compatibility middleware
 app.use(normalizeRequest);
 
+// Serve uploaded files in development mode
+if (process.env.NODE_ENV !== 'production') {
+  const uploadsPath = path.join(process.cwd(), 'uploads');
+  // Create uploads directory if it doesn't exist
+  if (!fs.existsSync(uploadsPath)) {
+    fs.mkdirSync(uploadsPath, { recursive: true });
+  }
+  // Add CORS/CORP headers for static files to work with COEP
+  app.use('/uploads', (req: Request, res: Response, next: any) => {
+    res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    next();
+  }, express.static(uploadsPath));
+  logger.info('Serving static files from:', uploadsPath);
+}
+
 // Request logging middleware
 app.use((req: Request, res: Response, next: any) => {
   logger.debug(`${req.method} ${req.url}`);

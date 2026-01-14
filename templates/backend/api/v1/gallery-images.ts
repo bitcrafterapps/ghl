@@ -1,5 +1,5 @@
-import { Router, Request, Response } from 'express';
-import multer from 'multer';
+import { Router, Request, Response, NextFunction } from 'express';
+import multer, { MulterError } from 'multer';
 import { GalleryImageService } from '../../services/gallery-image.service';
 import { UserService } from '../../services/user.service';
 import { authenticate } from '../../middleware/v1/auth.middleware';
@@ -30,6 +30,27 @@ const upload = multer({
     }
   }
 });
+
+// Multer error handling middleware
+const handleMulterError = (err: any, req: Request, res: Response, next: NextFunction) => {
+  if (err instanceof MulterError) {
+    logger.error('Multer error:', err);
+    if (err.code === 'LIMIT_FILE_SIZE') {
+      return res.status(400).json(
+        createErrorResponse('FILE_TOO_LARGE', 'File size exceeds the 10MB limit')
+      );
+    }
+    return res.status(400).json(
+      createErrorResponse('UPLOAD_ERROR', err.message)
+    );
+  } else if (err) {
+    logger.error('Upload error:', err);
+    return res.status(400).json(
+      createErrorResponse('UPLOAD_ERROR', err.message || 'Failed to upload file')
+    );
+  }
+  next();
+};
 
 // Middleware to log requests
 router.use((req: Request, _res: Response, next) => {
@@ -123,9 +144,19 @@ router.get('/:id', async (req: Request<{ id: string }>, res: Response) => {
  * POST /api/v1/gallery-images
  * Upload a new gallery image
  */
-router.post('/', authenticate, upload.single('image'), async (req: Request, res: Response) => {
+router.post('/', authenticate, (req: Request, res: Response, next: NextFunction) => {
+  // Use multer with custom error handling
+  upload.single('image')(req, res, (err: any) => {
+    if (err) {
+      return handleMulterError(err, req, res, next);
+    }
+    next();
+  });
+}, async (req: Request, res: Response) => {
   try {
     logger.debug('Uploading new gallery image');
+    logger.debug('Request body:', req.body);
+    logger.debug('File received:', req.file ? `${req.file.originalname} (${req.file.size} bytes)` : 'No file');
 
     // Check if user has admin privileges
     const currentUser = await UserService.getUserById(req.user!.userId);
@@ -137,6 +168,7 @@ router.post('/', authenticate, upload.single('image'), async (req: Request, res:
     }
 
     if (!req.file) {
+      logger.error('No file in request');
       return res.status(400).json(
         createErrorResponse('VALIDATION_ERROR', 'No image file provided')
       );
@@ -152,6 +184,8 @@ router.post('/', authenticate, upload.single('image'), async (req: Request, res:
       status: req.body.status,
       companyId: req.body.companyId ? parseInt(req.body.companyId) : undefined
     };
+
+    logger.debug('Metadata prepared:', metadata);
 
     const image = await GalleryImageService.uploadImage(
       req.file.buffer,

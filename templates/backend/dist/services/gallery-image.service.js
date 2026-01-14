@@ -1,4 +1,37 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -16,22 +49,52 @@ const schema_1 = require("../db/schema");
 const logger_1 = require("../logger");
 const drizzle_orm_1 = require("drizzle-orm");
 const activity_service_1 = require("./activity.service");
+const fs = __importStar(require("fs"));
+const path = __importStar(require("path"));
 const logger = logger_1.LoggerFactory.getLogger('GalleryImageService');
+// Check if running in development mode
+const isLocalDev = process.env.NODE_ENV !== 'production';
+const UPLOADS_DIR = path.join(process.cwd(), 'uploads', 'gallery');
+const LOCAL_BASE_URL = process.env.LOCAL_UPLOADS_URL || 'http://localhost:3001/uploads/gallery';
+// Ensure uploads directory exists in development
+if (isLocalDev) {
+    if (!fs.existsSync(UPLOADS_DIR)) {
+        fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+        logger.info('Created local uploads directory:', UPLOADS_DIR);
+    }
+}
 class GalleryImageService {
     /**
-     * Upload an image to Vercel Blob storage and create database record
+     * Upload an image - uses local filesystem in development, Vercel Blob in production
      */
     static uploadImage(file, filename, contentType, metadata, actorUserId) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a;
             try {
-                logger.debug('Uploading image to Vercel Blob:', filename);
-                // Upload to Vercel Blob
-                const blob = yield (0, blob_1.put)(`gallery/${Date.now()}-${filename}`, file, {
-                    access: 'public',
-                    contentType,
-                });
-                logger.debug('Blob upload successful:', blob.url);
+                let blobUrl;
+                let blobPathname;
+                // Sanitize filename
+                const sanitizedFilename = `${Date.now()}-${filename.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+                if (isLocalDev) {
+                    // Local development: save to filesystem
+                    logger.debug('Saving image to local filesystem:', sanitizedFilename);
+                    const filePath = path.join(UPLOADS_DIR, sanitizedFilename);
+                    fs.writeFileSync(filePath, file);
+                    blobUrl = `${LOCAL_BASE_URL}/${sanitizedFilename}`;
+                    blobPathname = `gallery/${sanitizedFilename}`;
+                    logger.debug('Local file saved:', blobUrl);
+                }
+                else {
+                    // Production: upload to Vercel Blob
+                    logger.debug('Uploading image to Vercel Blob:', sanitizedFilename);
+                    const blob = yield (0, blob_1.put)(`gallery/${sanitizedFilename}`, file, {
+                        access: 'public',
+                        contentType,
+                    });
+                    blobUrl = blob.url;
+                    blobPathname = blob.pathname;
+                    logger.debug('Blob upload successful:', blobUrl);
+                }
                 // Create database record
                 const [image] = yield db_1.db.insert(schema_1.galleryImages).values({
                     userId: actorUserId || null,
@@ -39,8 +102,8 @@ class GalleryImageService {
                     title: metadata.title || filename,
                     description: metadata.description || null,
                     altText: metadata.altText || metadata.title || filename,
-                    blobUrl: blob.url,
-                    blobPathname: blob.pathname,
+                    blobUrl,
+                    blobPathname,
                     blobContentType: contentType,
                     blobSize: file.length,
                     category: metadata.category || null,
@@ -175,7 +238,7 @@ class GalleryImageService {
         });
     }
     /**
-     * Delete a gallery image (removes from Blob storage and database)
+     * Delete a gallery image (removes from storage and database)
      */
     static deleteImage(id, actorUserId) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -186,14 +249,28 @@ class GalleryImageService {
                 if (!image) {
                     return false;
                 }
-                // Delete from Vercel Blob
+                // Delete from storage
                 if (image.blobUrl) {
                     try {
-                        yield (0, blob_1.del)(image.blobUrl);
-                        logger.debug('Deleted blob:', image.blobUrl);
+                        if (isLocalDev && image.blobUrl.includes('localhost')) {
+                            // Local development: delete from filesystem
+                            const filename = image.blobUrl.split('/').pop();
+                            if (filename) {
+                                const filePath = path.join(UPLOADS_DIR, filename);
+                                if (fs.existsSync(filePath)) {
+                                    fs.unlinkSync(filePath);
+                                    logger.debug('Deleted local file:', filePath);
+                                }
+                            }
+                        }
+                        else {
+                            // Production: delete from Vercel Blob
+                            yield (0, blob_1.del)(image.blobUrl);
+                            logger.debug('Deleted blob:', image.blobUrl);
+                        }
                     }
-                    catch (blobError) {
-                        logger.warn('Failed to delete blob (may not exist):', blobError);
+                    catch (storageError) {
+                        logger.warn('Failed to delete from storage (may not exist):', storageError);
                     }
                 }
                 // Delete from database

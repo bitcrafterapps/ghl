@@ -11,12 +11,27 @@ import {
 import { LoggerFactory } from '../logger';
 import { eq, and, desc, asc, sql } from 'drizzle-orm';
 import { ActivityService } from './activity.service';
+import * as fs from 'fs';
+import * as path from 'path';
 
 const logger = LoggerFactory.getLogger('GalleryImageService');
 
+// Check if running in development mode
+const isLocalDev = process.env.NODE_ENV !== 'production';
+const UPLOADS_DIR = path.join(process.cwd(), 'uploads', 'gallery');
+const LOCAL_BASE_URL = process.env.LOCAL_UPLOADS_URL || 'http://localhost:3001/uploads/gallery';
+
+// Ensure uploads directory exists in development
+if (isLocalDev) {
+  if (!fs.existsSync(UPLOADS_DIR)) {
+    fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+    logger.info('Created local uploads directory:', UPLOADS_DIR);
+  }
+}
+
 export class GalleryImageService {
   /**
-   * Upload an image to Vercel Blob storage and create database record
+   * Upload an image - uses local filesystem in development, Vercel Blob in production
    */
   static async uploadImage(
     file: Buffer,
@@ -26,15 +41,37 @@ export class GalleryImageService {
     actorUserId?: number
   ): Promise<GalleryImageResponse> {
     try {
-      logger.debug('Uploading image to Vercel Blob:', filename);
+      let blobUrl: string;
+      let blobPathname: string;
 
-      // Upload to Vercel Blob
-      const blob = await put(`gallery/${Date.now()}-${filename}`, file, {
-        access: 'public',
-        contentType,
-      });
+      // Sanitize filename
+      const sanitizedFilename = `${Date.now()}-${filename.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
 
-      logger.debug('Blob upload successful:', blob.url);
+      if (isLocalDev) {
+        // Local development: save to filesystem
+        logger.debug('Saving image to local filesystem:', sanitizedFilename);
+
+        const filePath = path.join(UPLOADS_DIR, sanitizedFilename);
+        fs.writeFileSync(filePath, file);
+
+        blobUrl = `${LOCAL_BASE_URL}/${sanitizedFilename}`;
+        blobPathname = `gallery/${sanitizedFilename}`;
+
+        logger.debug('Local file saved:', blobUrl);
+      } else {
+        // Production: upload to Vercel Blob
+        logger.debug('Uploading image to Vercel Blob:', sanitizedFilename);
+
+        const blob = await put(`gallery/${sanitizedFilename}`, file, {
+          access: 'public',
+          contentType,
+        });
+
+        blobUrl = blob.url;
+        blobPathname = blob.pathname;
+
+        logger.debug('Blob upload successful:', blobUrl);
+      }
 
       // Create database record
       const [image] = await db.insert(galleryImages).values({
@@ -43,8 +80,8 @@ export class GalleryImageService {
         title: metadata.title || filename,
         description: metadata.description || null,
         altText: metadata.altText || metadata.title || filename,
-        blobUrl: blob.url,
-        blobPathname: blob.pathname,
+        blobUrl,
+        blobPathname,
         blobContentType: contentType,
         blobSize: file.length,
         category: metadata.category || null,
@@ -193,7 +230,7 @@ export class GalleryImageService {
   }
 
   /**
-   * Delete a gallery image (removes from Blob storage and database)
+   * Delete a gallery image (removes from storage and database)
    */
   static async deleteImage(id: number, actorUserId?: number): Promise<boolean> {
     try {
@@ -206,13 +243,26 @@ export class GalleryImageService {
         return false;
       }
 
-      // Delete from Vercel Blob
+      // Delete from storage
       if (image.blobUrl) {
         try {
-          await del(image.blobUrl);
-          logger.debug('Deleted blob:', image.blobUrl);
-        } catch (blobError) {
-          logger.warn('Failed to delete blob (may not exist):', blobError);
+          if (isLocalDev && image.blobUrl.includes('localhost')) {
+            // Local development: delete from filesystem
+            const filename = image.blobUrl.split('/').pop();
+            if (filename) {
+              const filePath = path.join(UPLOADS_DIR, filename);
+              if (fs.existsSync(filePath)) {
+                fs.unlinkSync(filePath);
+                logger.debug('Deleted local file:', filePath);
+              }
+            }
+          } else {
+            // Production: delete from Vercel Blob
+            await del(image.blobUrl);
+            logger.debug('Deleted blob:', image.blobUrl);
+          }
+        } catch (storageError) {
+          logger.warn('Failed to delete from storage (may not exist):', storageError);
         }
       }
 
