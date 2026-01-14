@@ -64,7 +64,7 @@ const seedDatabase = function initializeAndSeed() {
                     emailNotify: true,
                     smsNotify: true,
                     phoneNumber: '+1234567890',
-                    theme: 'system',
+                    theme: 'dark',
                     companyName: 'My Company Inc'
                 })
                     .returning();
@@ -122,7 +122,7 @@ const seedDatabase = function initializeAndSeed() {
                     roles: ['User'],
                     emailNotify: true,
                     smsNotify: false,
-                    theme: 'light',
+                    theme: 'dark',
                     companyName: 'My Company Inc'
                 })
                     .returning();

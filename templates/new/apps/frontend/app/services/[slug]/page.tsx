@@ -125,16 +125,22 @@ export default function ServiceDetailPage() {
                   About Our {service.name} Service
                 </h2>
                 <div className="prose prose-lg max-w-none text-gray-600">
-                  <p>
-                    At {siteConfig.company.name}, we provide professional {service.name.toLowerCase()} services
-                    to homeowners and businesses throughout {siteConfig.serviceArea.primaryCity} and
-                    the surrounding {siteConfig.company.stateFullName} area.
-                  </p>
-                  <p>
-                    With {siteConfig.company.yearsInBusiness}+ years of experience, our licensed
-                    technicians deliver quality workmanship you can trust. We use the latest
-                    equipment and techniques to ensure every job is done right the first time.
-                  </p>
+                  {service.longDescription ? (
+                    <div dangerouslySetInnerHTML={{ __html: service.longDescription.replace(/\n/g, '<br/>') }} />
+                  ) : (
+                    <>
+                      <p>
+                        At {siteConfig.company.name}, we provide professional {service.name.toLowerCase()} services
+                        to homeowners and businesses throughout {siteConfig.serviceArea.primaryCity} and
+                        the surrounding {siteConfig.company.stateFullName} area.
+                      </p>
+                      <p>
+                        With {siteConfig.company.yearsInBusiness}+ years of experience, our licensed
+                        technicians deliver quality workmanship you can trust. We use the latest
+                        equipment and techniques to ensure every job is done right the first time.
+                      </p>
+                    </>
+                  )}
                 </div>
 
                 {/* Benefits */}

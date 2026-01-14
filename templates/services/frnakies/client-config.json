@@ -1,0 +1,146 @@
+{
+  "company": {
+    "name": "Frnakies",
+    "slug": "frnakies",
+    "phone": "3435535",
+    "email": "s@s.com",
+    "address": "23243 M",
+    "city": "Irifi",
+    "state": "CA",
+    "stateFullName": "California",
+    "zip": "92688",
+    "license": "4sdff",
+    "yearsInBusiness": "34"
+  },
+  "branding": {
+    "logoUrl": "",
+    "faviconUrl": "",
+    "primaryColor": "#2563eb",
+    "secondaryColor": "#1e40af",
+    "accentColor": "#f59e0b",
+    "headerFooterBg": "#1e293b",
+    "headerFooterText": "#ffffff",
+    "fontHeading": "Poppins",
+    "fontBody": "Inter"
+  },
+  "industry": {
+    "type": "Pool Service",
+    "slug": "pool-service",
+    "serviceNoun": "Services",
+    "serviceVerb": "maintain",
+    "emergencyService": false,
+    "schemaType": "HomeAndConstructionBusiness",
+    "services": [
+      {
+        "name": "Weekly Pool Maintenance",
+        "slug": "weekly-maintenance",
+        "shortDescription": "Complete weekly pool care service.",
+        "featured": true
+      },
+      {
+        "name": "Pool Equipment Repair",
+        "slug": "equipment-repair",
+        "shortDescription": "Pump, filter, and heater repairs.",
+        "featured": true
+      },
+      {
+        "name": "Pool Opening & Closing",
+        "slug": "opening-closing",
+        "shortDescription": "Seasonal pool preparation.",
+        "featured": true
+      },
+      {
+        "name": "Pool Remodeling",
+        "slug": "pool-remodeling",
+        "shortDescription": "Pool renovation and resurfacing."
+      }
+    ],
+    "faq": [
+      {
+        "question": "How often should I have my pool serviced?",
+        "answer": "We recommend weekly service to maintain proper chemistry and equipment function."
+      },
+      {
+        "question": "When should I open my pool for summer?",
+        "answer": "In most areas, opening in late April to early May is ideal when temperatures consistently reach 70°F."
+      }
+    ]
+  },
+  "serviceArea": {
+    "areas": "Irifi",
+    "radius": "30",
+    "primaryCity": "Irifi"
+  },
+  "social": {
+    "facebook": "",
+    "instagram": "",
+    "google": "",
+    "yelp": "",
+    "bbb": "",
+    "nextdoor": ""
+  },
+  "ghl": {
+    "calendarEmbed": "",
+    "formEmbed": "",
+    "chatWidget": "",
+    "webhookUrl": "",
+    "trackingId": ""
+  },
+  "seo": {
+    "googleAnalyticsId": "",
+    "googleTagManagerId": "",
+    "facebookPixelId": "",
+    "metaDescription": "Frnakies provides professional pool service services in Irifi, CA. 34+ years experience. Licensed & insured. Call for a free estimate!",
+    "metaKeywords": "pool service, Irifi, CA, weekly pool maintenance, pool equipment repair, pool opening & closing, pool remodeling"
+  },
+  "siteUrl": "https://frnakies.com",
+  "reviews": {
+    "rating": "4.9",
+    "count": "100",
+    "googleReviewLink": ""
+  },
+  "hours": {
+    "weekdays": "8:00 AM - 6:00 PM",
+    "saturday": "9:00 AM - 4:00 PM",
+    "sunday": "Closed",
+    "emergencyNote": ""
+  },
+  "services": [
+    {
+      "name": "Weekly Pool Maintenance",
+      "slug": "weekly-maintenance",
+      "shortDescription": "Complete weekly pool care service.",
+      "featured": true
+    },
+    {
+      "name": "Pool Equipment Repair",
+      "slug": "equipment-repair",
+      "shortDescription": "Pump, filter, and heater repairs.",
+      "featured": true
+    },
+    {
+      "name": "Pool Opening & Closing",
+      "slug": "opening-closing",
+      "shortDescription": "Seasonal pool preparation.",
+      "featured": true
+    },
+    {
+      "name": "Pool Remodeling",
+      "slug": "pool-remodeling",
+      "shortDescription": "Pool renovation and resurfacing."
+    }
+  ],
+  "testimonials": [],
+  "faq": [
+    {
+      "question": "How often should I have my pool serviced?",
+      "answer": "We recommend weekly service to maintain proper chemistry and equipment function."
+    },
+    {
+      "question": "When should I open my pool for summer?",
+      "answer": "In most areas, opening in late April to early May is ideal when temperatures consistently reach 70°F."
+    }
+  ],
+  "gallery": [],
+  "team": []
+}

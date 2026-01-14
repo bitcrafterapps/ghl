@@ -1,0 +1,10 @@
+// Section Components - Export barrel
+export { HeroSection } from './hero';
+export { TrustBar } from './trust-bar';
+export { ServicesSection } from './services';
+export { WhyChooseUs } from './why-choose-us';
+export { TestimonialsSection } from './testimonials';
+export { ServiceAreaSection } from './service-area';
+export { GalleryPreview } from './gallery-preview';
+export { FAQSection } from './faq';
+export { CTASection } from './cta';

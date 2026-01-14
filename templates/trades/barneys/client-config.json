@@ -1,0 +1,174 @@
+{
+  "company": {
+    "name": "Barneys",
+    "slug": "barneys",
+    "phone": "8484884848",
+    "email": "sandy@fgt.vom",
+    "address": "123 Main",
+    "city": "IRvine",
+    "state": "CA",
+    "stateFullName": "California",
+    "zip": "92688",
+    "license": "A444",
+    "yearsInBusiness": "21"
+  },
+  "branding": {
+    "logoUrl": "",
+    "faviconUrl": "",
+    "primaryColor": "#eb25c3",
+    "secondaryColor": "#7125eb",
+    "accentColor": "#5404d4",
+    "headerFooterBg": "#d46804",
+    "headerFooterText": "#ffffff",
+    "fontHeading": "Poppins",
+    "fontBody": "Inter"
+  },
+  "industry": {
+    "type": "Electrical",
+    "slug": "electrical",
+    "serviceNoun": "Services",
+    "serviceVerb": "repair",
+    "emergencyService": true,
+    "schemaType": "Electrician",
+    "services": [
+      {
+        "name": "Electrical Repairs",
+        "slug": "electrical-repairs",
+        "shortDescription": "Safe and reliable electrical repair services.",
+        "featured": true
+      },
+      {
+        "name": "Panel Upgrades",
+        "slug": "panel-upgrades",
+        "shortDescription": "Electrical panel upgrade and replacement.",
+        "featured": true
+      },
+      {
+        "name": "Lighting Installation",
+        "slug": "lighting-installation",
+        "shortDescription": "Indoor and outdoor lighting installation.",
+        "featured": true
+      },
+      {
+        "name": "Outlet & Switch Installation",
+        "slug": "outlet-switch-installation",
+        "shortDescription": "New outlet and switch installation."
+      },
+      {
+        "name": "Ceiling Fan Installation",
+        "slug": "ceiling-fan-installation",
+        "shortDescription": "Professional ceiling fan installation."
+      },
+      {
+        "name": "Electrical Inspections",
+        "slug": "electrical-inspections",
+        "shortDescription": "Comprehensive electrical safety inspections."
+      }
+    ],
+    "faq": [
+      {
+        "question": "What are signs of electrical problems?",
+        "answer": "Warning signs include flickering lights, frequent breaker trips, burning smells, sparking outlets, and warm switch plates."
+      },
+      {
+        "question": "How often should I have an electrical inspection?",
+        "answer": "We recommend an inspection every 3-5 years for homes, or whenever you purchase a new home."
+      },
+      {
+        "question": "Do you handle emergency electrical work?",
+        "answer": "Yes! We provide 24/7 emergency electrical services."
+      }
+    ]
+  },
+  "serviceArea": {
+    "areas": "IRvine",
+    "radius": "30",
+    "primaryCity": "IRvine"
+  },
+  "social": {
+    "facebook": "",
+    "instagram": "",
+    "google": "",
+    "yelp": "",
+    "bbb": "",
+    "nextdoor": ""
+  },
+  "ghl": {
+    "calendarEmbed": "",
+    "formEmbed": "",
+    "chatWidget": "",
+    "webhookUrl": "",
+    "trackingId": ""
+  },
+  "seo": {
+    "googleAnalyticsId": "",
+    "googleTagManagerId": "",
+    "facebookPixelId": "",
+    "metaDescription": "Barneys provides professional electrical services in IRvine, CA. 21+ years experience. Licensed & insured. Call for a free estimate!",
+    "metaKeywords": "electrical, IRvine, CA, electrical repairs, panel upgrades, lighting installation, outlet & switch installation, ceiling fan installation, electrical inspections"
+  },
+  "siteUrl": "https://barneys.com",
+  "reviews": {
+    "rating": "4.9",
+    "count": "100",
+    "googleReviewLink": ""
+  },
+  "hours": {
+    "weekdays": "8:00 AM - 6:00 PM",
+    "saturday": "9:00 AM - 4:00 PM",
+    "sunday": "Closed",
+    "emergencyNote": "24/7 Emergency Service Available"
+  },
+  "services": [
+    {
+      "name": "Electrical Repairs",
+      "slug": "electrical-repairs",
+      "shortDescription": "Safe and reliable electrical repair services.",
+      "featured": true
+    },
+    {
+      "name": "Panel Upgrades",
+      "slug": "panel-upgrades",
+      "shortDescription": "Electrical panel upgrade and replacement.",
+      "featured": true
+    },
+    {
+      "name": "Lighting Installation",
+      "slug": "lighting-installation",
+      "shortDescription": "Indoor and outdoor lighting installation.",
+      "featured": true
+    },
+    {
+      "name": "Outlet & Switch Installation",
+      "slug": "outlet-switch-installation",
+      "shortDescription": "New outlet and switch installation."
+    },
+    {
+      "name": "Ceiling Fan Installation",
+      "slug": "ceiling-fan-installation",
+      "shortDescription": "Professional ceiling fan installation."
+    },
+    {
+      "name": "Electrical Inspections",
+      "slug": "electrical-inspections",
+      "shortDescription": "Comprehensive electrical safety inspections."
+    }
+  ],
+  "testimonials": [],
+  "faq": [
+    {
+      "question": "What are signs of electrical problems?",
+      "answer": "Warning signs include flickering lights, frequent breaker trips, burning smells, sparking outlets, and warm switch plates."
+    },
+    {
+      "question": "How often should I have an electrical inspection?",
+      "answer": "We recommend an inspection every 3-5 years for homes, or whenever you purchase a new home."
+    },
+    {
+      "question": "Do you handle emergency electrical work?",
+      "answer": "Yes! We provide 24/7 emergency electrical services."
+    }
+  ],
+  "gallery": [],
+  "team": []
+}

@@ -16,11 +16,11 @@ import {
   Cog6ToothIcon,
   ArrowRightOnRectangleIcon,
 } from "@heroicons/react/24/outline";
-import { Search, Bell, DumbbellIcon, FileText, LayoutDashboard, Globe, Phone } from "lucide-react";
+import { Search, Bell, DumbbellIcon, FileText, LayoutDashboard, Globe, Phone, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useSocket } from "@/hooks/useSocket";
-import { siteConfig } from "@/data/config";
+import { siteConfig, services } from "@/data/config";
 import { formatPhone, formatPhoneLink } from "@/lib/utils";
 
 function classNames(...classes: string[]) {
@@ -362,8 +362,9 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
     <nav 
       className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl border-b shadow-lg"
       style={{
-        background: 'linear-gradient(135deg, #1e3a5f 0%, #0f172a 50%, #1e293b 100%)',
-        borderColor: 'rgba(59, 130, 246, 0.3)',
+        background: 'var(--header-bg)',
+        borderColor: 'var(--header-border)',
+        color: 'var(--header-text)',
       }}
     >
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -413,17 +414,66 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
               >
                 Home
               </Link>
-              <Link
-                href="/services"
-                className={classNames(
-                  pathname?.startsWith("/services") 
-                    ? "text-white bg-white/10" 
-                    : "text-zinc-300 hover:text-white hover:bg-white/5",
-                  "px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200"
-                )}
-              >
-                Services
-              </Link>
+              {/* Services Dropdown */}
+              <Menu as="div" className="relative">
+                <Menu.Button
+                  className={classNames(
+                    pathname?.startsWith("/services") 
+                      ? "text-white bg-white/10" 
+                      : "text-zinc-300 hover:text-white hover:bg-white/5",
+                    "px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-1"
+                  )}
+                >
+                  Services
+                  <ChevronDown className="h-4 w-4" />
+                </Menu.Button>
+                <Transition
+                  as={Fragment}
+                  enter="transition ease-out duration-100"
+                  enterFrom="transform opacity-0 scale-95"
+                  enterTo="transform opacity-100 scale-100"
+                  leave="transition ease-in duration-75"
+                  leaveFrom="transform opacity-100 scale-100"
+                  leaveTo="transform opacity-0 scale-95"
+                >
+                  <Menu.Items className="absolute left-0 z-50 mt-2 w-64 origin-top-left rounded-xl bg-gray-900 border border-gray-800 shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none overflow-hidden">
+                    <div className="py-1">
+                      {services.slice(0, 8).map((service: any) => (
+                        <Menu.Item key={service.slug}>
+                          {({ active }) => (
+                            <Link
+                              href={`/services/${service.slug}`}
+                              className={classNames(
+                                active ? 'bg-white/10 text-white' : 'text-zinc-300',
+                                'block px-4 py-2.5 text-sm transition-colors'
+                              )}
+                            >
+                              {service.name}
+                            </Link>
+                          )}
+                        </Menu.Item>
+                      ))}
+                      {services.length > 0 && (
+                        <div className="border-t border-gray-800 mt-1 pt-1">
+                          <Menu.Item>
+                            {({ active }) => (
+                              <Link
+                                href="/services"
+                                className={classNames(
+                                  active ? 'bg-white/10 text-white' : 'text-primary',
+                                  'block px-4 py-2.5 text-sm font-medium transition-colors'
+                                )}
+                              >
+                                View All Services →
+                              </Link>
+                            )}
+                          </Menu.Item>
+                        </div>
+                      )}
+                    </div>
+                  </Menu.Items>
+                </Transition>
+              </Menu>
               <Link
                 href="/gallery"
                 className={classNames(
@@ -714,7 +764,7 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
           <div 
             className="space-y-1 px-4 pb-4 pt-2 border-t border-white/10"
             style={{
-              background: 'linear-gradient(180deg, #0f172a 0%, #1e293b 100%)',
+              background: 'var(--header-bg)',
             }}
           >
             <Link
@@ -727,16 +777,42 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
             >
               Home
             </Link>
-            <Link
-              href="/services"
-              onClick={() => setMobileMenuOpen(false)}
-              className={classNames(
-                pathname?.startsWith("/services") ? "bg-white/10 text-white" : "text-zinc-300 hover:bg-white/5 hover:text-white",
-                "block rounded-lg px-3 py-2.5 text-base font-medium transition-colors"
+            {/* Mobile Services Accordion */}
+            <Disclosure>
+              {({ open }) => (
+                <>
+                  <Disclosure.Button className={classNames(
+                    pathname?.startsWith("/services") ? "bg-white/10 text-white" : "text-zinc-300 hover:bg-white/5 hover:text-white",
+                    "flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-base font-medium transition-colors"
+                  )}>
+                    Services
+                    <ChevronDown className={classNames(
+                      open ? "rotate-180" : "",
+                      "h-5 w-5 transition-transform"
+                    )} />
+                  </Disclosure.Button>
+                  <Disclosure.Panel className="pl-4 space-y-1">
+                    {services.slice(0, 8).map((service: any) => (
+                      <Link
+                        key={service.slug}
+                        href={`/services/${service.slug}`}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="block rounded-lg px-3 py-2 text-sm text-zinc-400 hover:bg-white/5 hover:text-white transition-colors"
+                      >
+                        {service.name}
+                      </Link>
+                    ))}
+                    <Link
+                      href="/services"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block rounded-lg px-3 py-2 text-sm text-primary font-medium hover:bg-white/5 transition-colors"
+                    >
+                      View All Services →
+                    </Link>
+                  </Disclosure.Panel>
+                </>
               )}
-            >
-              Services
-            </Link>
+            </Disclosure>
             <Link
               href="/gallery"
               onClick={() => setMobileMenuOpen(false)}

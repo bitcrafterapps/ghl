@@ -36,6 +36,7 @@
     "@types/pg": "^8.11.11",
     "@types/socket.io": "^3.0.1",
     "@types/uuid": "^10.0.0",
+    "@vercel/blob": "^2.0.0",
     "@vercel/postgres": "^0.10.0",
     "bcrypt": "^5.1.1",
     "bufferutil": "^4.1.0",
@@ -64,7 +65,9 @@
     "zod": "^4.3.5"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["bcrypt"]
+    "onlyBuiltDependencies": [
+      "bcrypt"
+    ]
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",

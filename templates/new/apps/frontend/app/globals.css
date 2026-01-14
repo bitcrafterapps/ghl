@@ -10,15 +10,24 @@
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
+
+    /* Primary color from branding - tokenized */
+    --primary-hex: __PRIMARY_COLOR__;
     --primary: 217 91% 60%;
-    /* blue-500 */
     --primary-foreground: 0 0% 100%;
+
+    /* Secondary color from branding - tokenized */
+    --secondary-hex: __SECONDARY_COLOR__;
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+
+    /* Accent color from branding - tokenized */
+    --accent-hex: __ACCENT_COLOR__;
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
     --border: 214.3 31.8% 91.4%;
@@ -26,27 +35,23 @@
     --ring: 217 91% 60%;
     --radius: 0.5rem;
 
-    /* Theme Variables - Light Mode Defaults */
-    --header-bg: #3b82f6;
-    /* blue-500 */
-    --header-border: #2563eb;
-    /* blue-600 */
+    /* Theme Variables - Light Mode Defaults - uses branding colors */
+    --header-bg: __HEADER_FOOTER_BG__;
+    --header-text: __HEADER_FOOTER_TEXT__;
+    --header-border: __SECONDARY_COLOR__;
     --header-text-secondary: #bfdbfe;
-    /* blue-200 */
+
+    /* Footer uses same colors as header */
+    --footer-bg: __HEADER_FOOTER_BG__;
+    --footer-text: __HEADER_FOOTER_TEXT__;
 
     --subheader-bg: #eff6ff;
-    /* blue-50 */
     --subheader-border: #bfdbfe;
-    /* blue-200 */
     --subheader-text-primary: #172554;
-    /* blue-950 */
-    --subheader-text-secondary: #1d4ed8;
-    /* blue-700 */
+    --subheader-text-secondary: __PRIMARY_COLOR__;
 
-    --btn-primary-bg: #2563eb;
-    /* blue-600 */
-    --btn-primary-hover: #1d4ed8;
-    /* blue-700 */
+    --btn-primary-bg: __PRIMARY_COLOR__;
+    --btn-primary-hover: __SECONDARY_COLOR__;
     --btn-primary-text: #ffffff;
   }
 
@@ -73,7 +78,7 @@
     --ring: 217 91% 60%;
 
     /* Theme Variables - Dark Mode Overrides */
-    --header-bg: linear-gradient(to right, rgba(8, 47, 73, 0.95), rgba(23, 37, 84, 0.95), rgba(8, 51, 68, 0.95));
+    --header-bg: __HEADER_FOOTER_BG__;
     --header-border: rgba(30, 64, 175, 0.3);
     --header-text-secondary: rgb(212, 212, 216);
     /* zinc-300 */
@@ -100,13 +105,7 @@
   }
 }
 
-html {
-  @apply h-full bg-gray-900;
-}
 
-body {
-  @apply h-full bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900;
-}
 
 .bg-gray-800\/50 {
   background-color: rgb(31 41 55 / 0.5);
@@ -521,31 +520,10 @@ body {
 
 /* Primary color utilities - will be tokenized */
 :root {
-
   /* These will be replaced by the create-site.js script */
-  --color-primary: {
-      {
-      PRIMARY_COLOR
-    }
-  }
-
-  ;
-
-  --color-secondary: {
-      {
-      SECONDARY_COLOR
-    }
-  }
-
-  ;
-
-  --color-accent: {
-      {
-      ACCENT_COLOR
-    }
-  }
-
-  ;
+  --color-primary: __PRIMARY_COLOR__;
+  --color-secondary: __SECONDARY_COLOR__;
+  --color-accent: __ACCENT_COLOR__;
 }
 
 /* Primary color classes for public pages */

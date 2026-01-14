@@ -7,7 +7,7 @@ const logger = LoggerFactory.getLogger('ActivityService');
 
 export class ActivityService {
   static async logActivity(data: {
-    type: 'proposal' | 'template' | 'company' | 'user' | 'project' | 'prd' | 'generation';
+    type: 'proposal' | 'template' | 'company' | 'user' | 'project' | 'prd' | 'generation' | 'gallery' | 'review';
     action: 'created' | 'updated' | 'deleted' | 'generated' | 'user_added' | 'user_removed';
     title: string;
     entityId: number | string;

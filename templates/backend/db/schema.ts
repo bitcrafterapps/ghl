@@ -309,6 +309,14 @@ export const tokenUsage = pgTable('token_usage', {
 export type TransactionStatus = 'pending' | 'authorized' | 'captured' | 'failed' | 'refunded' | 'cancelled';
 export type TransactionType = 'subscription' | 'one_time' | 'refund';
 
+// ============================================
+// Gallery & Reviews Types
+// ============================================
+
+export type GalleryImageStatus = 'active' | 'inactive' | 'pending';
+export type ReviewStatus = 'published' | 'draft' | 'pending' | 'rejected';
+export type ReviewSource = 'manual' | 'google' | 'yelp' | 'facebook';
+
 export const transactions = pgTable('transactions', {
   id: uuid('id').primaryKey().defaultRandom(),
   // User association (nullable for guest checkouts if needed in future)
@@ -360,4 +368,91 @@ export const transactions = pgTable('transactions', {
   providerIdx: index('transactions_provider_idx').on(table.provider),
   createdAtIdx: index('transactions_created_at_idx').on(table.createdAt),
   providerTxnIdx: index('transactions_provider_txn_idx').on(table.providerTransactionId)
+}));
+
+// ============================================
+// Gallery Images
+// ============================================
+
+export const galleryImages = pgTable('gallery_images', {
+  id: serial('id').primaryKey(),
+  userId: integer('user_id').references(() => users.id, { onDelete: 'set null' }),
+  companyId: integer('company_id').references(() => companies.id, { onDelete: 'cascade' }),
+
+  // Image metadata
+  title: varchar('title', { length: 255 }),
+  description: text('description'),
+  altText: varchar('alt_text', { length: 255 }),
+
+  // Vercel Blob storage reference
+  blobUrl: text('blob_url').notNull(),
+  blobPathname: varchar('blob_pathname', { length: 500 }),
+  blobContentType: varchar('blob_content_type', { length: 100 }),
+  blobSize: integer('blob_size'),
+
+  // Thumbnail (optional resized version)
+  thumbnailUrl: text('thumbnail_url'),
+
+  // Organization
+  category: varchar('category', { length: 100 }),
+  tags: text('tags').array().$type<string[]>().default([]),
+  sortOrder: integer('sort_order').default(0),
+
+  // Status
+  status: varchar('status', { length: 20 }).default('active').$type<GalleryImageStatus>(),
+
+  // Timestamps
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow()
+}, (table) => ({
+  companyIdx: index('gallery_images_company_idx').on(table.companyId),
+  categoryIdx: index('gallery_images_category_idx').on(table.category),
+  statusIdx: index('gallery_images_status_idx').on(table.status),
+  sortOrderIdx: index('gallery_images_sort_order_idx').on(table.sortOrder)
+}));
+
+// ============================================
+// Reviews / Testimonials
+// ============================================
+
+export const reviews = pgTable('reviews', {
+  id: serial('id').primaryKey(),
+  userId: integer('user_id').references(() => users.id, { onDelete: 'set null' }),
+  companyId: integer('company_id').references(() => companies.id, { onDelete: 'cascade' }),
+
+  // Reviewer info
+  reviewerName: varchar('reviewer_name', { length: 255 }).notNull(),
+  reviewerLocation: varchar('reviewer_location', { length: 255 }),
+  reviewerEmail: varchar('reviewer_email', { length: 255 }),
+
+  // Review content
+  text: text('text').notNull(),
+  rating: integer('rating').notNull().default(5),
+  service: varchar('service', { length: 255 }),
+
+  // Source tracking
+  source: varchar('source', { length: 50 }).default('manual').$type<ReviewSource>(),
+  externalId: varchar('external_id', { length: 255 }),
+
+  // Google Business integration
+  googleReviewId: varchar('google_review_id', { length: 255 }),
+  googlePostedAt: timestamp('google_posted_at'),
+
+  // Display settings
+  featured: boolean('featured').default(false),
+  sortOrder: integer('sort_order').default(0),
+
+  // Status
+  status: varchar('status', { length: 20 }).default('published').$type<ReviewStatus>(),
+
+  // Timestamps
+  reviewDate: timestamp('review_date').defaultNow(),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow()
+}, (table) => ({
+  companyIdx: index('reviews_company_idx').on(table.companyId),
+  ratingIdx: index('reviews_rating_idx').on(table.rating),
+  statusIdx: index('reviews_status_idx').on(table.status),
+  sourceIdx: index('reviews_source_idx').on(table.source),
+  featuredIdx: index('reviews_featured_idx').on(table.featured)
 }));

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.transactions = exports.tokenUsage = exports.siteSettings = exports.pushHistory = exports.deployments = exports.chatMessages = exports.generations = exports.prdMessages = exports.prds = exports.projects = exports.emailLogs = exports.emailTemplates = exports.activityLog = exports.companyUsers = exports.companies = exports.users = void 0;
+exports.reviews = exports.galleryImages = exports.transactions = exports.tokenUsage = exports.siteSettings = exports.pushHistory = exports.deployments = exports.chatMessages = exports.generations = exports.prdMessages = exports.prds = exports.projects = exports.emailLogs = exports.emailTemplates = exports.activityLog = exports.companyUsers = exports.companies = exports.users = void 0;
 const pg_core_1 = require("drizzle-orm/pg-core");
 exports.users = (0, pg_core_1.pgTable)('users', {
     id: (0, pg_core_1.serial)('id').primaryKey(),
@@ -12,7 +12,7 @@ exports.users = (0, pg_core_1.pgTable)('users', {
     emailNotify: (0, pg_core_1.boolean)('emailNotify').default(true),
     smsNotify: (0, pg_core_1.boolean)('smsNotify').default(false),
     phoneNumber: (0, pg_core_1.varchar)('phoneNumber', { length: 20 }),
-    theme: (0, pg_core_1.text)('theme').notNull().default('system'),
+    theme: (0, pg_core_1.text)('theme').notNull().default('dark'),
     status: (0, pg_core_1.varchar)('status', { length: 20 }).default('active'),
     companyName: (0, pg_core_1.varchar)('companyName', { length: 255 }),
     jobTitle: (0, pg_core_1.varchar)('jobTitle', { length: 255 }),
@@ -252,4 +252,74 @@ exports.transactions = (0, pg_core_1.pgTable)('transactions', {
     providerIdx: (0, pg_core_1.index)('transactions_provider_idx').on(table.provider),
     createdAtIdx: (0, pg_core_1.index)('transactions_created_at_idx').on(table.createdAt),
     providerTxnIdx: (0, pg_core_1.index)('transactions_provider_txn_idx').on(table.providerTransactionId)
+}));
+// ============================================
+// Gallery Images
+// ============================================
+exports.galleryImages = (0, pg_core_1.pgTable)('gallery_images', {
+    id: (0, pg_core_1.serial)('id').primaryKey(),
+    userId: (0, pg_core_1.integer)('user_id').references(() => exports.users.id, { onDelete: 'set null' }),
+    companyId: (0, pg_core_1.integer)('company_id').references(() => exports.companies.id, { onDelete: 'cascade' }),
+    // Image metadata
+    title: (0, pg_core_1.varchar)('title', { length: 255 }),
+    description: (0, pg_core_1.text)('description'),
+    altText: (0, pg_core_1.varchar)('alt_text', { length: 255 }),
+    // Vercel Blob storage reference
+    blobUrl: (0, pg_core_1.text)('blob_url').notNull(),
+    blobPathname: (0, pg_core_1.varchar)('blob_pathname', { length: 500 }),
+    blobContentType: (0, pg_core_1.varchar)('blob_content_type', { length: 100 }),
+    blobSize: (0, pg_core_1.integer)('blob_size'),
+    // Thumbnail (optional resized version)
+    thumbnailUrl: (0, pg_core_1.text)('thumbnail_url'),
+    // Organization
+    category: (0, pg_core_1.varchar)('category', { length: 100 }),
+    tags: (0, pg_core_1.text)('tags').array().$type().default([]),
+    sortOrder: (0, pg_core_1.integer)('sort_order').default(0),
+    // Status
+    status: (0, pg_core_1.varchar)('status', { length: 20 }).default('active').$type(),
+    // Timestamps
+    createdAt: (0, pg_core_1.timestamp)('created_at').defaultNow(),
+    updatedAt: (0, pg_core_1.timestamp)('updated_at').defaultNow()
+}, (table) => ({
+    companyIdx: (0, pg_core_1.index)('gallery_images_company_idx').on(table.companyId),
+    categoryIdx: (0, pg_core_1.index)('gallery_images_category_idx').on(table.category),
+    statusIdx: (0, pg_core_1.index)('gallery_images_status_idx').on(table.status),
+    sortOrderIdx: (0, pg_core_1.index)('gallery_images_sort_order_idx').on(table.sortOrder)
+}));
+// ============================================
+// Reviews / Testimonials
+// ============================================
+exports.reviews = (0, pg_core_1.pgTable)('reviews', {
+    id: (0, pg_core_1.serial)('id').primaryKey(),
+    userId: (0, pg_core_1.integer)('user_id').references(() => exports.users.id, { onDelete: 'set null' }),
+    companyId: (0, pg_core_1.integer)('company_id').references(() => exports.companies.id, { onDelete: 'cascade' }),
+    // Reviewer info
+    reviewerName: (0, pg_core_1.varchar)('reviewer_name', { length: 255 }).notNull(),
+    reviewerLocation: (0, pg_core_1.varchar)('reviewer_location', { length: 255 }),
+    reviewerEmail: (0, pg_core_1.varchar)('reviewer_email', { length: 255 }),
+    // Review content
+    text: (0, pg_core_1.text)('text').notNull(),
+    rating: (0, pg_core_1.integer)('rating').notNull().default(5),
+    service: (0, pg_core_1.varchar)('service', { length: 255 }),
+    // Source tracking
+    source: (0, pg_core_1.varchar)('source', { length: 50 }).default('manual').$type(),
+    externalId: (0, pg_core_1.varchar)('external_id', { length: 255 }),
+    // Google Business integration
+    googleReviewId: (0, pg_core_1.varchar)('google_review_id', { length: 255 }),
+    googlePostedAt: (0, pg_core_1.timestamp)('google_posted_at'),
+    // Display settings
+    featured: (0, pg_core_1.boolean)('featured').default(false),
+    sortOrder: (0, pg_core_1.integer)('sort_order').default(0),
+    // Status
+    status: (0, pg_core_1.varchar)('status', { length: 20 }).default('published').$type(),
+    // Timestamps
+    reviewDate: (0, pg_core_1.timestamp)('review_date').defaultNow(),
+    createdAt: (0, pg_core_1.timestamp)('created_at').defaultNow(),
+    updatedAt: (0, pg_core_1.timestamp)('updated_at').defaultNow()
+}, (table) => ({
+    companyIdx: (0, pg_core_1.index)('reviews_company_idx').on(table.companyId),
+    ratingIdx: (0, pg_core_1.index)('reviews_rating_idx').on(table.rating),
+    statusIdx: (0, pg_core_1.index)('reviews_status_idx').on(table.status),
+    sourceIdx: (0, pg_core_1.index)('reviews_source_idx').on(table.source),
+    featuredIdx: (0, pg_core_1.index)('reviews_featured_idx').on(table.featured)
 }));

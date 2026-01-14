@@ -1,0 +1,174 @@
+{
+  "company": {
+    "name": "Sues",
+    "slug": "sues",
+    "phone": "343533555",
+    "email": "sand@co.com",
+    "address": "123 Main",
+    "city": "IRvine",
+    "state": "CA",
+    "stateFullName": "California",
+    "zip": "92688",
+    "license": "A8888",
+    "yearsInBusiness": "2"
+  },
+  "branding": {
+    "logoUrl": "",
+    "faviconUrl": "",
+    "primaryColor": "#2563eb",
+    "secondaryColor": "#1e40af",
+    "accentColor": "#f59e0b",
+    "headerFooterBg": "#1e293b",
+    "headerFooterText": "#ffffff",
+    "fontHeading": "Poppins",
+    "fontBody": "Inter"
+  },
+  "industry": {
+    "type": "HVAC",
+    "slug": "hvac",
+    "serviceNoun": "Services",
+    "serviceVerb": "repair",
+    "emergencyService": true,
+    "schemaType": "HVACBusiness",
+    "services": [
+      {
+        "name": "AC Repair",
+        "slug": "ac-repair",
+        "shortDescription": "Fast, reliable air conditioning repair services.",
+        "featured": true
+      },
+      {
+        "name": "AC Installation",
+        "slug": "ac-installation",
+        "shortDescription": "Professional AC system installation.",
+        "featured": true
+      },
+      {
+        "name": "Heating Repair",
+        "slug": "heating-repair",
+        "shortDescription": "Expert heating system repair services.",
+        "featured": true
+      },
+      {
+        "name": "Furnace Installation",
+        "slug": "furnace-installation",
+        "shortDescription": "Quality furnace installation and replacement."
+      },
+      {
+        "name": "HVAC Maintenance",
+        "slug": "hvac-maintenance",
+        "shortDescription": "Preventive maintenance to keep your system running."
+      },
+      {
+        "name": "Duct Cleaning",
+        "slug": "duct-cleaning",
+        "shortDescription": "Professional air duct cleaning services."
+      }
+    ],
+    "faq": [
+      {
+        "question": "How often should I service my HVAC system?",
+        "answer": "We recommend servicing your HVAC system twice a year—once before summer for cooling and once before winter for heating."
+      },
+      {
+        "question": "What are signs my AC needs repair?",
+        "answer": "Common signs include weak airflow, warm air, unusual noises, high energy bills, and frequent cycling."
+      },
+      {
+        "question": "Do you offer emergency HVAC services?",
+        "answer": "Yes! We offer 24/7 emergency service for urgent heating and cooling issues."
+      }
+    ]
+  },
+  "serviceArea": {
+    "areas": "IRvine",
+    "radius": "30",
+    "primaryCity": "IRvine"
+  },
+  "social": {
+    "facebook": "",
+    "instagram": "",
+    "google": "",
+    "yelp": "",
+    "bbb": "",
+    "nextdoor": ""
+  },
+  "ghl": {
+    "calendarEmbed": "",
+    "formEmbed": "",
+    "chatWidget": "",
+    "webhookUrl": "",
+    "trackingId": ""
+  },
+  "seo": {
+    "googleAnalyticsId": "",
+    "googleTagManagerId": "",
+    "facebookPixelId": "",
+    "metaDescription": "Sues provides professional hvac services in IRvine, CA. 2+ years experience. Licensed & insured. Call for a free estimate!",
+    "metaKeywords": "hvac, IRvine, CA, ac repair, ac installation, heating repair, furnace installation, hvac maintenance, duct cleaning"
+  },
+  "siteUrl": "https://sues.com",
+  "reviews": {
+    "rating": "4.9",
+    "count": "100",
+    "googleReviewLink": ""
+  },
+  "hours": {
+    "weekdays": "8:00 AM - 6:00 PM",
+    "saturday": "9:00 AM - 4:00 PM",
+    "sunday": "Closed",
+    "emergencyNote": "24/7 Emergency Service Available"
+  },
+  "services": [
+    {
+      "name": "AC Repair",
+      "slug": "ac-repair",
+      "shortDescription": "Fast, reliable air conditioning repair services.",
+      "featured": true
+    },
+    {
+      "name": "AC Installation",
+      "slug": "ac-installation",
+      "shortDescription": "Professional AC system installation.",
+      "featured": true
+    },
+    {
+      "name": "Heating Repair",
+      "slug": "heating-repair",
+      "shortDescription": "Expert heating system repair services.",
+      "featured": true
+    },
+    {
+      "name": "Furnace Installation",
+      "slug": "furnace-installation",
+      "shortDescription": "Quality furnace installation and replacement."
+    },
+    {
+      "name": "HVAC Maintenance",
+      "slug": "hvac-maintenance",
+      "shortDescription": "Preventive maintenance to keep your system running."
+    },
+    {
+      "name": "Duct Cleaning",
+      "slug": "duct-cleaning",
+      "shortDescription": "Professional air duct cleaning services."
+    }
+  ],
+  "testimonials": [],
+  "faq": [
+    {
+      "question": "How often should I service my HVAC system?",
+      "answer": "We recommend servicing your HVAC system twice a year—once before summer for cooling and once before winter for heating."
+    },
+    {
+      "question": "What are signs my AC needs repair?",
+      "answer": "Common signs include weak airflow, warm air, unusual noises, high energy bills, and frequent cycling."
+    },
+    {
+      "question": "Do you offer emergency HVAC services?",
+      "answer": "Yes! We offer 24/7 emergency service for urgent heating and cooling issues."
+    }
+  ],
+  "gallery": [],
+  "team": []
+}

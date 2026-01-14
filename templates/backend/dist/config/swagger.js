@@ -2231,7 +2231,8 @@ const createSwaggerConfig = (port) => ({
         }
     },
     apis: [
-        './api/v1/**/*.ts'
+        './api/v1/**/*.ts',
+        './swagger/**/*.ts'
     ]
 });
 exports.createSwaggerConfig = createSwaggerConfig;

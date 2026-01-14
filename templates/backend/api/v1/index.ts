@@ -18,6 +18,8 @@ import impersonationRouter from './impersonation';
 import googleRouter from './google';
 import paymentsRouter from './payments';
 import transactionsRouter from './transactions';
+import galleryImagesRouter from './gallery-images';
+import reviewsRouter from './reviews';
 import { trackApiUsage, trackApiErrors } from '../../middleware/v1/stats.middleware';
 import { LoggerFactory } from '../../logger';
 import { validateSession, loadUserData } from '../../middleware/v1/auth.middleware';
@@ -137,6 +139,12 @@ router.use('/emails', emailsRouter);
 
 logger.debug('Mounting transactions routes at /transactions');
 router.use('/transactions', transactionsRouter);
+
+logger.debug('Mounting gallery-images routes at /gallery-images');
+router.use('/gallery-images', galleryImagesRouter);
+
+logger.debug('Mounting reviews routes at /reviews');
+router.use('/reviews', reviewsRouter);
 
 // Add API error tracking middleware
 router.use(trackApiErrors);
