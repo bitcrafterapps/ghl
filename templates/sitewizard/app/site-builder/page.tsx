@@ -422,41 +422,7 @@ export default function SiteBuilderPage() {
                       <CardDescription>Basic site configuration and type</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <label className="text-sm font-medium">Business Type</label>
-                          <Select 
-                              value={config.businessType} 
-                              onValueChange={(val) => setConfig({...config, businessType: val, industry: '', services: []})}
-                          >
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select type..." />
-                              </SelectTrigger>
-                              <SelectContent>
-                                {BUSINESS_TYPES.map(type => (
-                                    <SelectItem key={type.value} value={type.value}>{type.label}</SelectItem>
-                                ))}
-                              </SelectContent>
-                          </Select>
-                        </div>
-                        <div className="space-y-2">
-                          <label className="text-sm font-medium">Industry</label>
-                          <Select 
-                              value={config.industry} 
-                              onValueChange={(val) => setConfig({...config, industry: val, services: []})}
-                              disabled={!config.businessType}
-                          >
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select industry..." />
-                              </SelectTrigger>
-                              <SelectContent>
-                                {industryOptions.map(ind => (
-                                    <SelectItem key={ind.value} value={ind.value}>{ind.label}</SelectItem>
-                                ))}
-                              </SelectContent>
-                          </Select>
-                        </div>
-                      </div>
+
 
 
 
@@ -608,6 +574,41 @@ export default function SiteBuilderPage() {
                   <Card>
                     <CardHeader><CardTitle>Service & Hours</CardTitle></CardHeader>
                     <CardContent className="space-y-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium">Business Type</label>
+                          <Select 
+                              value={config.businessType} 
+                              onValueChange={(val) => setConfig({...config, businessType: val, industry: '', services: []})}
+                          >
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select type..." />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {BUSINESS_TYPES.map(type => (
+                                    <SelectItem key={type.value} value={type.value}>{type.label}</SelectItem>
+                                ))}
+                              </SelectContent>
+                          </Select>
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium">Industry</label>
+                          <Select 
+                              value={config.industry} 
+                              onValueChange={(val) => setConfig({...config, industry: val, services: []})}
+                              disabled={!config.businessType}
+                          >
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select industry..." />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {industryOptions.map(ind => (
+                                    <SelectItem key={ind.value} value={ind.value}>{ind.label}</SelectItem>
+                                ))}
+                              </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
                         <div className="space-y-2">
                             <label className="text-sm font-medium">Services</label>
                             <Card className="border-dashed bg-muted/20">
