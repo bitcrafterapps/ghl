@@ -163,7 +163,7 @@ export default function FeaturesPage() {
             {/* CTA Buttons with glow */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up" style={{animationDelay: '0.4s'}}>
               <Link
-                href="/signup"
+                href="/login"
                 className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold transition-all hover:-translate-y-1 overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-sky-400 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -466,7 +466,7 @@ export default function FeaturesPage() {
             [CTA description text]
           </p>
           <Link
-            href="/signup"
+            href="/login"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold hover:from-sky-400 hover:to-blue-500 transition-all shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5 group"
           >
             [CTA Button Text]

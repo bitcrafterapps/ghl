@@ -367,14 +367,15 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
         color: 'var(--header-text)',
       }}
     >
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative flex h-16 items-center justify-between">
-          {/* Mobile menu button - only show when not authenticated */}
-          {!isAuthenticated && (
-            <div className="md:hidden">
+      <div className="w-full px-4">
+        <div className="relative flex h-16 items-center">
+          {/* Left side - Logo (always docked left) */}
+          <div className="flex items-center flex-shrink-0">
+            {/* Mobile menu button - only show when not authenticated */}
+            {!isAuthenticated && (
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="inline-flex items-center justify-center p-2 rounded-md text-[--header-text-secondary] hover:text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+                className="md:hidden mr-2 inline-flex items-center justify-center p-2 rounded-md text-[--header-text-secondary] hover:text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
               >
                 <span className="sr-only">Open main menu</span>
                 {mobileMenuOpen ? (
@@ -383,11 +384,7 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
                   <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
                 )}
               </button>
-            </div>
-          )}
-
-          {/* Logo */}
-          <div className="flex items-center pl-0">
+            )}
             <Link
               href={isAuthenticated ? "/dashboard" : "/"}
               className="font-bold text-xl flex items-center gap-2 hover:text-white transition-colors"
@@ -402,7 +399,7 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
 
           {/* Center Navigation - Only show when not authenticated (desktop) */}
           {!isAuthenticated && (
-            <div className="hidden md:flex items-center justify-center flex-1 gap-1">
+            <div className="hidden md:flex items-center justify-center absolute left-1/2 -translate-x-1/2 gap-1">
               <Link
                 href="/"
                 className={classNames(
@@ -532,8 +529,8 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
             </div>
           )}
 
-          {/* Right side - notifications and user menu */}
-          <div className="flex items-center gap-4 ml-auto">
+          {/* Right side - notifications and user menu (always dock right) */}
+          <div className="flex-1 flex items-center justify-end gap-4">
             {isAuthenticated && (
               <Menu as={Fragment}>
                 <div className="relative hidden sm:block">

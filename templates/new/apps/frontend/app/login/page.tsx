@@ -67,11 +67,11 @@ export default function LoginPage() {
           
           <div className="relative z-10 flex flex-col justify-center px-16">
             <h1 className="text-4xl font-bold text-white mb-4 leading-tight">
-              [Value Proposition Headline]
+              {"{{VALUE_PROP_HEADLINE}}"}
             </h1>
             
             <p className="text-xl text-zinc-400 mb-8">
-              [Value Proposition Description]
+              {"{{VALUE_PROP_DESCRIPTION}}"}
             </p>
             
             <div className="space-y-4">
@@ -79,19 +79,19 @@ export default function LoginPage() {
                 <div className="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center">
                   <span className="text-blue-400 text-sm">✓</span>
                 </div>
-                [Key Benefit 1]
+                Manage your company gallery photos
               </div>
               <div className="flex items-center gap-3 text-zinc-300">
                 <div className="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center">
                   <span className="text-blue-400 text-sm">✓</span>
                 </div>
-                [Key Benefit 2]
+                Manage customer reviews and testimonials
               </div>
               <div className="flex items-center gap-3 text-zinc-300">
                 <div className="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center">
                   <span className="text-blue-400 text-sm">✓</span>
                 </div>
-                [Key Benefit 3]
+                Update your company information
               </div>
             </div>
           </div>

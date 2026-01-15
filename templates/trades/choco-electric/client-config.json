@@ -1,0 +1,188 @@
+{
+  "company": {
+    "name": "Choco Electric",
+    "slug": "choco-electric",
+    "phone": "949 292 3136",
+    "email": "s@s.com",
+    "address": "123 Main",
+    "city": "Irivne",
+    "state": "Ca",
+    "stateFullName": "California",
+    "zip": "926688",
+    "license": "A3454",
+    "yearsInBusiness": "12"
+  },
+  "branding": {
+    "logoUrl": "",
+    "faviconUrl": "",
+    "primaryColor": "#2563eb",
+    "secondaryColor": "#1e40af",
+    "accentColor": "#f59e0b",
+    "headerFooterBg": "#1e293b",
+    "headerFooterText": "#ffffff",
+    "fontHeading": "Poppins",
+    "fontBody": "Inter"
+  },
+  "industry": {
+    "type": "HVAC",
+    "slug": "hvac",
+    "serviceNoun": "Services",
+    "serviceVerb": "repair",
+    "emergencyService": true,
+    "schemaType": "HVACBusiness",
+    "services": [
+      {
+        "name": "AC Repair",
+        "slug": "ac-repair",
+        "shortDescription": "Fast, reliable air conditioning repair services.",
+        "longDescription": "Our expert AC repair service quickly diagnoses and fixes all cooling issues, from refrigerant leaks to compressor failures. We restore comfort to your home efficiently, ensuring your system operates at peak performance during the hottest days.",
+        "featured": true,
+        "image": "/images/services/ac-repair.png"
+      },
+      {
+        "name": "AC Installation",
+        "slug": "ac-installation",
+        "shortDescription": "Professional AC system installation.",
+        "longDescription": "We provide professional AC installation for energy-efficient systems tailored to your home's needs. Our team ensures proper sizing and seamless integration for maximum comfort and savings.",
+        "featured": true
+      },
+      {
+        "name": "Heating Repair",
+        "slug": "heating-repair",
+        "shortDescription": "Expert heating system repair services.",
+        "longDescription": "Don't let the cold inside. Our heating repair specialists troubleshoot and repair furnaces and heat pumps promptly, ensuring your home stays warm and safe throughout the winter.",
+        "featured": true
+      },
+      {
+        "name": "Furnace Installation",
+        "slug": "furnace-installation",
+        "shortDescription": "Quality furnace installation and replacement.",
+        "longDescription": "Upgrade your comfort with our top-tier furnace installation services. We install reliable, high-efficiency heating systems that provide consistent warmth and lower energy bills."
+      },
+      {
+        "name": "HVAC Maintenance",
+        "slug": "hvac-maintenance",
+        "shortDescription": "Preventive maintenance to keep your system running.",
+        "longDescription": "Extend the life of your system with our comprehensive HVAC maintenance. Regular tune-ups prevent costly breakdowns, improve efficiency, and ensure cleaner air for your family."
+      },
+      {
+        "name": "Duct Cleaning",
+        "slug": "duct-cleaning",
+        "shortDescription": "Professional air duct cleaning services.",
+        "longDescription": "Breathe easier with our professional duct cleaning services. We remove dust, allergens, and debris from your air ducts, improving indoor air quality and system efficiency."
+      }
+    ],
+    "faq": [
+      {
+        "question": "How often should I service my HVAC system?",
+        "answer": "We recommend servicing your HVAC system twice a year—once before summer for cooling and once before winter for heating."
+      },
+      {
+        "question": "What are signs my AC needs repair?",
+        "answer": "Common signs include weak airflow, warm air, unusual noises, high energy bills, and frequent cycling."
+      },
+      {
+        "question": "Do you offer emergency HVAC services?",
+        "answer": "Yes! We offer 24/7 emergency service for urgent heating and cooling issues."
+      }
+    ]
+  },
+  "serviceArea": {
+    "areas": "Irivne",
+    "radius": "30",
+    "primaryCity": "Irivne"
+  },
+  "social": {
+    "facebook": "",
+    "instagram": "",
+    "google": "",
+    "yelp": "",
+    "bbb": "",
+    "nextdoor": ""
+  },
+  "ghl": {
+    "calendarEmbed": "",
+    "formEmbed": "",
+    "chatWidget": "",
+    "webhookUrl": "",
+    "trackingId": ""
+  },
+  "seo": {
+    "googleAnalyticsId": "",
+    "googleTagManagerId": "",
+    "facebookPixelId": "",
+    "metaDescription": "Choco Electric provides professional hvac services in Irivne, Ca. 12+ years experience. Licensed & insured. Call for a free estimate!",
+    "metaKeywords": "hvac, Irivne, Ca, ac repair, ac installation, heating repair, furnace installation, hvac maintenance, duct cleaning"
+  },
+  "siteUrl": "https://choco-electric.com",
+  "reviews": {
+    "rating": "4.9",
+    "count": "100",
+    "googleReviewLink": ""
+  },
+  "hours": {
+    "weekdays": "8:00 AM - 6:00 PM",
+    "saturday": "9:00 AM - 4:00 PM",
+    "sunday": "Closed",
+    "emergencyNote": "24/7 Emergency Service Available"
+  },
+  "services": [
+    {
+      "name": "AC Repair",
+      "slug": "ac-repair",
+      "shortDescription": "Fast, reliable air conditioning repair services.",
+      "longDescription": "Our expert AC repair service quickly diagnoses and fixes all cooling issues, from refrigerant leaks to compressor failures. We restore comfort to your home efficiently, ensuring your system operates at peak performance during the hottest days.",
+      "featured": true,
+      "image": "/images/services/ac-repair.png"
+    },
+    {
+      "name": "AC Installation",
+      "slug": "ac-installation",
+      "shortDescription": "Professional AC system installation.",
+      "longDescription": "We provide professional AC installation for energy-efficient systems tailored to your home's needs. Our team ensures proper sizing and seamless integration for maximum comfort and savings.",
+      "featured": true
+    },
+    {
+      "name": "Heating Repair",
+      "slug": "heating-repair",
+      "shortDescription": "Expert heating system repair services.",
+      "longDescription": "Don't let the cold inside. Our heating repair specialists troubleshoot and repair furnaces and heat pumps promptly, ensuring your home stays warm and safe throughout the winter.",
+      "featured": true
+    },
+    {
+      "name": "Furnace Installation",
+      "slug": "furnace-installation",
+      "shortDescription": "Quality furnace installation and replacement.",
+      "longDescription": "Upgrade your comfort with our top-tier furnace installation services. We install reliable, high-efficiency heating systems that provide consistent warmth and lower energy bills."
+    },
+    {
+      "name": "HVAC Maintenance",
+      "slug": "hvac-maintenance",
+      "shortDescription": "Preventive maintenance to keep your system running.",
+      "longDescription": "Extend the life of your system with our comprehensive HVAC maintenance. Regular tune-ups prevent costly breakdowns, improve efficiency, and ensure cleaner air for your family."
+    },
+    {
+      "name": "Duct Cleaning",
+      "slug": "duct-cleaning",
+      "shortDescription": "Professional air duct cleaning services.",
+      "longDescription": "Breathe easier with our professional duct cleaning services. We remove dust, allergens, and debris from your air ducts, improving indoor air quality and system efficiency."
+    }
+  ],
+  "testimonials": [],
+  "faq": [
+    {
+      "question": "How often should I service my HVAC system?",
+      "answer": "We recommend servicing your HVAC system twice a year—once before summer for cooling and once before winter for heating."
+    },
+    {
+      "question": "What are signs my AC needs repair?",
+      "answer": "Common signs include weak airflow, warm air, unusual noises, high energy bills, and frequent cycling."
+    },
+    {
+      "question": "Do you offer emergency HVAC services?",
+      "answer": "Yes! We offer 24/7 emergency service for urgent heating and cooling issues."
+    }
+  ],
+  "gallery": [],
+  "team": []
+}

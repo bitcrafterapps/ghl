@@ -85,7 +85,7 @@ export default function Home() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-              <Link href="/signup">
+              <Link href="/login">
                 <button className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-sky-500 to-blue-600 rounded-xl text-white font-semibold text-lg hover:from-sky-400 hover:to-blue-500 transition-all shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5 flex items-center justify-center gap-2 group">
                   Start Building Free
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

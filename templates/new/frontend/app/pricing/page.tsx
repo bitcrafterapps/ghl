@@ -67,7 +67,7 @@ export default function PricingPage() {
               </ul>
 
               <Link
-                href="/signup"
+                href="/login"
                 className="block w-full py-3 rounded-lg font-medium text-center bg-zinc-800 text-white hover:bg-zinc-700 transition-all text-sm"
               >
                 [CTA Button Text]
@@ -112,7 +112,7 @@ export default function PricingPage() {
               </ul>
 
               <Link
-                href="/signup"
+                href="/login"
                 className="block w-full py-3 rounded-lg font-medium text-center bg-gradient-to-r from-sky-500 to-blue-600 text-white hover:from-sky-400 hover:to-blue-500 transition-all shadow-lg shadow-blue-500/25 text-sm"
               >
                 [CTA Button Text]
@@ -209,7 +209,7 @@ export default function PricingPage() {
             [CTA description text]
           </p>
           <Link
-            href="/signup"
+            href="/login"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold hover:from-sky-400 hover:to-blue-500 transition-all shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5 group"
           >
             [CTA Button Text]

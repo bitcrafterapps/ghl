@@ -17,6 +17,10 @@ export const siteConfig = {
     license: "{{COMPANY_LICENSE}}",
     yearsInBusiness: "{{YEARS_IN_BUSINESS}}",
   },
+  
+  // Company ID from database (for API filtering)
+  // Will be null if token is not replaced or not a valid number
+  companyId: (() => { const id = "{{COMPANY_ID}}"; return !isNaN(parseInt(id)) ? parseInt(id) : null; })(),
 
   // Branding
   branding: {

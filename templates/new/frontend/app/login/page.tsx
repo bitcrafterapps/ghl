@@ -109,7 +109,7 @@ export default function LoginPage() {
             </div>
 
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-white">Welcome back</h2>
+              <h2 className="text-3xl font-bold text-white">[Login Headline]</h2>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -215,12 +215,6 @@ export default function LoginPage() {
                 </button>
               </div>
 
-              <p className="text-center text-zinc-400 text-sm mt-8">
-                Don't have an account?{' '}
-                <Link href="/signup" className="text-blue-400 hover:text-blue-300 font-medium transition-colors">
-                  Sign up for free
-                </Link>
-              </p>
             </form>
           </div>
         </div>

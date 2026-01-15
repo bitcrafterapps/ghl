@@ -1,0 +1,12 @@
+{
+  "name": "ghl-scripts",
+  "version": "1.0.0",
+  "description": "GHL site generator scripts",
+  "scripts": {
+    "create-site": "node create-new-site.js"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "pg": "^8.11.3"
+  }
+}

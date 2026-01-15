@@ -629,15 +629,9 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
               <div className="flex items-center gap-2 sm:gap-4">
                 <Link
                   href="/login"
-                  className="text-sm text-[--header-text-secondary] hover:text-white transition-colors"
-                >
-                  Sign In
-                </Link>
-                <Link 
-                  href="/signup" 
                   className="px-3 sm:px-4 py-2 rounded-lg bg-[--btn-primary-bg] text-[--btn-primary-text] text-sm font-medium hover:bg-[--btn-primary-hover] transition-all shadow-lg"
                 >
-                  Get Started
+                  Sign In
                 </Link>
               </div>
             )}
