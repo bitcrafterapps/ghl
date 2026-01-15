@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { Layout } from '@/components/Layout';
 import { SubHeader } from '@/components/SubHeader';
-import { Hammer, Save, RefreshCw, Copy, Check, Info, Rocket, X } from 'lucide-react';
+import { Hammer, Save, RefreshCw, Copy, Check, Info, Rocket, X, Smile, Search } from 'lucide-react';
 import { getApiUrl } from '@/lib/api';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -20,6 +20,8 @@ import {
 } from "@/components/ui/select";
 import { useToast } from '@/components/ui/use-toast';
 import { INDUSTRIES_DATA } from './industries';
+
+import { EMOJI_LIST, EMOJI_CATEGORIES } from './emojis';
 
 // Data derived from create-new-site.js
 const BUSINESS_TYPES = [
@@ -133,6 +135,9 @@ export default function SiteBuilderPage() {
   const [showJson, setShowJson] = useState(false);
   const [copied, setCopied] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
+  const [emojiSearch, setEmojiSearch] = useState('');
+  const [emojiCategory, setEmojiCategory] = useState('All');
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -210,6 +215,16 @@ export default function SiteBuilderPage() {
       setCustomServiceInput('');
     }
   };
+
+  const filteredEmojis = useMemo(() => {
+    return EMOJI_LIST.filter(item => {
+      const matchesSearch = item.keywords.some(k => k.toLowerCase().includes(emojiSearch.toLowerCase())) || 
+                            item.category.toLowerCase().includes(emojiSearch.toLowerCase()) ||
+                            item.char.includes(emojiSearch);
+      const matchesCategory = emojiCategory === 'All' || item.category === emojiCategory;
+      return matchesSearch && matchesCategory;
+    });
+  }, [emojiSearch, emojiCategory]);
 
   // Construct the JSON object structure requested
   const constructedConfig = useMemo(() => {
@@ -379,7 +394,7 @@ export default function SiteBuilderPage() {
         actions={
             <Button onClick={handleGenerate} disabled={isGenerating} className="bg-emerald-600 hover:bg-emerald-700 text-white">
                <Rocket className="w-4 h-4 mr-2" />
-               {isGenerating ? 'Launching...' : 'Launch Site'}
+               {isGenerating ? 'Generating...' : 'Generate Site'}
             </Button>
         }
       />
@@ -542,7 +557,7 @@ export default function SiteBuilderPage() {
                             <Input type="color" className="h-10 w-full" value={config.accentColor} onChange={e => setConfig({...config, accentColor: e.target.value})} />
                           </div>
                           <div className="space-y-2">
-                            <label className="text-sm font-medium">Footer Bg</label>
+                            <label className="text-sm font-medium">Header/Footer Bg</label>
                             <Input type="color" className="h-10 w-full" value={config.headerFooterBg} onChange={e => setConfig({...config, headerFooterBg: e.target.value})} />
                           </div>
                       </div>
@@ -556,7 +571,12 @@ export default function SiteBuilderPage() {
                          </div>
                          <div className="space-y-2">
                              <label className="text-sm font-medium">Icon Emoji</label>
-                             <Input value={config.icon} onChange={e => setConfig({...config, icon: e.target.value})} className="w-24 text-center text-lg" />
+                             <div className="flex gap-2">
+                                <Input value={config.icon} onChange={e => setConfig({...config, icon: e.target.value})} className="w-24 text-center text-lg" />
+                                <Button variant="outline" size="icon" onClick={() => setIsEmojiPickerOpen(true)}>
+                                    <Smile className="w-4 h-4" />
+                                </Button>
+                             </div>
                          </div>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -795,6 +815,62 @@ export default function SiteBuilderPage() {
 
          </div>
       </div>
+
+      {isEmojiPickerOpen && (
+        <div className="fixed inset-0 z-50 flex justify-end">
+            <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setIsEmojiPickerOpen(false)} />
+            <div className="relative z-50 w-full max-w-sm h-full bg-white dark:bg-zinc-950 shadow-2xl border-l animate-in slide-in-from-right duration-300 flex flex-col">
+                <div className="p-4 border-b flex justify-between items-center bg-gray-50 dark:bg-zinc-900">
+                    <h2 className="text-lg font-semibold">Select Emoji</h2>
+                    <Button variant="ghost" size="icon" onClick={() => setIsEmojiPickerOpen(false)}><X className="w-5 h-5" /></Button>
+                </div>
+                <div className="p-4 border-b space-y-3 bg-gray-50/50 dark:bg-zinc-900/50">
+                    <div className="relative">
+                        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                        <Input 
+                            placeholder="Search emojis..." 
+                            className="pl-9" 
+                            value={emojiSearch}
+                            onChange={(e) => setEmojiSearch(e.target.value)}
+                            autoFocus
+                        />
+                    </div>
+                    <div className="flex gap-1 overflow-x-auto pb-2 scrollbar-hide">
+                        {EMOJI_CATEGORIES.map(cat => (
+                            <Badge 
+                                key={cat} 
+                                variant={emojiCategory === cat ? "default" : "outline"} 
+                                className="cursor-pointer whitespace-nowrap hover:bg-secondary"
+                                onClick={() => setEmojiCategory(cat)}
+                            >
+                                {cat}
+                            </Badge>
+                        ))}
+                    </div>
+                </div>
+                <div className="p-4 grid grid-cols-6 gap-2 overflow-y-auto flex-1 content-start">
+                    {filteredEmojis.map(item => (
+                        <button 
+                            key={item.char} 
+                            onClick={() => {
+                                setConfig({...config, icon: item.char});
+                                setIsEmojiPickerOpen(false);
+                            }} 
+                            className="text-2xl hover:bg-muted p-2 rounded-lg transition-colors flex items-center justify-center aspect-square"
+                            title={item.keywords.join(', ')}
+                        >
+                            {item.char}
+                        </button>
+                    ))}
+                    {filteredEmojis.length === 0 && (
+                        <div className="col-span-6 text-center text-muted-foreground py-8 text-sm">
+                            No emojis found.
+                        </div>
+                    )}
+                </div>
+            </div>
+        </div>
+      )}
     </Layout>
   );
 }
