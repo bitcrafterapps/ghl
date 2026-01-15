@@ -405,44 +405,17 @@ export default function SiteBuilderPage() {
             {/* Main Configuration Form */}
             <div className="lg:col-span-2 space-y-6">
               
-              <Tabs defaultValue="setup" className="w-full">
+              <Tabs defaultValue="company" className="w-full">
                 <TabsList className="w-full grid grid-cols-5 mb-8">
-                  <TabsTrigger value="setup">Setup</TabsTrigger>
                   <TabsTrigger value="company">Company</TabsTrigger>
                   <TabsTrigger value="branding">Branding</TabsTrigger>
                   <TabsTrigger value="service">Service</TabsTrigger>
+                  <TabsTrigger value="setup">Setup</TabsTrigger>
                   <TabsTrigger value="integrations">Connect</TabsTrigger>
                 </TabsList>
 
                 {/* Site Setup Tab */}
-                <TabsContent value="setup">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Site Setup</CardTitle>
-                      <CardDescription>Basic site configuration and type</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
 
-
-
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium">URL Slug</label>
-                            <Input value={config.slug} onChange={e => setConfig({...config, slug: e.target.value})} />
-                        </div>
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium">Project Folder</label>
-                            <Input value={config.projectName} onChange={e => setConfig({...config, projectName: e.target.value})} />
-                        </div>
-                      </div>
-                      <div className="space-y-2">
-                          <label className="text-sm font-medium">Production URL</label>
-                          <Input value={config.siteUrl} placeholder="https://example.com" onChange={e => setConfig({...config, siteUrl: e.target.value})} />
-                      </div>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
 
                 {/* Company Info Tab */}
                 <TabsContent value="company">
@@ -454,7 +427,11 @@ export default function SiteBuilderPage() {
                     <CardContent className="space-y-4">
                       <div className="space-y-2">
                           <label className="text-sm font-medium">Company Name</label>
-                          <Input value={config.companyName} onChange={e => setConfig({...config, companyName: e.target.value})} placeholder="Acme Inc" />
+                          <Input value={config.companyName} onChange={e => {
+                              const name = e.target.value;
+                              const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+                              setConfig({...config, companyName: name, slug, projectName: slug});
+                          }} placeholder="Acme Inc" />
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div className="space-y-2">
@@ -712,6 +689,32 @@ export default function SiteBuilderPage() {
                               <Input value={config.hoursSunday} onChange={e => setConfig({...config, hoursSunday: e.target.value})} />
                           </div>
                         </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+
+                {/* Site Setup Tab */}
+                <TabsContent value="setup">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Site Setup</CardTitle>
+                      <CardDescription>Basic site configuration and type</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium">URL Slug</label>
+                            <Input value={config.slug} onChange={e => setConfig({...config, slug: e.target.value})} />
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium">Project Folder</label>
+                            <Input value={config.projectName} onChange={e => setConfig({...config, projectName: e.target.value})} />
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                          <label className="text-sm font-medium">Production URL</label>
+                          <Input value={config.siteUrl} placeholder="https://example.com" onChange={e => setConfig({...config, siteUrl: e.target.value})} />
+                      </div>
                     </CardContent>
                   </Card>
                 </TabsContent>
