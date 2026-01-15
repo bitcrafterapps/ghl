@@ -1262,10 +1262,17 @@ async function main() {
   if (config.services && Array.isArray(config.services)) {
     config.services.forEach(service => {
       const imageSlug = service.slug;
+      const industryImageSlug = `${config.industry.slug}-${service.slug}`;
+
       const srcImagePng = path.join(scriptsImagesDir, `${imageSlug}.png`);
       const srcImageWebp = path.join(scriptsImagesDir, `${imageSlug}.webp`);
+      const srcIndustryImagePng = path.join(scriptsImagesDir, `${industryImageSlug}.png`);
+      const srcIndustryImageWebp = path.join(scriptsImagesDir, `${industryImageSlug}.webp`);
+
       let srcImage = null; let ext = '';
-      if (fs.existsSync(srcImagePng)) { srcImage = srcImagePng; ext = '.png'; }
+      if (fs.existsSync(srcIndustryImagePng)) { srcImage = srcIndustryImagePng; ext = '.png'; }
+      else if (fs.existsSync(srcIndustryImageWebp)) { srcImage = srcIndustryImageWebp; ext = '.webp'; }
+      else if (fs.existsSync(srcImagePng)) { srcImage = srcImagePng; ext = '.png'; }
       else if (fs.existsSync(srcImageWebp)) { srcImage = srcImageWebp; ext = '.webp'; }
 
       if (srcImage) {

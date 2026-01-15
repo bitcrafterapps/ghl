@@ -1371,15 +1371,24 @@ async function main() {
     // We will update config.services in place.
     config.services.forEach(service => {
       const imageSlug = service.slug;
+      const industryImageSlug = `${config.industry.slug}-${service.slug}`;
 
       // Check for png
       const srcImagePng = path.join(scriptsImagesDir, `${imageSlug}.png`);
       const srcImageWebp = path.join(scriptsImagesDir, `${imageSlug}.webp`);
+      const srcIndustryImagePng = path.join(scriptsImagesDir, `${industryImageSlug}.png`);
+      const srcIndustryImageWebp = path.join(scriptsImagesDir, `${industryImageSlug}.webp`);
 
       let srcImage = null;
       let ext = '';
 
-      if (fs.existsSync(srcImagePng)) {
+      if (fs.existsSync(srcIndustryImagePng)) {
+        srcImage = srcIndustryImagePng;
+        ext = '.png';
+      } else if (fs.existsSync(srcIndustryImageWebp)) {
+        srcImage = srcIndustryImageWebp;
+        ext = '.webp';
+      } else if (fs.existsSync(srcImagePng)) {
         srcImage = srcImagePng;
         ext = '.png';
       } else if (fs.existsSync(srcImageWebp)) {
