@@ -1,0 +1,130 @@
+{
+  "company": {
+    "name": "Migoot Plumbing",
+    "slug": "migoot-plumbing",
+    "phone": "9492923136",
+    "email": "maya@genwith.ai",
+    "address": "15 Las Castanetas",
+    "city": "Rancho Santa Margarita",
+    "state": "CA",
+    "stateFullName": "CA",
+    "zip": "92688",
+    "license": "A33434434",
+    "yearsInBusiness": "10"
+  },
+  "branding": {
+    "logoUrl": "/images/logo.jpg",
+    "faviconUrl": "",
+    "primaryColor": "#2563eb",
+    "secondaryColor": "#f1f5f9",
+    "accentColor": "#10b981",
+    "headerFooterBg": "#0f172a",
+    "headerFooterText": "#ffffff",
+    "fontHeading": "Poppins",
+    "fontBody": "Inter",
+    "icon": "🔧",
+    "tagline": "Your tagline here"
+  },
+  "industry": {
+    "slug": "plumbing",
+    "type": "Plumbing",
+    "emergencyService": true,
+    "services": [
+      {
+        "name": "Drain Cleaning",
+        "slug": "drain-cleaning",
+        "shortDescription": "Professional drain cleaning and unclogging services.",
+        "longDescription": "Our thorough drain cleaning service removes stubborn clogs and buildup, restoring proper flow to your plumbing. We use advanced tools to clear blockages safely and effectively.",
+        "featured": true
+      },
+      {
+        "name": "Water Heater Installation",
+        "slug": "water-heater-installation",
+        "shortDescription": "New water heater installation services.",
+        "longDescription": "Upgrade to a new, efficient water heater. We install traditional tank and tankless systems, ensuring reliable hot water and energy savings for your home.",
+        "featured": true
+      },
+      {
+        "name": "Pipe Repair",
+        "slug": "pipe-repair",
+        "shortDescription": "Reliable pipe repair and replacement.",
+        "longDescription": "From burst pipes to corrosion, our pipe repair services address all types of piping issues. We ensure watertight, durable repairs to protect your home from water damage."
+      }
+    ],
+    "faq": []
+  },
+  "serviceArea": {
+    "areas": [
+      "RSM",
+      "Mission Viejo",
+      "Irvine"
+    ],
+    "radius": "25",
+    "primaryCity": "RSM"
+  },
+  "social": {
+    "facebook": "",
+    "instagram": "",
+    "google": "",
+    "yelp": "",
+    "bbb": "",
+    "nextdoor": ""
+  },
+  "ghl": {
+    "calendarEmbed": "",
+    "formEmbed": "",
+    "chatWidget": "",
+    "webhookUrl": "",
+    "trackingId": ""
+  },
+  "seo": {
+    "googleAnalyticsId": "",
+    "googleTagManagerId": "",
+    "facebookPixelId": "",
+    "metaDescription": "Migoot Plumbing provides professional plumbing services in Rancho Santa Margarita, CA. 10+ years experience. Licensed & insured. Call for a free estimate!",
+    "metaKeywords": "plumbing, Rancho Santa Margarita, CA, drain cleaning, water heater installation, pipe repair"
+  },
+  "siteUrl": "",
+  "reviews": {
+    "rating": "5.0",
+    "count": "100",
+    "googleReviewLink": ""
+  },
+  "hours": {
+    "weekdays": "8:00 AM - 6:00 PM",
+    "saturday": "9:00 AM - 4:00 PM",
+    "sunday": "Closed",
+    "emergencyNote": "24/7 Emergency Service Available"
+  },
+  "services": [
+    {
+      "name": "Drain Cleaning",
+      "slug": "drain-cleaning",
+      "shortDescription": "Professional drain cleaning and unclogging services.",
+      "longDescription": "Our thorough drain cleaning service removes stubborn clogs and buildup, restoring proper flow to your plumbing. We use advanced tools to clear blockages safely and effectively.",
+      "featured": true
+    },
+    {
+      "name": "Water Heater Installation",
+      "slug": "water-heater-installation",
+      "shortDescription": "New water heater installation services.",
+      "longDescription": "Upgrade to a new, efficient water heater. We install traditional tank and tankless systems, ensuring reliable hot water and energy savings for your home.",
+      "featured": true
+    },
+    {
+      "name": "Pipe Repair",
+      "slug": "pipe-repair",
+      "shortDescription": "Reliable pipe repair and replacement.",
+      "longDescription": "From burst pipes to corrosion, our pipe repair services address all types of piping issues. We ensure watertight, durable repairs to protect your home from water damage."
+    }
+  ],
+  "testimonials": [],
+  "faq": [],
+  "gallery": [],
+  "team": [],
+  "_generator": {
+    "projectName": "migoot-plumbing",
+    "businessType": "trades",
+    "iconEmoji": "🔧"
+  }
+}

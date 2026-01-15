@@ -1,0 +1,129 @@
+{
+  "company": {
+    "name": "Simpsons Plumbing",
+    "slug": "simpsons-plumbing",
+    "phone": "9492923136",
+    "email": "randy@genwith.ai",
+    "address": "15 Las Castanetas",
+    "city": "Rancho Santa Margarita",
+    "state": "CA",
+    "stateFullName": "CA",
+    "zip": "92688",
+    "license": "A344dssd",
+    "yearsInBusiness": "10"
+  },
+  "branding": {
+    "logoUrl": "/images/logo.jpg",
+    "faviconUrl": "",
+    "primaryColor": "#2563eb",
+    "secondaryColor": "#f1f5f9",
+    "accentColor": "#10b981",
+    "headerFooterBg": "#0f172a",
+    "headerFooterText": "#ffffff",
+    "fontHeading": "Poppins",
+    "fontBody": "Inter",
+    "icon": "🔧",
+    "tagline": "Shit rolls downhill"
+  },
+  "industry": {
+    "slug": "plumbing",
+    "type": "Plumbing",
+    "services": [
+      {
+        "name": "Sewer Line Services",
+        "slug": "sewer-line-services",
+        "shortDescription": "Complete sewer line inspection and repair.",
+        "longDescription": "We offer complete sewer line inspection, repair, and replacement. Using camera inspections, we identify issues and provide effective solutions for your sewer system."
+      },
+      {
+        "name": "Drain Cleaning",
+        "slug": "drain-cleaning",
+        "shortDescription": "Professional drain cleaning and unclogging services.",
+        "longDescription": "Our thorough drain cleaning service removes stubborn clogs and buildup, restoring proper flow to your plumbing. We use advanced tools to clear blockages safely and effectively.",
+        "featured": true
+      },
+      {
+        "name": "Water Heater Installation",
+        "slug": "water-heater-installation",
+        "shortDescription": "New water heater installation services.",
+        "longDescription": "Upgrade to a new, efficient water heater. We install traditional tank and tankless systems, ensuring reliable hot water and energy savings for your home.",
+        "featured": true
+      }
+    ],
+    "faq": [],
+    "emergencyService": true
+  },
+  "serviceArea": {
+    "areas": [
+      "RSM",
+      "Mission Viejo"
+    ],
+    "radius": "25",
+    "primaryCity": "RSM"
+  },
+  "social": {
+    "facebook": "",
+    "instagram": "",
+    "google": "",
+    "yelp": "",
+    "bbb": "",
+    "nextdoor": ""
+  },
+  "ghl": {
+    "calendarEmbed": "",
+    "formEmbed": "",
+    "chatWidget": "",
+    "webhookUrl": "",
+    "trackingId": ""
+  },
+  "seo": {
+    "googleAnalyticsId": "",
+    "googleTagManagerId": "",
+    "facebookPixelId": "",
+    "metaDescription": "Simpsons Plumbing provides professional plumbing services in Rancho Santa Margarita, CA. 10+ years experience. Licensed & insured. Call for a free estimate!",
+    "metaKeywords": "plumbing, Rancho Santa Margarita, CA, sewer line services, drain cleaning, water heater installation"
+  },
+  "reviews": {
+    "rating": "5.0",
+    "count": "100",
+    "googleReviewLink": ""
+  },
+  "hours": {
+    "weekdays": "8:00 AM - 6:00 PM",
+    "saturday": "9:00 AM - 4:00 PM",
+    "sunday": "Closed",
+    "emergencyNote": "24/7 Emergency Service Available"
+  },
+  "services": [
+    {
+      "name": "Sewer Line Services",
+      "slug": "sewer-line-services",
+      "shortDescription": "Complete sewer line inspection and repair.",
+      "longDescription": "We offer complete sewer line inspection, repair, and replacement. Using camera inspections, we identify issues and provide effective solutions for your sewer system."
+    },
+    {
+      "name": "Drain Cleaning",
+      "slug": "drain-cleaning",
+      "shortDescription": "Professional drain cleaning and unclogging services.",
+      "longDescription": "Our thorough drain cleaning service removes stubborn clogs and buildup, restoring proper flow to your plumbing. We use advanced tools to clear blockages safely and effectively.",
+      "featured": true
+    },
+    {
+      "name": "Water Heater Installation",
+      "slug": "water-heater-installation",
+      "shortDescription": "New water heater installation services.",
+      "longDescription": "Upgrade to a new, efficient water heater. We install traditional tank and tankless systems, ensuring reliable hot water and energy savings for your home.",
+      "featured": true
+    }
+  ],
+  "testimonials": [],
+  "faq": [],
+  "gallery": [],
+  "team": [],
+  "siteUrl": "",
+  "_generator": {
+    "projectName": "simpsons-plumbing",
+    "businessType": "trades",
+    "iconEmoji": "🔧"
+  }
+}

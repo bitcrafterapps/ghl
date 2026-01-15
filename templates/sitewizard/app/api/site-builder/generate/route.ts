@@ -1,29 +1,55 @@
 import { NextResponse } from 'next/server';
+import { writeFile, unlink } from 'fs/promises';
+import { join, resolve } from 'path';
+import { exec } from 'child_process';
+import { promisify } from 'util';
+
+const execAsync = promisify(exec);
 
 export async function POST(req: Request) {
   try {
     const config = await req.json();
     
-    // In a real implementation, we would:
-    // 1. Write this config to a temp file
-    // 2. Spawn a child process to run the site generator script
-    // 3. Monitor the process output
-    
-    console.log('Received site configuration:', JSON.stringify(config, null, 2));
-    
-    // For now, we simulate a delay and success since the script 
-    // requires interactive input or meaningful modification to accept JSON directly.
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    console.log('Received generation request for:', config.company.name);
 
-    return NextResponse.json({ 
-      success: true, 
-      message: 'Site generation initiated',
-      jobId: 'mock-job-123' 
-    });
-  } catch (error) {
+    // Save temp config file
+    const tempFileName = `site-config-${Date.now()}.json`;
+    const tempFilePath = join(process.cwd(), tempFileName);
+    
+    await writeFile(tempFilePath, JSON.stringify(config, null, 2));
+    
+    // Resolve script path (assuming sitewizard is in templates/sitewizard and scripts is in templates/scripts)
+    const scriptPath = resolve(process.cwd(), '../scripts/create-site-api.js');
+    
+    console.log(`Executing generator script: ${scriptPath}`);
+    console.log(`Config file: ${tempFilePath}`);
+
+    try {
+      const { stdout, stderr } = await execAsync(`node "${scriptPath}" --json-config "${tempFilePath}"`);
+      
+      console.log('Generator output:', stdout);
+      if (stderr) console.error('Generator stderr:', stderr);
+      
+      // Clean up temp file
+      await unlink(tempFilePath).catch(e => console.error('Failed to cleanup temp file:', e));
+
+      return NextResponse.json({ 
+        success: true, 
+        message: 'Site generated successfully',
+        details: stdout
+      });
+    } catch (execError: any) {
+      console.error('Script execution failed:', execError);
+      return NextResponse.json({ 
+        success: false, 
+        error: 'Script execution failed', 
+        details: execError.message 
+      }, { status: 500 });
+    }
+  } catch (error: any) {
     console.error('Site generation error:', error);
     return NextResponse.json(
-      { success: false, error: 'Failed to generate site' },
+      { success: false, error: 'Failed to process request: ' + error.message },
       { status: 500 }
     );
   }

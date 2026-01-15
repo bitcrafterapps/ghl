@@ -1,0 +1,27 @@
+{
+  "company": {
+    "name": "Test Company",
+    "slug": "test-gen-1",
+    "email": "test@example.com",
+    "phone": "555-555-5555",
+    "city": "Test City",
+    "state": "TS",
+    "zip": "12345"
+  },
+  "branding": {
+    "tagline": "Test Tagline",
+    "icon": "🧪",
+    "primaryColor": "#000000",
+    "logoUrl": ""
+  },
+  "industry": {
+    "slug": "plumbing",
+    "type": "Plumbing"
+  },
+  "serviceArea": {
+    "areas": "Test Area",
+    "radius": "50"
+  },
+  "services": ["leak-detection"],
+  "businessType": "trades"
+}

@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from '@/components/ui/use-toast';
+import { ImageUpload } from "@/components/ui/image-upload";
 import { INDUSTRIES_DATA } from './industries';
 
 import { EMOJI_LIST, EMOJI_CATEGORIES } from './emojis';
@@ -81,13 +82,17 @@ const DEFAULT_CONFIG = {
 
   // Branding
   logoUrl: '',
+  logoAbsolutePath: '',
   faviconUrl: '',
+  faviconAbsolutePath: '',
   primaryColor: '#2563eb',
-  secondaryColor: '#475569',
-  accentColor: '#f59e0b',
+  secondaryColor: '#f1f5f9',
+  accentColor: '#10b981',
   headerFooterBg: '#0f172a',
   headerFooterText: '#ffffff',
+  logoType: 'emoji',
   icon: '🔧',
+  tagline: 'Your tagline here',
   fontHeading: 'Poppins',
   fontBody: 'Inter',
 
@@ -135,6 +140,7 @@ export default function SiteBuilderPage() {
   const [showJson, setShowJson] = useState(false);
   const [copied, setCopied] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [generationResult, setGenerationResult] = useState<{path: string, url: string} | null>(null);
   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
   const [emojiSearch, setEmojiSearch] = useState('');
   const [emojiCategory, setEmojiCategory] = useState('All');
@@ -263,8 +269,8 @@ export default function SiteBuilderPage() {
           yearsInBusiness: config.yearsInBusiness,
         },
         branding: {
-          logoUrl: config.logoUrl,
-          faviconUrl: config.faviconUrl,
+          logoUrl: config.logoType === 'image' ? (config.logoAbsolutePath || config.logoUrl) : '',
+          faviconUrl: config.faviconAbsolutePath || config.faviconUrl,
           primaryColor: config.primaryColor,
           secondaryColor: config.secondaryColor,
           accentColor: config.accentColor,
@@ -272,6 +278,8 @@ export default function SiteBuilderPage() {
           headerFooterText: config.headerFooterText,
           fontHeading: config.fontHeading,
           fontBody: config.fontBody,
+          icon: config.icon,
+          tagline: config.tagline,
         },
         industry: {
           slug: config.industry,
@@ -357,10 +365,14 @@ export default function SiteBuilderPage() {
          throw new Error('Failed to generate site');
        }
  
-       toast({
-         title: "Site Generation Started",
-         description: "The build process has started in the background.",
-       });
+        const result = await response.json();
+
+        // Calculate path for instructions
+        const destPath = `templates/${config.businessType === 'services' ? 'services' : 'trades'}/${config.slug}`;
+        setGenerationResult({
+          path: destPath,
+          url: '',
+        });
      } catch (error) {
        console.error(error);
        toast({
@@ -432,6 +444,10 @@ export default function SiteBuilderPage() {
                               const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
                               setConfig({...config, companyName: name, slug, projectName: slug});
                           }} placeholder="Acme Inc" />
+                      </div>
+                      <div className="space-y-2">
+                          <label className="text-sm font-medium">Tagline</label>
+                          <Input value={config.tagline} onChange={e => setConfig({...config, tagline: e.target.value})} placeholder="Professional Services you can Trust" />
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div className="space-y-2">
@@ -505,33 +521,63 @@ export default function SiteBuilderPage() {
                           </div>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                         <div className="space-y-2">
-                            <label className="text-sm font-medium">Footer Text Color</label>
-                            <div className="flex gap-2">
-                               <Input type="color" className="h-10 w-12" value={config.headerFooterText} onChange={e => setConfig({...config, headerFooterText: e.target.value})} />
-                               <Input value={config.headerFooterText} onChange={e => setConfig({...config, headerFooterText: e.target.value})} className="font-mono flex-1" />
-                            </div>
-                         </div>
-                         <div className="space-y-2">
-                             <label className="text-sm font-medium">Icon Emoji</label>
+                          <div className="space-y-2">
+                             <label className="text-sm font-medium">Footer Text Color</label>
                              <div className="flex gap-2">
-                                <Input value={config.icon} onChange={e => setConfig({...config, icon: e.target.value})} className="w-24 text-center text-lg" />
-                                <Button variant="outline" size="icon" onClick={() => setIsEmojiPickerOpen(true)}>
-                                    <Smile className="w-4 h-4" />
-                                </Button>
+                                <Input type="color" className="h-10 w-12" value={config.headerFooterText} onChange={e => setConfig({...config, headerFooterText: e.target.value})} />
+                                <Input value={config.headerFooterText} onChange={e => setConfig({...config, headerFooterText: e.target.value})} className="font-mono flex-1" />
                              </div>
-                         </div>
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div className="space-y-2">
-                              <label className="text-sm font-medium">Logo URL</label>
-                              <Input value={config.logoUrl} onChange={e => setConfig({...config, logoUrl: e.target.value})} placeholder="https://..." />
                           </div>
                           <div className="space-y-2">
-                              <label className="text-sm font-medium">Favicon URL</label>
-                              <Input value={config.faviconUrl} onChange={e => setConfig({...config, faviconUrl: e.target.value})} />
+                             <label className="text-sm font-medium">Logo Type</label>
+                             <Select value={config.logoType} onValueChange={(val) => setConfig({...config, logoType: val})}>
+                                <SelectTrigger><SelectValue /></SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="emoji">Emoji Icon</SelectItem>
+                                    <SelectItem value="image">Image Logo</SelectItem>
+                                </SelectContent>
+                             </Select>
                           </div>
-                      </div>
+                       </div>
+                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                           {config.logoType === 'emoji' ? (
+                             <div className="space-y-2">
+                                 <label className="text-sm font-medium">Icon Emoji</label>
+                                 <div className="flex gap-2">
+                                    <Input value={config.icon} onChange={e => setConfig({...config, icon: e.target.value})} className="w-24 text-center text-lg" />
+                                    <Button variant="outline" size="icon" onClick={() => setIsEmojiPickerOpen(true)}>
+                                        <Smile className="w-4 h-4" />
+                                    </Button>
+                                    <div className="flex-1 flex items-center text-xs text-muted-foreground px-2 bg-muted/50 rounded">
+                                        Using emoji as logo
+                                    </div>
+                                 </div>
+                             </div>
+                           ) : (
+                             <div className="space-y-2">
+                                 <label className="text-sm font-medium">Logo Image</label>
+                                 <ImageUpload 
+                                    value={config.logoUrl} 
+                                    onChange={(url: string, absPath?: string) => setConfig({
+                                        ...config, 
+                                        logoUrl: url, 
+                                        logoAbsolutePath: absPath || ''
+                                    })} 
+                                 />
+                             </div>
+                           )}
+                           <div className="space-y-2">
+                               <label className="text-sm font-medium">Favicon Image</label>
+                               <ImageUpload 
+                                    value={config.faviconUrl} 
+                                    onChange={(url: string, absPath?: string) => setConfig({
+                                        ...config, 
+                                        faviconUrl: url, 
+                                        faviconAbsolutePath: absPath || ''
+                                    })} 
+                                />
+                           </div>
+                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div className="space-y-2">
                               <label className="text-sm font-medium">Heading Font</label>
@@ -871,6 +917,49 @@ export default function SiteBuilderPage() {
                             No emojis found.
                         </div>
                     )}
+                </div>
+            </div>
+        </div>
+      )}
+
+      {generationResult && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm">
+            <div className="bg-zinc-950 border border-zinc-800 rounded-xl max-w-lg w-full p-6 shadow-2xl animate-in zoom-in-95 duration-200">
+                <div className="flex items-center gap-4 mb-4">
+                    <div className="h-12 w-12 rounded-full bg-green-500/20 flex items-center justify-center text-green-500">
+                        <Check className="w-6 h-6" />
+                    </div>
+                    <div>
+                        <h2 className="text-xl font-bold text-white">Site Generated Successfully!</h2>
+                        <p className="text-sm text-zinc-400">Your new website is ready to deploy.</p>
+                    </div>
+                </div>
+
+                <div className="space-y-4">
+                    <div className="bg-zinc-900 rounded-lg p-4 font-mono text-sm text-zinc-300 relative group">
+                        <div className="flex justify-between items-start mb-2">
+                             <span className="text-xs uppercase text-zinc-500 font-bold">Terminal Commands</span>
+                             <button
+                               onClick={() => {
+                                  // @ts-ignore
+                                  navigator.clipboard.writeText(`cd ${generationResult.path}\nnpm install\nnpm run dev`);
+                                  toast({ title: "Copied to clipboard" });
+                               }}
+                               className="text-zinc-500 hover:text-white transition-colors"
+                             >
+                                <Copy className="w-4 h-4" />
+                             </button>
+                        </div>
+                        <div className="space-y-1">
+                            <div className="flex gap-2"><span className="text-green-500">$</span> cd {generationResult.path}</div>
+                            <div className="flex gap-2"><span className="text-green-500">$</span> npm install</div>
+                            <div className="flex gap-2"><span className="text-green-500">$</span> npm run dev</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="mt-6 flex justify-end gap-2">
+                    <Button onClick={() => setGenerationResult(null)}>Close</Button>
                 </div>
             </div>
         </div>
