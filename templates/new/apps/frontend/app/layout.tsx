@@ -18,8 +18,9 @@ const fontHeading = Poppins({
 })
 
 // Tokenized metadata - replaced by create-site.js
+const siteUrl = '{{SITE_URL}}';
 export const metadata: Metadata = {
-  metadataBase: new URL('{{SITE_URL}}' || 'https://example.com'),
+  metadataBase: new URL(siteUrl.startsWith('http') ? siteUrl : 'https://example.com'),
   title: {
     default: '{{COMPANY_NAME}} | {{INDUSTRY_TYPE}} Services in {{COMPANY_CITY}}, {{COMPANY_STATE}}',
     template: '%s | {{COMPANY_NAME}}',
@@ -95,22 +96,25 @@ export default function RootLayout({
         />
         
         {/* Google Analytics - Only if ID provided */}
-        {'{{GOOGLE_ANALYTICS_ID}}' && '{{GOOGLE_ANALYTICS_ID}}'.startsWith('G-') && (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id={{GOOGLE_ANALYTICS_ID}}`}
-              strategy="afterInteractive"
-            />
-            <Script id="google-analytics" strategy="afterInteractive">
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '{{GOOGLE_ANALYTICS_ID}}');
-              `}
-            </Script>
-          </>
-        )}
+        {(() => {
+          const gaId = '{{GOOGLE_ANALYTICS_ID}}';
+          return gaId.startsWith('G-') && (
+            <>
+              <Script
+                src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+                strategy="afterInteractive"
+              />
+              <Script id="google-analytics" strategy="afterInteractive">
+                {`
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${gaId}');
+                `}
+              </Script>
+            </>
+          );
+        })()}
       </head>
       <body className={`${fontBody.variable} ${fontHeading.variable} font-body min-h-screen`}>
         <ThemeProvider>

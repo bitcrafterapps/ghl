@@ -117,12 +117,18 @@ function UploadModal({ onClose, onUpload, categories }: UploadModalProps) {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
-  const [metadata, setMetadata] = useState({
+  const [metadata, setMetadata] = useState<{
+    title: string;
+    description: string;
+    altText: string;
+    category: string;
+    status: 'active' | 'inactive';
+  }>({
     title: '',
     description: '',
     altText: '',
     category: '',
-    status: 'active' as const
+    status: 'active'
   });
   const fileInputRef = useRef<HTMLInputElement>(null);
 

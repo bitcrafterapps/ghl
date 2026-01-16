@@ -22,7 +22,11 @@ import {
   Mail,
   ClipboardList,
   Image,
-  Star
+  Star,
+  Calendar,
+  Contact2,
+  Camera,
+  ScrollText
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -134,6 +138,18 @@ export function Sidebar({
     // Regular users with a company can access their company page
     navigation.push(
       { name: 'My Company', href: `/companies/${userProfile.companyId}`, icon: Building2 }
+    );
+  }
+
+  // Private Pages navigation - available to all authenticated users with a company
+  if (userProfile?.companyId || userProfile?.roles?.includes('Admin') || userProfile?.roles?.includes('Site Admin')) {
+    // Add after main navigation items
+    navigation.splice(2, 0,
+      { name: 'Contacts', href: '/contacts', icon: Contact2 },
+      { name: 'Jobs', href: '/jobs', icon: FolderKanban },
+      { name: 'Job Photos', href: '/job-photos', icon: Camera },
+      { name: 'Service Contracts', href: '/service-contracts', icon: ScrollText },
+      { name: 'Calendar', href: '/calendar', icon: Calendar }
     );
   }
 

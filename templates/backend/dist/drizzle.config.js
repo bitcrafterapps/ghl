@@ -46,7 +46,7 @@ exports.default = {
         database: process.env.POSTGRES_DATABASE || 'postgres',
         ssl: process.env.NODE_ENV === 'production',
     },
-    schemaFilter: process.env.POSTGRES_SCHEMA || 'public',
+    schemaFilter: 'public',
     verbose: true,
     strict: true,
 };

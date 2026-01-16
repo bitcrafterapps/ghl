@@ -20,6 +20,11 @@ import paymentsRouter from './payments';
 import transactionsRouter from './transactions';
 import galleryImagesRouter from './gallery-images';
 import reviewsRouter from './reviews';
+import contactsRouter from './contacts';
+import jobsRouter from './jobs';
+import calendarRouter from './calendar';
+import serviceContractsRouter from './service-contracts';
+import jobPhotosRouter from './job-photos';
 import { trackApiUsage, trackApiErrors } from '../../middleware/v1/stats.middleware';
 import { LoggerFactory } from '../../logger';
 import { validateSession, loadUserData } from '../../middleware/v1/auth.middleware';
@@ -145,6 +150,22 @@ router.use('/gallery-images', galleryImagesRouter);
 
 logger.debug('Mounting reviews routes at /reviews');
 router.use('/reviews', reviewsRouter);
+
+// Private Pages Routes (Contacts, Jobs, Calendar)
+logger.debug('Mounting contacts routes at /contacts');
+router.use('/contacts', contactsRouter);
+
+logger.debug('Mounting jobs routes at /jobs');
+router.use('/jobs', jobsRouter);
+
+logger.debug('Mounting calendar routes at /calendar');
+router.use('/calendar', calendarRouter);
+
+logger.debug('Mounting service-contracts routes at /service-contracts');
+router.use('/service-contracts', serviceContractsRouter);
+
+logger.debug('Mounting job-photos routes at /job-photos');
+router.use('/job-photos', jobPhotosRouter);
 
 // Add API error tracking middleware
 router.use(trackApiErrors);

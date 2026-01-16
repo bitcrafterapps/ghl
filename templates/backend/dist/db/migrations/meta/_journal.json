@@ -15,6 +15,13 @@
       "when": 1766774323332,
       "tag": "0001_cynical_ego",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1768538257597,
+      "tag": "0002_handy_doomsday",
+      "breakpoints": true
     }
   ]
 }

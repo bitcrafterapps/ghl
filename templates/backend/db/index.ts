@@ -83,10 +83,12 @@ const getPool = (): Pool => {
   return pool;
 };
 
+import * as schema from "./schema";
+
 // Initialize database connection
 const createDbConnection = () => {
   logger.info(`Using standard pg driver (Local: ${isLocalDatabase})`);
-  return drizzle(getPool());
+  return drizzle(getPool(), { schema });
 };
 
 export const db = createDbConnection();

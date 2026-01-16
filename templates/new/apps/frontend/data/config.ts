@@ -41,7 +41,7 @@ export const siteConfig = {
     slug: "{{INDUSTRY_SLUG}}",
     serviceNoun: "{{SERVICE_NOUN}}",
     serviceVerb: "{{SERVICE_VERB}}",
-    emergencyService: "{{EMERGENCY_SERVICE}}" === "true",
+    emergencyService: String("{{EMERGENCY_SERVICE}}") === "true",
     schemaType: "{{SCHEMA_BUSINESS_TYPE}}",
   },
 
