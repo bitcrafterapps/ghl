@@ -1,0 +1,172 @@
+{
+  "company": {
+    "name": "SAmazon",
+    "slug": "samazon",
+    "phone": "9492923136",
+    "email": "sssandyrfriedman@gmail.com",
+    "address": "15 Las Castanetas",
+    "city": "Rancho Santa Margarita",
+    "state": "CA",
+    "stateFullName": "CA",
+    "zip": "92688",
+    "license": "A344343",
+    "yearsInBusiness": "10"
+  },
+  "branding": {
+    "logoUrl": "",
+    "faviconUrl": "",
+    "primaryColor": "#2563eb",
+    "secondaryColor": "#f1f5f9",
+    "accentColor": "#10b981",
+    "headerFooterBg": "#0f172a",
+    "headerFooterText": "#ffffff",
+    "fontHeading": "Poppins",
+    "fontBody": "Inter",
+    "icon": "🔧",
+    "tagline": "Your tagline here"
+  },
+  "industry": {
+    "slug": "general-contractor",
+    "type": "General Contractor",
+    "services": [
+      {
+        "name": "Home Remodeling",
+        "slug": "home-remodeling",
+        "shortDescription": "Complete home remodeling services.",
+        "longDescription": "Transform your living space with our full-service home remodeling. We manage every aspect of your project, delivering high-quality craftsmanship and your dream home.",
+        "featured": true
+      },
+      {
+        "name": "Kitchen Remodeling",
+        "slug": "kitchen-remodeling",
+        "shortDescription": "Custom kitchen design and renovation.",
+        "longDescription": "Create the kitchen of your dreams. Our custom kitchen remodeling services include design, cabinetry, countertops, and appliances for a beautiful, functional space.",
+        "featured": true
+      },
+      {
+        "name": "Bathroom Remodeling",
+        "slug": "bathroom-remodeling",
+        "shortDescription": "Beautiful bathroom transformations.",
+        "longDescription": "Update your bathroom with our expert remodeling services. From modern fixtures to tile work, we create relaxing, stylish bathrooms tailored to your needs.",
+        "featured": true
+      },
+      {
+        "name": "Room Additions",
+        "slug": "room-additions",
+        "shortDescription": "Expand your living space with additions.",
+        "longDescription": "Need more space? Our room addition services expand your home seamlessly. We handle everything from design to construction, giving you the extra room you need."
+      },
+      {
+        "name": "Commercial Construction",
+        "slug": "commercial-construction",
+        "shortDescription": "Commercial building and renovation.",
+        "longDescription": "We provide reliable commercial construction services for businesses. From tenant improvements to new builds, we deliver quality projects on time and on budget."
+      },
+      {
+        "name": "Deck & Patio",
+        "slug": "deck-patio",
+        "shortDescription": "Custom deck and patio construction.",
+        "longDescription": "Enhance your outdoor living with a custom deck or patio. We design and build durable, attractive outdoor spaces perfect for relaxation and entertaining."
+      }
+    ],
+    "faq": [],
+    "emergencyService": false
+  },
+  "serviceArea": {
+    "areas": [
+      "RSM"
+    ],
+    "radius": "25",
+    "primaryCity": "RSM"
+  },
+  "social": {
+    "facebook": "",
+    "instagram": "",
+    "google": "",
+    "yelp": "",
+    "bbb": "",
+    "nextdoor": ""
+  },
+  "ghl": {
+    "calendarEmbed": "",
+    "formEmbed": "",
+    "chatWidget": "",
+    "webhookUrl": "",
+    "trackingId": ""
+  },
+  "seo": {
+    "googleAnalyticsId": "",
+    "googleTagManagerId": "",
+    "facebookPixelId": "",
+    "metaDescription": "SAmazon provides professional general contractor services in Rancho Santa Margarita, CA. 10+ years experience. Licensed & insured. Call for a free estimate!",
+    "metaKeywords": "general contractor, Rancho Santa Margarita, CA, home remodeling, kitchen remodeling, bathroom remodeling, room additions, commercial construction, deck & patio"
+  },
+  "reviews": {
+    "rating": "5.0",
+    "count": "100",
+    "googleReviewLink": ""
+  },
+  "hours": {
+    "weekdays": "8:00 AM - 6:00 PM",
+    "saturday": "9:00 AM - 4:00 PM",
+    "sunday": "Closed",
+    "emergencyNote": ""
+  },
+  "services": [
+    {
+      "name": "Home Remodeling",
+      "slug": "home-remodeling",
+      "shortDescription": "Complete home remodeling services.",
+      "longDescription": "Transform your living space with our full-service home remodeling. We manage every aspect of your project, delivering high-quality craftsmanship and your dream home.",
+      "featured": true,
+      "image": "/images/services/home-remodeling.png"
+    },
+    {
+      "name": "Kitchen Remodeling",
+      "slug": "kitchen-remodeling",
+      "shortDescription": "Custom kitchen design and renovation.",
+      "longDescription": "Create the kitchen of your dreams. Our custom kitchen remodeling services include design, cabinetry, countertops, and appliances for a beautiful, functional space.",
+      "featured": true,
+      "image": "/images/services/kitchen-remodeling.png"
+    },
+    {
+      "name": "Bathroom Remodeling",
+      "slug": "bathroom-remodeling",
+      "shortDescription": "Beautiful bathroom transformations.",
+      "longDescription": "Update your bathroom with our expert remodeling services. From modern fixtures to tile work, we create relaxing, stylish bathrooms tailored to your needs.",
+      "featured": true,
+      "image": "/images/services/bathroom-remodeling.png"
+    },
+    {
+      "name": "Room Additions",
+      "slug": "room-additions",
+      "shortDescription": "Expand your living space with additions.",
+      "longDescription": "Need more space? Our room addition services expand your home seamlessly. We handle everything from design to construction, giving you the extra room you need.",
+      "image": "/images/services/room-additions.png"
+    },
+    {
+      "name": "Commercial Construction",
+      "slug": "commercial-construction",
+      "shortDescription": "Commercial building and renovation.",
+      "longDescription": "We provide reliable commercial construction services for businesses. From tenant improvements to new builds, we deliver quality projects on time and on budget.",
+      "image": "/images/services/commercial-construction.png"
+    },
+    {
+      "name": "Deck & Patio",
+      "slug": "deck-patio",
+      "shortDescription": "Custom deck and patio construction.",
+      "longDescription": "Enhance your outdoor living with a custom deck or patio. We design and build durable, attractive outdoor spaces perfect for relaxation and entertaining.",
+      "image": "/images/services/deck-patio.png"
+    }
+  ],
+  "testimonials": [],
+  "faq": [],
+  "gallery": [],
+  "team": [],
+  "siteUrl": "",
+  "_generator": {
+    "projectName": "samazon",
+    "businessType": "trades",
+    "iconEmoji": "🔧"
+  }
+}

@@ -92,40 +92,40 @@ const industryPresets = {
         name: 'AC Repair',
         slug: 'ac-repair',
         shortDescription: 'Fast, reliable air conditioning repair services.',
-        longDescription: "Our expert AC repair service quickly diagnoses and fixes all cooling issues, from refrigerant leaks to compressor failures. We restore comfort to your home efficiently, ensuring your system operates at peak performance during the hottest days.",
+        longDescription: "Our expert AC repair service quickly diagnoses and fixes all cooling issues, from refrigerant leaks to compressor failures. We utilize advanced diagnostic tools to pinpoint the root cause, preventing recurring problems and saving you money on future repairs. Our technicians are trained on all major brands and models, ensuring a precise fix regardless of your system's age. We restore comfort to your home efficiently, ensuring your system operates at peak performance during the hottest days. We know that a broken AC is an emergency, which is why we offer flexible scheduling and prompt arrival times. Our trucks are fully stocked with common parts to minimize waiting and get your system up and running in a single visit. Choose us for transparent pricing and a commitment to restoring your home's cool comfort without delay.",
         featured: true
       },
       {
         name: 'AC Installation',
         slug: 'ac-installation',
         shortDescription: 'Professional AC system installation.',
-        longDescription: "We provide professional AC installation for energy-efficient systems tailored to your home's needs. Our team ensures proper sizing and seamless integration for maximum comfort and savings.",
+        longDescription: "We provide professional AC installation for energy-efficient systems tailored to your home's needs. Our team conducts a thorough load calculation to ensure proper sizing, which is critical for efficiency and longevity. We handle the entire process, from removing your old unit to optimizing the new airflow for every room. Seamless integration leads to maximum comfort and significant energy savings from day one. Investing in a new AC system is a major decision, and we are here to support you with expert advice and flexible financing options. We stand behind our workmanship with a satisfaction guarantee, ensuring your new unit performs exactly as promised. Let us help you select the perfect system that balances performance, noise levels, and energy efficiency for your unique home.",
         featured: true
       },
       {
         name: 'Heating Repair',
         slug: 'heating-repair',
         shortDescription: 'Expert heating system repair services.',
-        longDescription: "Don't let the cold inside. Our heating repair specialists troubleshoot and repair furnaces and heat pumps promptly, ensuring your home stays warm and safe throughout the winter.",
+        longDescription: "Don't let the cold inside. Our heating repair specialists troubleshoot and repair furnaces and heat pumps promptly, regardless of the make or model. We address issues like pilot light failures, cracked heat exchangers, and thermostat malfunctions with safety as our top priority. By restoring your system's efficiency, we help eliminate cold spots and ensure consistent warmth throughout your home. Ignoring small heater issues can lead to dangerous carbon monoxide leaks or complete system failure when you need it most. Our thorough troubleshooting process catches these risks early, protecting your family and property. We provide clear, upfront estimates before any work begins, so you are never caught off guard by the cost of essential winter repairs.",
         featured: true
       },
       {
         name: 'Furnace Installation',
         slug: 'furnace-installation',
         shortDescription: 'Quality furnace installation and replacement.',
-        longDescription: "Upgrade your comfort with our top-tier furnace installation services. We install reliable, high-efficiency heating systems that provide consistent warmth and lower energy bills."
+        longDescription: "Upgrade your comfort with our top-tier furnace installation services. We install reliable, high-efficiency heating systems that provide consistent warmth and lower energy bills. Our installation process includes a full inspection of your ductwork and ventilation to maximize system performance. We guide you through selecting the best unit for your budget and comfort goals. A modern furnace not only keeps you warm but also improves indoor air quality and humidity control. We carefully install your new unit to manufacturer specifications, validating warranties and ensuring optimal safety. From the initial consultation to the final thermostat programming, we make the upgrade process smooth, stress-free, and rewarding for your household.",
       },
       {
         name: 'HVAC Maintenance',
         slug: 'hvac-maintenance',
         shortDescription: 'Preventive maintenance to keep your system running.',
-        longDescription: "Extend the life of your system with our comprehensive HVAC maintenance. Regular tune-ups prevent costly breakdowns, improve efficiency, and ensure cleaner air for your family."
+        longDescription: "Extend the life of your system with our comprehensive HVAC maintenance. Regular tune-ups prevent costly breakdowns, improve efficiency, and ensure cleaner air for your family. Our multi-point inspection covers cleaning coils, checking refrigerant levels, tightening electrical connections, and lubricating moving parts. This proactive approach identifies potential issues before they become major repairs. Regular maintenance is the requirement for keeping most manufacturer warranties valid, saving you from paying out-of-pocket for covered parts. We provide a detailed report after every visit, so you always know the exact health of your HVAC system. Join our maintenance program today to enjoy priority service, discounted repairs, and the peace of mind that comes with a well-cared-for home.",
       },
       {
         name: 'Duct Cleaning',
         slug: 'duct-cleaning',
         shortDescription: 'Professional air duct cleaning services.',
-        longDescription: "Breathe easier with our professional duct cleaning services. We remove dust, allergens, and debris from your air ducts, improving indoor air quality and system efficiency."
+        longDescription: "Breathe easier with our professional duct cleaning services. We remove dust, allergens, pet dander, and debris from your air ducts, improving indoor air quality and system efficiency. A clean duct system allows your HVAC unit to breathe freely, reducing strain and energy consumption. We use high-powered vacuums and specialized brushes to reach deep into your ventilation network. Over time, ducts can accumulate pounds of dust and hidden mold that circulate every time your system turns on. Cleaning them can significantly reduce allergy symptoms and keep your home cleaner for longer periods. We treat your home with respect, using drop cloths and shoe covers to leave no mess behind, just cleaner, healthier air for everyone to enjoy.",
       },
     ],
     faq: [
@@ -146,40 +146,40 @@ const industryPresets = {
         name: 'Drain Cleaning',
         slug: 'drain-cleaning',
         shortDescription: 'Professional drain cleaning and unclogging services.',
-        longDescription: "Our thorough drain cleaning service removes stubborn clogs and buildup, restoring proper flow to your plumbing. We use advanced tools to clear blockages safely and effectively.",
+        longDescription: "Our thorough drain cleaning service removes stubborn clogs and buildup, restoring proper flow to your plumbing. We use advanced tools like hydro-jetting and motorized snakes to clear blockages safely and effectively without damaging your pipes. Whether it’s grease, hair, or tree roots, we tackle the toughest obstructions preventing backups and unpleasant odors. Regular cleaning also helps prevent future emergencies. Recurring clogs can be a symptom of a much larger issue deep within your plumbing system. Our comprehensive service doesn't just clear the immediate blockage but investigates the underlying cause to prevent future headaches. We also offer tips and maintenance advice to help you keep your drains clear, saving you from the stress of unexpected backups.",
         featured: true
       },
       {
         name: 'Water Heater Repair',
         slug: 'water-heater-repair',
         shortDescription: 'Expert water heater repair and maintenance.',
-        longDescription: "Experiencing water heater issues? Our technicians repair all makes and models, restoring hot water quickly. We address leaks, heating element failures, and thermostat issues.",
+        longDescription: "Experiencing water heater issues? Our technicians repair all makes and models, restoring hot water quickly and safely. We address common problems like leaks, sediment buildup, heating element failures, and faulty thermostats with precision. A malfunctioning water heater can disrupt your daily routine and drive up energy costs; we fix it right the first time to restore your comfort. We understand that hot water is a necessity, not a luxury, especially for large families. Our rapid response team works diligently to minimize your downtime and restore your daily routine. Before we leave, we ensure your water heater is operating safely and efficiently, giving you confidence in your home's most hardworking appliance.",
         featured: true
       },
       {
         name: 'Water Heater Installation',
         slug: 'water-heater-installation',
         shortDescription: 'New water heater installation services.',
-        longDescription: "Upgrade to a new, efficient water heater. We install traditional tank and tankless systems, ensuring reliable hot water and energy savings for your home.",
+        longDescription: "Upgrade to a new, efficient water heater. We install traditional tank and tankless systems, ensuring reliable hot water and energy savings for your home. Our experts help you choose the right capacity and fuel type to meet your family's daily demand. Tankless options offer endless hot water and superior efficiency, while modern tank systems provide robust performance. We handle the removal and responsible disposal of your old unit, making the upgrade process completely hassle-free. Our installation includes all necessary code upgrades, such as expansion tanks and properly sized gas lines. Trust our experienced team to provide a seamless transition to a new, high-performance water heater that meets all your hot water needs.",
         featured: true
       },
       {
         name: 'Leak Detection',
         slug: 'leak-detection',
         shortDescription: 'Advanced leak detection technology.',
-        longDescription: "Hidden leaks can cause major damage. Our non-invasive leak detection technology pinpoints the exact location of leaks, allowing us to repair them with minimal disruption."
+        longDescription: "Hidden leaks can cause major damage to your foundation and increase your water bill silently. Our non-invasive leak detection technology pinpoints the exact location of leaks, allowing us to repair them with minimal disruption to your property. We use acoustic sensors and thermal imaging to find even the smallest drips. Catching a leak early saves you thousands in restoration costs. Water damage can spread quickly, compromising the structural integrity of your home and encouraging mold growth. Our precise detection methods allow us to stop the damage at its source before it becomes a catastrophic expense. We provide detailed documentation of our findings, which is often essential for insurance claims and proving the resolution of the issue.",
       },
       {
         name: 'Pipe Repair',
         slug: 'pipe-repair',
         shortDescription: 'Reliable pipe repair and replacement.',
-        longDescription: "From burst pipes to corrosion, our pipe repair services address all types of piping issues. We ensure watertight, durable repairs to protect your home from water damage."
+        longDescription: "From burst pipes to corrosion, our pipe repair services address all types of piping issues. We ensure watertight, durable repairs to protect your home from water damage and structural issues. Whether you have copper, PEX, or galvanized pipes, our skilled plumbers have the right solution. We can perform spot repairs or repipe entire sections if necessary to ensure long-term reliability. Old, corroded pipes can leak heavy metals into your water supply or burst unexpectedly, causing massive damage. We upgrade your plumbing infrastructure with modern, long-lasting materials that improve water pressure and quality. Whether it's a single troublesome joint or a whole-house repipe, we deliver craftsmanship that stands the test of time.",
       },
       {
         name: 'Sewer Line Services',
         slug: 'sewer-line-services',
         shortDescription: 'Complete sewer line inspection and repair.',
-        longDescription: "We offer complete sewer line inspection, repair, and replacement. Using camera inspections, we identify issues and provide effective solutions for your sewer system."
+        longDescription: "We offer complete sewer line inspection, repair, and replacement. Using high-definition camera inspections, we identify issues like root intrusion, cracks, or bellies without guesswork. We provide effective solutions such as trenchless repair to minimize digging and preserve your landscape. A functioning sewer line is vital for home hygiene; we ensure yours operates smoothly. Sewer layout issues can be stressful and messy, but our trenchless technology allows us to fix the problem without destroying your driveway or garden. We explain every step of the process clearly, helping you make informed decisions about repair versus replacement. Rest assured, we restore full function to your sewer system with minimal impact on your property and daily life.",
       },
     ],
     faq: [
@@ -200,40 +200,40 @@ const industryPresets = {
         name: 'Electrical Repairs',
         slug: 'electrical-repairs',
         shortDescription: 'Safe and reliable electrical repair services.',
-        longDescription: "Our licensed electricians handle all electrical repairs safely and efficiently. From flickering lights to faulty wiring, we troubleshoot and fix issues to ensure your home's safety.",
+        longDescription: "Our licensed electricians handle all electrical repairs safely and efficiently. From flickering lights to faulty wiring, we troubleshoot and fix issues to ensure your home's safety. We use advanced circuit tracing tools to find hidden problems without unnecessary damage to your walls. Whether it's a simple outlet fix or a complex wiring issue, we treat every job with the highest level of care. Don't risk DIY repairs with electricity; trust our certified professionals to get it done right. Electrical issues often present invisible dangers that only a trained professional can safely identify and resolve. Our team stays up-to-date with the latest safety codes and technologies to provide the highest standard of repair. We offer a 100% satisfaction guarantee on our service, ensuring that your electrical system is safe, stable, and ready to power your life.",
         featured: true
       },
       {
         name: 'Panel Upgrades',
         slug: 'panel-upgrades',
         shortDescription: 'Electrical panel upgrade and replacement.',
-        longDescription: "Modernize your home's power system with an electrical panel upgrade. We replace outdated panels to handle increased electrical loads, enhancing safety and performance.",
+        longDescription: "Modernize your home's power system with an electrical panel upgrade. We replace outdated panels to handle increased electrical loads, enhancing safety and performance. This is essential for older homes or before adding major appliances like EV chargers or hot tubs. Our upgrades ensure your breakers trip correctly and eliminate fire hazards associated with old equipment. Enjoy a safer, more reliable electrical system that grows with your family's needs. An outdated panel can be a significant bottleneck for modern electrical needs, often causing breakers to trip repeatedly. Upgrading prepares your home for future value-adding renovations like kitchen remodels or home theater installations. We label your new panel clearly and explain exactly how it works, leaving you with a system that is both powerful and user-friendly.",
         featured: true
       },
       {
         name: 'Lighting Installation',
         slug: 'lighting-installation',
         shortDescription: 'Indoor and outdoor lighting installation.',
-        longDescription: "Transform your space with professional lighting installation. We install recessed lighting, chandeliers, and outdoor fixtures to enhance the beauty and functionality of your home.",
+        longDescription: "Transform your space with professional lighting installation. We install recessed lighting, chandeliers, and outdoor fixtures to enhance the beauty and functionality of your home. Our team can help with layout design to create the perfect ambiance for every room. We also specialize in energy-efficient LED upgrades that save you money on utility bills. Illuminate your home inside and out with our expert installation services. Proper lighting design can completely change the mood and functionality of a room, making small spaces feel larger and more inviting. We work with you to choose fixtures that complement your decor while providing the right amount of light for tasks and relaxation. Let us perform the install safely, handling high ladders and complex wiring so you can simply enjoy the beautiful results.",
         featured: true
       },
       {
         name: 'Outlet & Switch Installation',
         slug: 'outlet-switch-installation',
         shortDescription: 'New outlet and switch installation.',
-        longDescription: "Add convenience and safety with new outlets and switches. We install GFCIs, USB outlets, and dimmers, upgrading your home's electrical accessibility."
+        longDescription: "Add convenience and safety with new outlets and switches. We install GFCIs, USB outlets, and dimmers, upgrading your home's electrical accessibility. Perfect for home offices, kitchens, and bedrooms, our modern solutions streamline your daily life. We ensure all installations meet current building codes for maximum safety. Update the look and feel of your home with stylish, functional switches and receptacles. Tired of using extension cords or searching for an open outlet? Strategic installation of new power points eliminates clutter and reduces fire risks associated with overloaded strips. We can also install smart switches that allow you to control your lights from your phone, adding a layer of modern convenience and security to your home.",
       },
       {
         name: 'Ceiling Fan Installation',
         slug: 'ceiling-fan-installation',
         shortDescription: 'Professional ceiling fan installation.',
-        longDescription: "Stay cool and comfortable with our ceiling fan installation services. We ensure secure mounting and proper wiring for optimal performance and safety."
+        longDescription: "Stay cool and comfortable with our ceiling fan installation services. We ensure secure mounting and proper wiring for optimal performance and safety, even on high or vaulted ceilings. A properly installed fan improves air circulation and can lower your cooling costs in the summer. We handle all assembly and balancing to ensure quiet, wobble-free operation. Enhance your room's comfort and style with our professional service. Many homeowners underestimate the complexity of installing a heavy fan, especially when no support box exists. We install the necessary bracing to ensure your fan is rock-solid and safe to operate at any speed. Enjoy the gentle breeze and energy savings of a perfectly installed ceiling fan without the wobble or noise of a DIY job.",
       },
       {
         name: 'Electrical Inspections',
         slug: 'electrical-inspections',
         shortDescription: 'Comprehensive electrical safety inspections.',
-        longDescription: "Ensure your home's electrical system is up to code with our comprehensive inspections. We identify potential hazards and recommend solutions for a safe home."
+        longDescription: "Ensure your home's electrical system is up to code with our comprehensive inspections. We identify potential hazards, outdated wiring, and code violations before they become dangerous. This service is crucial for new home purchases or homes over 20 years old. We provide a detailed report with prioritized recommendations for repairs or upgrades. Sleep soundly knowing your electrical system is safe and reliable. Unknown electrical hazards are a leading cause of residential fires, but they are often preventable with a professional inspection. We check your grounding, surge protection, and circuit load to ensure everything is operating within safe limits. Investing in an inspection is investing in the safety of your family and the longevity of your home's most critical system.",
       },
     ],
     faq: [
@@ -254,40 +254,40 @@ const industryPresets = {
         name: 'Roof Repair',
         slug: 'roof-repair',
         shortDescription: 'Expert roof repair for all roof types.',
-        longDescription: "Our roof repair experts fix leaks, missing shingles, and structural damage. We extend the life of your roof and protect your home from the elements with quality repairs.",
+        longDescription: "Our roof repair experts fix leaks, missing shingles, and structural damage. We extend the life of your roof and protect your home from the elements with quality repairs. We match materials perfectly to maintain your home's aesthetic appeal while ensuring a watertight seal. Our team acts quickly to prevent water damage from spreading to your insulation and drywall. Trust us to restore your roof's integrity with lasting solutions. We conduct a thorough assessment to ensure we aren't just patching a symptom while missing the larger problem. Our technicians are trained to spot subtle signs of damage that others miss, providing a more comprehensive repair. We leave your property clean and debris-free, ensuring that the only sign we were there is a perfectly repaired, watertight roof.",
         featured: true
       },
       {
         name: 'Roof Replacement',
         slug: 'roof-replacement',
         shortDescription: 'Complete roof replacement services.',
-        longDescription: "When it's time for a new roof, trust our professional replacement services. We install durable, high-quality roofing systems that enhance curb appeal and value.",
+        longDescription: "When it's time for a new roof, trust our professional replacement services. We install durable, high-quality roofing systems that enhance curb appeal and value. Our process includes stripping the old roof, inspecting the decking, and installing premium underlayment for superior protection. We offer a wide range of materials and colors to suit your style and budget. Invest in a roof that stands the test of time and weather. A new roof is a significant investment that boosts your home's energy efficiency and resale value immediately. We provide a dedicated project manager to keep you informed every step of the way, ensuring the project stays on schedule and on budget. With our industry-leading warranties on both materials and labor, your new roof is protected for decades to come.",
         featured: true
       },
       {
         name: 'Roof Inspection',
         slug: 'roof-inspection',
         shortDescription: 'Comprehensive roof inspection and assessment.',
-        longDescription: "Get a clear picture of your roof's condition with our detailed inspections. We identify potential issues early, helping you plan for maintenance and avoid costly repairs.",
+        longDescription: "Get a clear picture of your roof's condition with our detailed inspections. We identify potential issues early, helping you plan for maintenance and avoid costly repairs. Our inspectors check flashings, gutters, shingles, and ventilation systems thoroughly. You'll receive a comprehensive report with photos and honest recommendations. Regular inspections are the key to maximizing your roof's lifespan. Documentation is key when it comes to maintaining your roof's warranty and filing future insurance claims. Our detailed inspection reports serve as a valuable record of your roof's condition and maintenance history. Schedule an inspection after any major storm to catch damage early and keep your manufacturer's warranty fully intact.",
         featured: true
       },
       {
         name: 'Storm Damage Repair',
         slug: 'storm-damage-repair',
         shortDescription: 'Emergency storm damage repair services.',
-        longDescription: "We provide rapid response for storm-damaged roofs. From wind to hail damage, our team repairs and restores your roof to protect your home from further weather impact."
+        longDescription: "We provide rapid response for storm-damaged roofs. From wind to hail damage, our team repairs and restores your roof to protect your home from further weather impact. We provide temporary tarping services to prevent immediate leaks while we plan the permanent repair. Our experts document all damage to assist with your insurance claim process. restoring your home's safety is our top priority after severe weather. Navigating the insurance claims process can be overwhelming, but our experienced team is here to assist you every step of the way. We meet with adjusters on-site to ensure all damage is properly identified and covered. Let us take the stress out of storm recovery by handling the repairs quickly and professionally, restoring your home to its pre-storm condition.",
       },
       {
         name: 'Gutter Services',
         slug: 'gutter-services',
         shortDescription: 'Gutter installation, repair, and cleaning.',
-        longDescription: "Keep your home safe from water damage with our gutter services. We install, repair, and clean gutters to ensure proper water drainage away from your foundation."
+        longDescription: "Keep your home safe from water damage with our gutter services. We install, repair, and clean gutters to ensure proper water drainage away from your foundation. Clogged or damaged gutters can lead to basement flooding and landscape erosion. We offer seamless gutter options and leaf guards to minimize maintenance. Protect your home's structural integrity with our comprehensive gutter solutions. Properly functioning gutters are your home's first line of defense against basement flooding and foundation cracks. We ensure your gutters are pitched correctly to handle heavy downpours without overflowing. Whether you need a simple cleaning or a full system replacement, we provide affordable solutions to keep your home high and dry.",
       },
       {
         name: 'Commercial Roofing',
         slug: 'commercial-roofing',
         shortDescription: 'Commercial roofing solutions.',
-        longDescription: "We offer specialized roofing solutions for commercial properties. Our team handles flat roofs, TPO, and other commercial systems with expert care and precision."
+        longDescription: "We offer specialized roofing solutions for commercial properties. Our team handles flat roofs, TPO, and other commercial systems with expert care and precision. We understand the unique challenges of commercial buildings, including drainage and equipment mounting. We work efficiently to minimize disruption to your business operations. Partner with us for reliable, long-lasting commercial roofing performance. We know that every hour of disruption affects your bottom line, which is why we offer flexible scheduling to work around your business hours. Our preventative maintenance plans help you budget for roofing costs and extend the lifespan of your commercial roof. comprehensive safety protocols ensure a secure job site for your employees and customers while we work.",
       },
     ],
     faq: [
@@ -308,40 +308,40 @@ const industryPresets = {
         name: 'Home Remodeling',
         slug: 'home-remodeling',
         shortDescription: 'Complete home remodeling services.',
-        longDescription: "Transform your living space with our full-service home remodeling. We manage every aspect of your project, delivering high-quality craftsmanship and your dream home.",
+        longDescription: "Transform your living space with our full-service home remodeling. We manage every aspect of your project, delivering high-quality craftsmanship and your dream home. Our team coordinates all trades, ensuring smooth communication and efficient scheduling. We handle permits and inspections, so you can focus on the exciting design choices. Whether it's a historic renovation or a modern update, we treat your home with the same care as our own. Let us turn your vision into reality with a remodel that adds lasting value and joy to your daily life.",
         featured: true
       },
       {
         name: 'Kitchen Remodeling',
         slug: 'kitchen-remodeling',
         shortDescription: 'Custom kitchen design and renovation.',
-        longDescription: "Create the kitchen of your dreams. Our custom kitchen remodeling services include design, cabinetry, countertops, and appliances for a beautiful, functional space.",
+        longDescription: "Create the kitchen of your dreams. Our custom kitchen remodeling services include design, cabinetry, countertops, and appliances for a beautiful, functional space. We optimize layouts to improve workflow, making cooking and entertaining a pleasure. From installing chef-grade appliances to custom lighting plans, every detail is considered. We work with you to select durable, stylish materials that stand up to daily life. Experience the heart of your home reimagined with our expert craftsmanship.",
         featured: true
       },
       {
         name: 'Bathroom Remodeling',
         slug: 'bathroom-remodeling',
         shortDescription: 'Beautiful bathroom transformations.',
-        longDescription: "Update your bathroom with our expert remodeling services. From modern fixtures to tile work, we create relaxing, stylish bathrooms tailored to your needs.",
+        longDescription: "Update your bathroom with our expert remodeling services. From modern fixtures to tile work, we create relaxing, stylish bathrooms tailored to your needs. We can convert standard tubs to luxurious walk-in showers or install soaking tubs for a spa-like retreat. Our team ensures proper waterproofing and ventilation to prevent mold and water damage. We maximize storage and functionality, even in small spaces. Start your day in a space that feels fresh, clean, and uniquely yours.",
         featured: true
       },
       {
         name: 'Room Additions',
         slug: 'room-additions',
         shortDescription: 'Expand your living space with additions.',
-        longDescription: "Need more space? Our room addition services expand your home seamlessly. We handle everything from design to construction, giving you the extra room you need."
+        longDescription: "Need more space? Our room addition services expand your home seamlessly. We handle everything from design to construction, giving you the extra room you need. We match your existing architecture and finishes so the new space looks like it was always there. Whether it's a new bedroom, home office, or sunroom, we ensure the structural integrity and energy efficiency of the addition. Increase your home's square footage and functionality without the stress of moving.",
       },
       {
         name: 'Deck & Patio',
         slug: 'deck-patio',
         shortDescription: 'Custom deck and patio construction.',
-        longDescription: "Enhance your outdoor living with a custom deck or patio. We design and build durable, attractive outdoor spaces perfect for relaxation and entertaining."
+        longDescription: "Enhance your outdoor living with a custom deck or patio. We design and build durable, attractive outdoor spaces perfect for relaxation and entertaining. utilizing high-quality materials like composite decking or natural stone, we create low-maintenance extensions of your living area. We can integrate features like built-in seating, kitchens, or fire pits to elevate your outdoor experience. Enjoy the fresh air in style with a custom-built solution that complements your landscape.",
       },
       {
         name: 'Commercial Construction',
         slug: 'commercial-construction',
         shortDescription: 'Commercial building and renovation.',
-        longDescription: "We provide reliable commercial construction services for businesses. From tenant improvements to new builds, we deliver quality projects on time and on budget."
+        longDescription: "We provide reliable commercial construction services for businesses. From tenant improvements to new builds, we deliver quality projects on time and on budget. We understand the importance of speed to market and minimal disruption to your operations. Our project managers communicate proactively, keeping you informed of progress and milestones. We build spaces that reflect your brand identity and support your business goals, ensuring a professional environment for your team and clients.",
       },
     ],
     faq: [
@@ -363,28 +363,28 @@ const industryPresets = {
         name: 'Mold Inspection',
         slug: 'mold-inspection',
         shortDescription: 'Comprehensive mold testing and inspection.',
-        longDescription: "Our comprehensive mold testing and inspection services identify hidden mold growth and moisture sources. We use advanced detection equipment to ensure your home is safe and mold-free.",
+        longDescription: "Our comprehensive mold testing and inspection services identify hidden mold growth and moisture sources. We use advanced detection equipment to ensure your home is safe and mold-free. We conduct comprehensive air and surface sampling to identify the mold type and spore concentration. You'll receive a detailed report outlining our findings and a remediation plan tailored to your property. Early detection is key to preventing health issues and structural damage. We focus on finding the moisture source that is feeding the mold, not just the mold itself. Our unbiased inspections give you the facts you need to make informed decisions about your home's health.",
         featured: true
       },
       {
         name: 'Mold Removal',
         slug: 'mold-removal',
         shortDescription: 'Safe and thorough mold remediation.',
-        longDescription: "Safe and thorough mold remediation is our specialty. We contain the area, remove contaminated materials, and treat surfaces to prevent future growth, restoring a healthy environment.",
+        longDescription: "Safe and thorough mold remediation is our specialty. We contain the area, remove contaminated materials, and treat surfaces to prevent future growth, restoring a healthy environment. We contain the affected area to prevent spore cross-contamination to other parts of your home. Our team uses HEPA filtration and antimicrobial treatments to remove mold at the source. We handle the safe disposal of contaminated materials and thoroughly clean the space. Your health is our priority; we follow strict industry protocols to ensure a safe environment. We don't just cover up the problem; we physically remove the mold and treat the underlying surfaces to prevent regrowth. Rest easy knowing your home is clean, safe, and mold-free.",
         featured: true
       },
       {
         name: 'Water Damage Restoration',
         slug: 'water-damage',
         shortDescription: 'Complete water damage restoration services.',
-        longDescription: "Mold often follows water damage. Our restoration services address the root cause, drying out affected areas and repairing damage to prevent mold recurrence.",
+        longDescription: "Mold often follows water damage. Our restoration services address the root cause, drying out affected areas and repairing damage to prevent mold recurrence. We use industrial-grade dehumidifiers and air movers to restore normal humidity levels. Preventing mold starts with controlling moisture, and we act fast to protect your property. We carefully monitor the drying process with moisture meters to ensure every material reaches its dry standard. Ignoring water damage often leads to costly mold repairs down the road, so let us handle the drying professionally and completely.",
         featured: true
       },
       {
         name: 'Air Quality Testing',
         slug: 'air-quality-testing',
         shortDescription: 'Indoor air quality assessment.',
-        longDescription: "Breathe easier with our indoor air quality assessment. We test for mold spores and other allergens, providing detailed reports and recommendations for improvement."
+        longDescription: "Breathe easier with our indoor air quality assessment. We test for mold spores and other allergens, providing detailed reports and recommendations for improvement. Our testing helps identify sources of poor air quality, from humidity issues to ventilation problems. We provide actionable recommendations to create a healthier home for you and your family. Poor indoor air quality can aggravate allergies and asthma, making your home uncomfortable. We explain the lab results in plain English, empowering you to take the right steps toward cleaner, fresher air.",
       },
     ],
     faq: [
@@ -404,28 +404,28 @@ const industryPresets = {
         name: 'Water Damage Restoration',
         slug: 'water-damage',
         shortDescription: '24/7 water damage emergency response.',
-        longDescription: "We offer 24/7 emergency response for water damage. Our team extracts water, dries structures, and restores your property to pre-loss condition quickly and effectively.",
+        longDescription: "We offer 24/7 emergency response for water damage. Our team extracts water, dries structures, and restores your property to pre-loss condition quickly and effectively. We monitor moisture levels ensuring structural materials are completely dry. Trust us to handle your emergency with speed and compassion. Water can migrate quickly behind walls and under flooring, causing hidden damage that surface drying won't reach. We use specialized equipment to dry these hard-to-reach areas, preventing warping, rotting, and mold growth.",
         featured: true
       },
       {
         name: 'Fire Damage Restoration',
         slug: 'fire-damage',
         shortDescription: 'Complete fire and smoke damage restoration.',
-        longDescription: "Recovering from a fire is difficult. We handle smoke and soot removal, deodorization, and structural repairs to restore your home and peace of mind.",
+        longDescription: "Recovering from a fire is difficult. We handle smoke and soot removal, deodorization, and structural repairs to restore your home and peace of mind. Our process includes meticulous cleaning of salvageable items and safe disposal of damaged debris. We work closely with your insurance company to streamline the claims process. Fire damage is traumatic, but our respectful team works hard to return your home to normal as quickly as possible. We use ozone treatments and thermal fogging to eliminate stubborn smoke odors that can linger for years if not treated properly.",
         featured: true
       },
       {
         name: 'Storm Damage Restoration',
         slug: 'storm-damage',
         shortDescription: 'Emergency storm damage repair.',
-        longDescription: "When storms strike, we are here to help. From wind damage to flooding, our emergency restoration services secure your property and begin repairs immediately.",
+        longDescription: "When storms strike, we are here to help. From wind damage to flooding, our emergency restoration services secure your property and begin repairs immediately. Our team offers emergency board-up and tarping services to protect your home from the elements. we reconstruct damaged areas, matching your home's original design and quality. Mother Nature can be unpredictable, but our response is reliable and robust. We understand the stress of a storm-damaged home and prioritize getting a roof back over your head and your life back on track.",
         featured: true
       },
       {
         name: 'Contents Restoration',
         slug: 'contents-restoration',
         shortDescription: 'Salvage and restore your belongings.',
-        longDescription: "We don't just restore buildings; we save belongings too. Our contents restoration service cleans and deodorizes furniture, electronics, and personal items affected by disaster."
+        longDescription: "We don't just restore buildings; we save belongings too. Our contents restoration service cleans and deodorizes furniture, electronics, and personal items affected by disaster. Our secure facility provides safe storage while your home is being repaired. We treat your belongings with the utmost care, aiming to salvage sentimental and valuable items. Don't assume everything is lost; modern restoration techniques can save items that appear ruined. We inventory, pack, and transport your items with professional care, giving you one less thing to worry about during the restoration process.",
       },
     ],
     faq: [
@@ -445,28 +445,28 @@ const industryPresets = {
         name: 'Carpet Cleaning',
         slug: 'carpet-cleaning',
         shortDescription: 'Deep carpet cleaning for homes and businesses.',
-        longDescription: "Revitalize your carpets with our deep cleaning services. We remove tough stains, dirt, and allergens using eco-friendly solutions, leaving your carpets fresh and soft.",
+        longDescription: "Revitalize your carpets with our deep cleaning services. We remove tough stains, dirt, and allergens using eco-friendly solutions, leaving your carpets fresh and soft. Our high-temperature steam cleaning method kills germs and bacteria trapped deep in the fibers. We use fast-drying technology so you can walk on your floors again in hours, not days. Regular professional cleaning extends the life of your carpet and improves indoor air quality. We treat high-traffic areas with special care to restore their original texture and color.",
         featured: true
       },
       {
         name: 'Tile & Grout Cleaning',
         slug: 'tile-grout-cleaning',
         shortDescription: 'Restore your tile and grout to like-new condition.',
-        longDescription: "Restore the shine to your floors. Our specialized tile and grout cleaning removes embedded dirt and grime that regular mopping can't reach, making surfaces look new again.",
+        longDescription: "Restore the shine to your floors. Our specialized tile and grout cleaning removes embedded dirt and grime that regular mopping can't reach, making surfaces look new again. Porous grout lines absorb stains over time, becoming discolored and unsanitary. We use high-pressure extraction to float away contaminants and restore the original color. We can also seal your grout to protect it from future staining. Say goodbye to scrubbing on your hands and knees and hello to sparkling floors.",
         featured: true
       },
       {
         name: 'Upholstery Cleaning',
         slug: 'upholstery-cleaning',
         shortDescription: 'Professional furniture cleaning.',
-        longDescription: "Extend the life of your furniture with professional upholstery cleaning. We safely clean all fabric types, removing stains and odors to refresh your living space.",
+        longDescription: "Extend the life of your furniture with professional upholstery cleaning. We safely clean all fabric types, removing stains and odors to refresh your living space. From delicate microfibers to durable cotton blends, we have the right solution for every material. Our cleaning process removes body oils, pet dander, and dust mites that accumulate over time. We help your furniture look and smell like new again. Save money on replacement costs by revitalizing the pieces you already love.",
         featured: true
       },
       {
         name: 'Area Rug Cleaning',
         slug: 'area-rug-cleaning',
         shortDescription: 'Specialty cleaning for all rug types.',
-        longDescription: "We provide specialized care for area rugs, from wool to synthetic. our gentle but effective cleaning preserves colors and fibers while removing deep-set dirt."
+        longDescription: "We provide specialized care for area rugs, from wool to synthetic. our gentle but effective cleaning preserves colors and fibers while removing deep-set dirt. Rugs often trap more dirt than wall-to-wall carpet and require specific attention to prevent dye bleeding. We inspect every rug to determine the safest cleaning method, whether on-site or at our facility. We also offer fringe cleaning and protective treatments. Trust your fine textiles to our experienced hands.",
       },
     ],
     faq: [
@@ -486,28 +486,28 @@ const industryPresets = {
         name: 'Weekly Pool Maintenance',
         slug: 'weekly-maintenance',
         shortDescription: 'Complete weekly pool care service.',
-        longDescription: "Enjoy a pristine pool without the work. Our weekly maintenance includes skimming, vacuuming, chemical balancing, and equipment checks for a sparkling clean pool.",
+        longDescription: "Enjoy a pristine pool without the work. Our weekly maintenance includes skimming, vacuuming, chemical balancing, and equipment checks for a sparkling clean pool. We maintain precise chemical levels to prevent algae growth and protect your swimmers' skin and eyes. Our consistent care prolongs the life of your pool finish and equipment. You'll receive a digital report after every visit detailing what we did. Spend your weekends swimming, not scrubbing.",
         featured: true
       },
       {
         name: 'Pool Equipment Repair',
         slug: 'equipment-repair',
         shortDescription: 'Pump, filter, and heater repairs.',
-        longDescription: "Keep your pool running smoothly with our equipment repair services. We fix pumps, filters, heaters, and automation systems to ensure optimal performance.",
+        longDescription: "Keep your pool running smoothly with our equipment repair services. We fix pumps, filters, heaters, and automation systems to ensure optimal performance. A noisy pump or cold heater can ruin your pool experience. Our technicians carry common parts to resolve many issues in a single visit. We diagnose energy inefficiencies that could be costing you money. Don't let a breakdown interrupt your summer fun; call us for fast, reliable repairs.",
         featured: true
       },
       {
         name: 'Pool Opening & Closing',
         slug: 'opening-closing',
         shortDescription: 'Seasonal pool preparation.',
-        longDescription: "Make seasonal transitions easy. We handle professional pool opening in spring and winterization in fall, protecting your investment year-round.",
+        longDescription: "Make seasonal transitions easy. We handle professional pool opening in spring and winterization in fall, protecting your investment year-round. Proper closing is crucial to prevent freeze damage to pipes and equipment. For opening, we remove the cover, reassemble equipment, and shock the water to get it swim-ready fast. We inspect everything for winter wear and tear. Let us handle the heavy lifting of covers and chemicals.",
         featured: true
       },
       {
         name: 'Pool Remodeling',
         slug: 'pool-remodeling',
         shortDescription: 'Pool renovation and resurfacing.',
-        longDescription: "Transform your pool with our remodeling services. From resurfacing and tile replacement to adding water features, we upgrade your pool's aesthetics and functionality."
+        longDescription: "Transform your pool with our remodeling services. From resurfacing and tile replacement to adding water features, we upgrade your pool's aesthetics and functionality. Update your dated pool with modern finishes like pebble aggregate or glass tile. We can add LED lighting, waterfalls, or automation for a luxury resort feel. Our energy-efficient upgrades can also lower your monthly utility bills. Turn your backyard into the ultimate personal oasis.",
       },
     ],
     faq: [
@@ -527,34 +527,34 @@ const industryPresets = {
         name: 'Landscape Design',
         slug: 'landscape-design',
         shortDescription: 'Custom landscape design services.',
-        longDescription: "Our custom landscape design services bring your vision to life. We create beautiful, functional outdoor spaces tailored to your style and local climate.",
+        longDescription: "Our custom landscape design services bring your vision to life. We create beautiful, functional outdoor spaces tailored to your style and local climate. using 3D rendering tools, we help you visualize the final result before a single shovel hits the ground. We select native and drought-tolerant plants to ensure a sustainable, low-maintenance garden. From hardscapes to planting beds, every element is harmoniously integrated. specific attention to drainage and soil health ensures your landscape thrives for years to come.",
         featured: true
       },
       {
         name: 'Lawn Maintenance',
         slug: 'lawn-maintenance',
         shortDescription: 'Weekly lawn care and maintenance.',
-        longDescription: "Keep your lawn lush and healthy with our weekly maintenance. Mowing, edging, and fertilization ensure your yard looks its best throughout the season.",
+        longDescription: "Keep your lawn lush and healthy with our weekly maintenance. Mowing, edging, and fertilization ensure your yard looks its best throughout the season. We adjust our cutting height based on seasonal needs to promote deep root growth and drought resistance. Our team meticulously trims around obstacles and clears clippings for a manicured look. We also monitor for pests and diseases, creating a proactive treatment plan. Enjoy your weekends while we do the heavy lifting to keep your curb appeal high.",
         featured: true
       },
       {
         name: 'Hardscaping',
         slug: 'hardscaping',
         shortDescription: 'Patios, walkways, and retaining walls.',
-        longDescription: "Add structure and elegance with hardscaping. We design and install patios, walkways, retaining walls, and fire pits using high-quality stone and pavers.",
+        longDescription: "Add structure and elegance with hardscaping. We design and install patios, walkways, retaining walls, and fire pits using high-quality stone and pavers. proper base preparation is our priority, ensuring your hardscape remains level and stable through freeze-thaw cycles. We offer a wide variety of textures and colors to match your home's exterior. Whether you want a cozy gathering spot or a grand entrance, our masonry experts deliver durable beauty. Invest in permanent features that define and enhance your outdoor living area.",
         featured: true
       },
       {
         name: 'Irrigation Systems',
         slug: 'irrigation',
         shortDescription: 'Sprinkler installation and repair.',
-        longDescription: "Efficient watering is key to a healthy landscape. We design, install, and repair irrigation systems to ensure your plants get the right amount of water."
+        longDescription: "Efficient watering is key to a healthy landscape. We design, install, and repair irrigation systems to ensure your plants get the right amount of water. utilizing smart controllers and rain sensors, we minimize water waste and lower your utility bills. We provide seasonal start-ups and shut-downs to protect your pipes from freezing. Our systems deliver precise hydration to lawns and garden beds alike. Protect your landscape investment with automated, worry-free watering solutions.",
       },
       {
         name: 'Tree Service',
         slug: 'tree-service',
         shortDescription: 'Tree trimming, removal, and care.',
-        longDescription: "Maintain the health and safety of your trees. Our certified arborists offer trimming, pruning, and removal services to protect your property and enhance curb appeal."
+        longDescription: "Maintain the health and safety of your trees. Our certified arborists offer trimming, pruning, and removal services to protect your property and enhance curb appeal. We assess tree structural integrity to prevent potential storm damage or falls. utilizing proper pruning techniques promotes healthy growth and better fruit production. We also perform stump grinding and complete clean-up, leaving your yard safe and tidy. Trust us to care for the largest and most valuable plants in your landscape.",
       },
     ],
     faq: [
@@ -574,28 +574,28 @@ const industryPresets = {
         name: 'General Pest Control',
         slug: 'general-pest-control',
         shortDescription: 'Comprehensive pest elimination.',
-        longDescription: "Protect your home from unwanted guests. Our comprehensive pest control eliminates ants, spiders, roaches, and more, creating a bug-free environment.",
+        longDescription: "Protect your home from unwanted guests. Our comprehensive pest control eliminates ants, spiders, roaches, and more, creating a bug-free environment. We identify entry points and treat the perimeter of your home to prevent future infestations. Our customized service plans ensure year-round protection tailored to the specific pests in your area. We use safe, family-friendly products that are tough on bugs but gentle on your home. Say goodbye to creepy crawlies and hello to peace of mind.",
         featured: true
       },
       {
         name: 'Termite Treatment',
         slug: 'termite-treatment',
         shortDescription: 'Complete termite inspection and treatment.',
-        longDescription: "Termites cause billions in damage. Our termite inspections and treatments detect colonies early and provide long-lasting protection for your home's structure.",
+        longDescription: "Termites cause billions in damage. Our termite inspections and treatments detect colonies early and provide long-lasting protection for your home's structure. We use advanced baiting systems and liquid treatments to eliminate the entire colony, including the queen. Our annual inspections ensure that your home remains termite-free for years to come. Don't let these silent destroyers compromise your biggest investment. We provide a transferable warranty on our work, adding value to your property.",
         featured: true
       },
       {
         name: 'Rodent Control',
         slug: 'rodent-control',
         shortDescription: 'Mouse and rat elimination services.',
-        longDescription: "Eliminate mice and rats with our effective rodent control. We seal entry points and remove pests to prevent contamination and damage to your home.",
+        longDescription: "Eliminate mice and rats with our effective rodent control. We seal entry points and remove pests to prevent contamination and damage to your home. Rodents can chew through wires and insulation, posing a fire hazard and health risk. Our exclusionary methods keep them out for good, rather than just treating the symptoms. We safely trap and remove existing rodents and sanitize affect areas. reclaiming your home from these pests is our top priority.",
         featured: true
       },
       {
         name: 'Mosquito Control',
         slug: 'mosquito-control',
         shortDescription: 'Yard mosquito treatment programs.',
-        longDescription: "Reclaim your yard with our mosquito control services. Barrier sprays and treatment programs reduce mosquito populations, making outdoor time safe and enjoyable."
+        longDescription: "Reclaim your yard with our mosquito control services. Barrier sprays and treatment programs reduce mosquito populations, making outdoor time safe and enjoyable. Our treatments target breeding grounds and resting areas to break the mosquito life cycle. We offer flexible scheduling for special events or season-long protection. Protect your family from mosquito-borne illnesses like West Nile and Zika. Enjoy your backyard again without the constant buzzing and biting.",
       },
     ],
     faq: [
@@ -615,28 +615,28 @@ const industryPresets = {
         name: 'House Cleaning',
         slug: 'house-cleaning',
         shortDescription: 'Regular residential cleaning services.',
-        longDescription: "Come home to a spotless house. Our regular cleaning services cover dusting, vacuuming, mopping, and sanitizing, giving you more time to do what you love.",
+        longDescription: "Come home to a spotless house. Our regular cleaning services cover dusting, vacuuming, mopping, and sanitizing, giving you more time to do what you love. We work around your schedule, offering weekly, bi-weekly, or monthly visits. Our trusted team uses detailed checklists to ensure no corner is overlooked. We use green cleaning products that are safe for pets and children. Experience the joy of a consistently clean home without lifting a finger.",
         featured: true
       },
       {
         name: 'Deep Cleaning',
         slug: 'deep-cleaning',
         shortDescription: 'Thorough top-to-bottom cleaning.',
-        longDescription: "Our deep cleaning service targets hidden dirt and grime. We clean baseboards, inside appliances, and hard-to-reach areas for a truly thorough clean.",
+        longDescription: "Our deep cleaning service targets hidden dirt and grime. We clean baseboards, inside appliances, and hard-to-reach areas for a truly thorough clean. This service is perfect for spring cleaning or preparing for a special event. We scrub tile grout, wipe down ceiling fans, and sanitize light switches. It’s a reset button for your home’s cleanliness. Let us handle the heavy scrubbing so you can enjoy a fresh, rejuvenated living space.",
         featured: true
       },
       {
         name: 'Move In/Out Cleaning',
         slug: 'move-cleaning',
         shortDescription: 'Make your move stress-free.',
-        longDescription: "Make your move stress-free. Our move-in/out cleaning ensures your new home is ready or you get your deposit back, scrubbing every corner.",
+        longDescription: "Make your move stress-free. Our move-in/out cleaning ensures your new home is ready or you get your deposit back, scrubbing every corner. We understand the strict standards of landlords and new homeowners. We clean inside cabinets, drawers, and closets to ensure a blank slate. Focus on the logistics of your move while we handle the dirty work. Walk into your new chapter with a sparkling clean start.",
         featured: true
       },
       {
         name: 'Commercial Cleaning',
         slug: 'commercial-cleaning',
         shortDescription: 'Office and business cleaning.',
-        longDescription: "Maintain a professional image with our commercial cleaning. We keep offices, retail spaces, and facilities clean and sanitary for employees and customers."
+        longDescription: "Maintain a professional image with our commercial cleaning. We keep offices, retail spaces, and facilities clean and sanitary for employees and customers. A clean workplace boosts morale and productivity. We offer customized cleaning schedules, including after-hours service, to avoid disrupting your business. From restrooms to breakrooms, we maintain high standards of hygiene. Make a great first impression on every client who walks through your door.",
       },
     ],
     faq: [
@@ -656,28 +656,28 @@ const industryPresets = {
         name: 'Interior Painting',
         slug: 'interior-painting',
         shortDescription: 'Transform your indoor spaces.',
-        longDescription: "Transform your indoor spaces with professional interior painting. We offer color consultation, meticulous prep, and flawless finish for walls, ceilings, and trim.",
+        longDescription: "Transform your indoor spaces with professional interior painting. We offer color consultation, meticulous prep, and flawless finish for walls, ceilings, and trim. We protect your floors and furniture before a single can is opened. Our team repairs drywall imperfections, such as nail holes and cracks, ensuring a smooth canvas. We use premium low-VOC paints that are safe for your family and durable against wear and tear. A fresh coat of paint is the most cost-effective way to dramatically change the look and feel of your home.",
         featured: true
       },
       {
         name: 'Exterior Painting',
         slug: 'exterior-painting',
         shortDescription: 'Protect and beautify your home exterior.',
-        longDescription: "Boost curb appeal and protection with exterior painting. We use high-quality, weather-resistant paints to revitalize your home's siding and trim.",
+        longDescription: "Boost curb appeal and protection with exterior painting. We use high-quality, weather-resistant paints to revitalize your home's siding and trim. Proper preparation is our secret to a long-lasting finish; we power wash, scrape, and prime surfaces thoroughly. Our paints are specially formulated to resist fading, cracking, and peeling in harsh weather conditions. We paint siding, trim, shutters, and doors with precision and care. Protect your home's exterior envelope while making it the envy of the neighborhood.",
         featured: true
       },
       {
         name: 'Cabinet Painting',
         slug: 'cabinet-painting',
         shortDescription: 'Kitchen cabinet refinishing.',
-        longDescription: "Update your kitchen without a full remodel. Our cabinet painting and refinishing give your cabinets a factory-like finish at a fraction of the replacement cost.",
+        longDescription: "Update your kitchen without a full remodel. Our cabinet painting and refinishing give your cabinets a factory-like finish at a fraction of the replacement cost. We remove doors and drawer fronts to spray them in our controlled facility for a smooth, brush-free look. You can choose any color to match your style, from classic white to bold navy. We use durable, furniture-grade finishes that stand up to daily kitchen use. It’s a complete kitchen transformation without the demolition dust and weeks of downtime.",
         featured: true
       },
       {
         name: 'Commercial Painting',
         slug: 'commercial-painting',
         shortDescription: 'Business and commercial painting.',
-        longDescription: "We specialize in commercial painting for businesses. Our team works efficiently to minimize downtime while delivering durable, professional results."
+        longDescription: "We specialize in commercial painting for businesses. Our team works efficiently to minimize downtime while delivering durable, professional results. We handle large-scale projects like warehouses, office buildings, and retail centers. Our safety-trained crews are equipped with lifts and sprayers to tackle high ceilings and difficult access areas. We offer flexible scheduling, including nights and weekends, to keep your business running smoothly. Present a sharp, professional image to your clients with our expert commercial services.",
       },
     ],
     faq: [
@@ -697,28 +697,28 @@ const industryPresets = {
         name: 'Hardwood Flooring',
         slug: 'hardwood-flooring',
         shortDescription: 'Hardwood installation and refinishing.',
-        longDescription: "Add timeless elegance with hardwood flooring. We offer expert installation of solid and engineered wood, as well as refinishing to restore old floors.",
+        longDescription: "Add timeless elegance with hardwood flooring. We offer expert installation of solid and engineered wood, as well as refinishing to restore old floors. Wood floors add warmth and significant value to your home. We help you select the perfect species and stain to complement your decor. Our dustless sanding system keeps your home clean during the refinishing process. Whether you prefer the character of hand-scraped planks or the sleek look of smooth oak, we deliver a flawless installation that lasts for generations.",
         featured: true
       },
       {
         name: 'Tile Installation',
         slug: 'tile-installation',
         shortDescription: 'Tile flooring for any room.',
-        longDescription: "Upgrade your kitchen or bath with professional tile installation. We install ceramic, porcelain, and stone tile with precision alignment and grouting.",
+        longDescription: "Upgrade your kitchen or bath with professional tile installation. We install ceramic, porcelain, and stone tile with precision alignment and grouting. From intricate backsplashes to large-format floor tiles, our craftsmanship is second to none. We ensure a waterproof substrate for wet areas like showers and mudrooms. You can choose from a vast array of patterns, including herringbone and subway layouts. Tile is not only beautiful but also incredibly durable and easy to clean, making it a smart investment.",
         featured: true
       },
       {
         name: 'Luxury Vinyl Plank',
         slug: 'lvp-flooring',
         shortDescription: 'Durable LVP flooring installation.',
-        longDescription: "Get the look of wood or stone with durable Luxury Vinyl Plank (LVP). Our installation guarantees a waterproof, scratch-resistant floor perfect for high-traffic areas.",
+        longDescription: "Get the look of wood or stone with durable Luxury Vinyl Plank (LVP). Our installation guarantees a waterproof, scratch-resistant floor perfect for high-traffic areas. LVP is the fastest-growing flooring choice for busy families with pets and kids. It’s softer underfoot than tile and warmer than wood, providing comfort and quiet. We can install it over most existing subfloors, often in just one day. Enjoy the realistic texture and high-end look of wood without the maintenance concerns or fear of water damage.",
         featured: true
       },
       {
         name: 'Carpet Installation',
         slug: 'carpet-installation',
         shortDescription: 'Professional carpet installation.',
-        longDescription: "Enjoy comfort and warmth with new carpet. We provide professional installation of a wide range of styles and textures to suit any room."
+        longDescription: "Enjoy comfort and warmth with new carpet. We provide professional installation of a wide range of styles and textures to suit any room. From plush frieze to durable berber, we have the perfect carpet for your lifestyle. We use high-quality padding to extend the life of your carpet and improve sound insulation. Our team handles furniture moving and responsible disposal of your old flooring. Wake up to softness underfoot and create a cozy atmosphere in bedrooms and living areas with our expert installation.",
       },
     ],
     faq: [
@@ -738,28 +738,28 @@ const industryPresets = {
         name: 'Wood Fencing',
         slug: 'wood-fencing',
         shortDescription: 'Classic wood fence installation.',
-        longDescription: "Classic and versatile, wood fencing offers privacy and beauty. We design and install custom cedar and pine fences to define your property boundaries.",
+        longDescription: "Classic and versatile, wood fencing offers privacy and beauty. We design and install custom cedar and pine fences to define your property boundaries. We use pressure-treated lumber and galvanized fasteners to resist rot and rust. Choose from styles like privacy, shadowbox, or picket to limit visibility or enhance curb appeal. We set every post in concrete for maximum stability against wind. A wood fence provides a natural, sturdy barrier that can be stained or painted to match your home.",
         featured: true
       },
       {
         name: 'Vinyl Fencing',
         slug: 'vinyl-fencing',
         shortDescription: 'Low-maintenance vinyl fencing.',
-        longDescription: "Choose low-maintenance vinyl fencing for durability and style. It resists rotting and fading, providing a long-lasting solution with minimal upkeep.",
+        longDescription: "Choose low-maintenance vinyl fencing for durability and style. It resists rotting and fading, providing a long-lasting solution with minimal upkeep. Vinyl fencing is impervious to moisture and insects, making it a lifetime investment. It stays clean with just a quick hose-down, never needing paint or stain. We offer a variety of colors and textures, including wood-grain simulations. Enjoy complete privacy and security with a fence that looks brand new year after year.",
         featured: true
       },
       {
         name: 'Chain Link Fencing',
         slug: 'chain-link',
         shortDescription: 'Affordable chain link solutions.',
-        longDescription: "Secure your property affordably with chain link fencing. Ideal for pets and security, we offer galvanized and color-coated options.",
+        longDescription: "Secure your property affordably with chain link fencing. Ideal for pets and security, we offer galvanized and color-coated options. Chain link provides a robust barrier without blocking your view, perfect for large backyards. Our vinyl-coated options in black or green blend seamlessly with the landscape. It’s the most cost-effective way to keep pets in and intruders out. We install durable top rails and tension wire to prevent sagging, ensuring a secure perimeter for decades.",
         featured: true
       },
       {
         name: 'Fence Repair',
         slug: 'fence-repair',
         shortDescription: 'Fence repair and replacement.',
-        longDescription: "Extend the life of your fence with our repair services. We fix leaning posts, broken pickets, and sagging gates to keep your fence secure and attractive."
+        longDescription: "Extend the life of your fence with our repair services. We fix leaning posts, broken pickets, and sagging gates to keep your fence secure and attractive. Don't let a few broken boards compromise your security or curb appeal. We can match weathered wood to make repairs blend in seamlessly. We also adjust gate hardware for smooth operation. Regular maintenance and timely repairs can save you the cost of a full replacement, keeping your yard safe and enclosed.",
       },
     ],
     faq: [
