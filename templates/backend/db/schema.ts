@@ -1,4 +1,5 @@
 import { pgTable, serial, varchar, timestamp, text, boolean, jsonb, integer, index, uniqueIndex, uuid } from 'drizzle-orm/pg-core';
+import { relations } from 'drizzle-orm';
 
 export type ThemeType = 'light' | 'dark' | 'system';
 
@@ -960,3 +961,7 @@ export const dataImports = pgTable('data_imports', {
   completedAt: timestamp('completed_at'),
   createdAt: timestamp('created_at').defaultNow()
 });
+
+export const serviceContractsRelations = relations(serviceContracts, ({ one }) => ({
+  contact: one(contacts),
+}));

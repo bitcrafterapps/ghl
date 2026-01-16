@@ -11,17 +11,104 @@ interface ContactCardProps {
   onView?: (contact: Contact) => void;
   onEdit?: (contact: Contact) => void;
   onDelete?: (contact: Contact) => void;
+  viewMode?: 'grid' | 'list';
 }
 
-export function ContactCard({ contact, onView, onEdit, onDelete }: ContactCardProps) {
+export function ContactCard({ contact, viewMode = 'grid', onView, onEdit, onDelete }: ContactCardProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const statusColors = CONTACT_STATUS_COLORS[contact.status];
   
   const fullName = [contact.firstName, contact.lastName].filter(Boolean).join(' ');
   const location = [contact.city, contact.state].filter(Boolean).join(', ');
   
+  if (viewMode === 'list') {
+    return (
+      <div className={cn(
+        "group relative bg-[#1C1C1C]/80 backdrop-blur-sm rounded-xl border border-white/5 p-4 transition-all duration-300 hover:border-white/10 hover:bg-[#1C1C1C] hover:z-10 flex items-center gap-4",
+        menuOpen && "z-20"
+      )}>
+        {/* Name & Company */}
+        <div className="flex-1 min-w-[200px]">
+          <h3 className="text-base font-semibold text-white group-hover:text-blue-400 transition-colors truncate">
+            {fullName}
+          </h3>
+          {contact.contactCompanyName && (
+            <div className="flex items-center gap-1.5 mt-1 text-sm text-gray-400">
+              <Building2 className="w-3.5 h-3.5" />
+              <span className="truncate">{contact.contactCompanyName}</span>
+            </div>
+          )}
+        </div>
+
+        {/* Contact Info */}
+        <div className="flex-[2] hidden md:grid grid-cols-2 gap-4">
+          {contact.email && (
+            <a href={`mailto:${contact.email}`} className="flex items-center gap-2 text-sm text-gray-400 hover:text-blue-400 transition-colors truncate">
+              <Mail className="w-4 h-4 flex-shrink-0" />
+              <span className="truncate">{contact.email}</span>
+            </a>
+          )}
+          {contact.phone && (
+            <div className="flex items-center gap-2 text-sm text-gray-400">
+              <Phone className="w-4 h-4 flex-shrink-0" />
+              <span>{contact.phone}</span>
+            </div>
+          )}
+        </div>
+
+        {/* Status */}
+        <div className="w-32 flex-shrink-0">
+          <span className={cn(
+            'px-2.5 py-1 text-xs font-medium rounded-full border capitalize',
+            statusColors.bg,
+            statusColors.text,
+            statusColors.border
+          )}>
+            {contact.status.replace('_', ' ')}
+          </span>
+        </div>
+
+        {/* Actions Menu */}
+        <div className="relative">
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
+          >
+            <MoreVertical className="w-4 h-4" />
+          </button>
+          
+          {menuOpen && (
+            <>
+              <div className="fixed inset-0 z-10" onClick={() => setMenuOpen(false)} />
+              <div className="absolute right-0 top-8 z-20 w-36 bg-[#2A2A2A] rounded-lg border border-white/10 shadow-xl py-1 animate-in fade-in slide-in-from-top-2 duration-200">
+                {onView && (
+                  <button onClick={() => { onView(contact); setMenuOpen(false); }} className="w-full px-3 py-2 text-left text-sm text-gray-300 hover:text-white hover:bg-white/5 flex items-center gap-2">
+                    <Eye className="w-4 h-4" /> View
+                  </button>
+                )}
+                {onEdit && (
+                  <button onClick={() => { onEdit(contact); setMenuOpen(false); }} className="w-full px-3 py-2 text-left text-sm text-gray-300 hover:text-white hover:bg-white/5 flex items-center gap-2">
+                    <Edit className="w-4 h-4" /> Edit
+                  </button>
+                )}
+                {onDelete && (
+                  <button onClick={() => { onDelete(contact); setMenuOpen(false); }} className="w-full px-3 py-2 text-left text-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 flex items-center gap-2">
+                    <Trash2 className="w-4 h-4" /> Delete
+                  </button>
+                )}
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="group relative bg-[#1C1C1C]/80 backdrop-blur-sm rounded-xl border border-white/5 p-5 transition-all duration-300 hover:border-white/10 hover:bg-[#1C1C1C] hover:shadow-lg hover:shadow-black/20">
+    <div className={cn(
+      "group relative bg-[#1C1C1C]/80 backdrop-blur-sm rounded-xl border border-white/5 p-5 transition-all duration-300 hover:border-white/10 hover:bg-[#1C1C1C] hover:shadow-lg hover:shadow-black/20 hover:z-10",
+      menuOpen && "z-20"
+    )}>
       {/* Status Badge */}
       <div className="absolute top-4 right-4 flex items-center gap-2">
         <span className={cn(

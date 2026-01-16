@@ -194,6 +194,7 @@ export default function ContactsPage() {
                 onView={handleViewContact}
                 onEdit={(c) => setEditingContact(c)}
                 onDelete={(c) => setDeleteConfirm(c)}
+                viewMode={viewMode}
               />
             ))}
           </div>

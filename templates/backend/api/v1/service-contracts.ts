@@ -29,8 +29,15 @@ const createContractSchema = z.object({
 const updateContractSchema = createContractSchema.partial();
 
 // Get all contracts
-router.get('/', authenticate, async (req, res) => {
+router.get('/', (req, res, next) => {
+  const debugLog = require('path').join(process.cwd(), 'service-contract-debug.log');
+  require('fs').appendFileSync(debugLog, `[${new Date().toISOString()}] PRE-AUTH GET /service-contracts\n`);
+  next();
+}, authenticate, async (req, res) => {
   try {
+    const debugLog = require('path').join(process.cwd(), 'service-contract-debug.log');
+    require('fs').appendFileSync(debugLog, `[${new Date().toISOString()}] GET /service-contracts HIT. User: ${JSON.stringify(req.user)}\n`);
+    
     const companyId = await getUserCompanyId(req.user!.userId);
     if (!companyId) return res.status(400).json({ error: 'User not associated with a company' });
 
@@ -56,8 +63,16 @@ router.get('/', authenticate, async (req, res) => {
     const result = await service.findAll(companyId, filters);
     res.json({ data: result });
   } catch (error) {
+    const errorLogPath = require('path').join(process.cwd(), 'service-contract-error.log');
+    const logData = `[${new Date().toISOString()}] ${error instanceof Error ? error.stack : String(error)}\n`;
+    require('fs').appendFileSync(errorLogPath, logData);
+    
     console.error('Error fetching contracts:', error);
-    res.status(500).json({ error: 'Failed to fetch contracts' });
+    res.status(500).json({ 
+      error: 'Failed to fetch contracts',
+      details: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined
+    });
   }
 });
 

@@ -28,7 +28,13 @@ import {
   ExternalLink,
   Receipt,
   CreditCard,
+  X,
+  ImageIcon,
 } from 'lucide-react';
+import NextImage from 'next/image';
+import { useJobPhotos } from '@/hooks/useJobPhotos';
+import { PhotoCard } from '@/components/job-photos/PhotoCard';
+import type { JobPhoto } from '@/types/job-photos';
 import { cn } from '@/lib/utils';
 
 interface JobDetailPageProps {
@@ -49,6 +55,11 @@ export default function JobDetailPage({ params }: JobDetailPageProps) {
     getActivities, 
     addActivity 
   } = useJobs();
+
+  const {
+    photos,
+    fetchPhotos,
+  } = useJobPhotos();
   
   const [job, setJob] = useState<Job | null>(null);
   const [activities, setActivities] = useState<JobActivity[]>([]);
@@ -61,10 +72,12 @@ export default function JobDetailPage({ params }: JobDetailPageProps) {
   const [activityTitle, setActivityTitle] = useState('');
   const [activityDescription, setActivityDescription] = useState('');
   const [statusMenuOpen, setStatusMenuOpen] = useState(false);
+  const [viewPhoto, setViewPhoto] = useState<JobPhoto | null>(null);
   
   useEffect(() => {
     loadJob();
     loadActivities();
+    fetchPhotos(id);
   }, [id]);
   
   const loadJob = async () => {
@@ -489,6 +502,49 @@ export default function JobDetailPage({ params }: JobDetailPageProps) {
                 )}
               </div>
             </div>
+
+            {/* Job Photos */}
+            <div className="bg-[#1C1C1C]/80 backdrop-blur-sm rounded-xl border border-white/5 overflow-hidden">
+              <div className="flex items-center justify-between px-6 py-4 border-b border-white/5">
+                <h3 className="text-lg font-semibold text-white">Job Photos</h3>
+                <div className="flex items-center gap-3">
+                  {photos.length > 0 && (
+                     <Link 
+                       href={`/job-photos?jobId=${job.id}`}
+                       className="text-sm text-purple-400 hover:text-purple-300"
+                     >
+                       View All
+                     </Link>
+                  )}
+                  <Link
+                    href={`/job-photos?jobId=${job.id}&action=upload`}
+                    className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-pink-400 bg-pink-500/10 hover:bg-pink-500/20 rounded-lg transition-colors"
+                  >
+                    <Plus className="w-4 h-4" />
+                    Add Photo
+                  </Link>
+                </div>
+              </div>
+              
+              <div className="p-6">
+                {photos.length === 0 ? (
+                  <div className="text-center py-8">
+                     <ImageIcon className="w-12 h-12 text-gray-600 mx-auto mb-3" />
+                     <p className="text-gray-500">No photos uploaded yet</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {photos.slice(0, 4).map(photo => (
+                       <PhotoCard 
+                         key={photo.id} 
+                         photo={photo} 
+                         onView={setViewPhoto}
+                       />
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
             
             {/* Notes */}
             {job.notes && (
@@ -615,10 +671,13 @@ export default function JobDetailPage({ params }: JobDetailPageProps) {
               <h3 className="text-sm font-medium text-gray-400 uppercase tracking-wider">Quick Actions</h3>
               
               <div className="space-y-2">
-                <button className="w-full flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-left">
+                <Link 
+                  href={`/job-photos?jobId=${job.id}&action=upload`}
+                  className="w-full flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-left"
+                >
                   <Image className="w-4 h-4 text-pink-400" />
                   <span className="text-sm text-white">Add Photos</span>
-                </button>
+                </Link>
                 <button className="w-full flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-left">
                   <Receipt className="w-4 h-4 text-yellow-400" />
                   <span className="text-sm text-white">Create Invoice</span>
@@ -670,6 +729,36 @@ export default function JobDetailPage({ params }: JobDetailPageProps) {
                 Delete
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* View Photo Modal */}
+      {viewPhoto && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80">
+          <button
+            onClick={() => setViewPhoto(null)}
+            className="absolute top-4 right-4 p-2 text-white/80 hover:text-white"
+          >
+            <X className="w-8 h-8" />
+          </button>
+          <div className="relative max-w-4xl max-h-[90vh]">
+            <NextImage
+              src={viewPhoto.blobUrl}
+              alt={viewPhoto.title || 'Job photo'}
+              width={1200}
+              height={800}
+              className="max-w-full max-h-[90vh] object-contain rounded-lg"
+              unoptimized={viewPhoto.blobUrl.includes('localhost')}
+            />
+            {viewPhoto.title && (
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                <p className="text-white font-medium">{viewPhoto.title}</p>
+                {viewPhoto.caption && (
+                  <p className="text-gray-300 text-sm">{viewPhoto.caption}</p>
+                )}
+              </div>
+            )}
           </div>
         </div>
       )}

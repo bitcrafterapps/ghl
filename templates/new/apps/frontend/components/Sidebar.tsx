@@ -147,7 +147,6 @@ export function Sidebar({
     navigation.splice(2, 0,
       { name: 'Contacts', href: '/contacts', icon: Contact2 },
       { name: 'Jobs', href: '/jobs', icon: FolderKanban },
-      { name: 'Job Photos', href: '/job-photos', icon: Camera },
       { name: 'Service Contracts', href: '/service-contracts', icon: ScrollText },
       { name: 'Calendar', href: '/calendar', icon: Calendar }
     );

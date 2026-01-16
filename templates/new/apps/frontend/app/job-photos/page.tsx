@@ -3,7 +3,7 @@
 import { Layout } from '@/components/Layout';
 
 import { useEffect, useState, Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useJobPhotos } from '@/hooks/useJobPhotos';
@@ -26,8 +26,10 @@ import {
 import { cn } from '@/lib/utils';
 
 function JobPhotosContent() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const jobIdParam = searchParams.get('jobId');
+  const actionParam = searchParams.get('action');
   
   const {
     photos,
@@ -65,6 +67,12 @@ function JobPhotosContent() {
       }
     }
   }, [jobIdParam, jobs]);
+
+  useEffect(() => {
+    if (actionParam === 'upload' && selectedJob) {
+      setShowUpload(true);
+    }
+  }, [actionParam, selectedJob]);
   
   const handleSelectJob = (job: Job) => {
     setSelectedJob(job);
@@ -100,6 +108,15 @@ function JobPhotosContent() {
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
+              {selectedJob && (
+                <Link
+                  href={`/jobs/${selectedJob.id}`}
+                  className="p-2 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors mr-2"
+                  title="Back to Job"
+                >
+                  <ArrowLeft className="w-5 h-5" />
+                </Link>
+              )}
               <div className="p-2.5 bg-gradient-to-br from-pink-500/20 to-rose-500/20 rounded-xl">
                 <ImageIcon className="w-6 h-6 text-pink-400" />
               </div>
@@ -157,6 +174,16 @@ function JobPhotosContent() {
               <>
                 <div className="fixed inset-0 z-10" onClick={() => setShowJobSelector(false)} />
                 <div className="absolute top-full left-0 mt-2 w-full max-w-md max-h-80 overflow-y-auto bg-[#1C1C1C] border border-white/10 rounded-xl shadow-xl z-20">
+                  <button
+                    onClick={() => {
+                      setSelectedJob(null);
+                      setShowJobSelector(false);
+                      router.push('/job-photos');
+                    }}
+                    className="w-full px-4 py-3 text-left hover:bg-white/5 transition-colors border-b border-white/5 text-gray-400 font-medium sticky top-0 bg-[#1C1C1C] z-10"
+                  >
+                    Clear Selection / View All
+                  </button>
                   {jobs.length === 0 ? (
                     <div className="p-4 text-center text-gray-500">No jobs available</div>
                   ) : (

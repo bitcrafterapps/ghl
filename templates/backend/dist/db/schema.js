@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.dataImports = exports.dataExports = exports.auditLogs = exports.notificationPreferences = exports.notifications = exports.jobPhotoBeforeAfterPairs = exports.jobPhotos = exports.serviceContracts = exports.jobActivities = exports.jobs = exports.calendarEvents = exports.contactActivities = exports.contacts = exports.reviews = exports.galleryImages = exports.transactions = exports.tokenUsage = exports.siteSettings = exports.pushHistory = exports.deployments = exports.chatMessages = exports.generations = exports.prdMessages = exports.prds = exports.projects = exports.emailLogs = exports.emailTemplates = exports.activityLog = exports.companyUsers = exports.companies = exports.users = void 0;
+exports.serviceContractsRelations = exports.dataImports = exports.dataExports = exports.auditLogs = exports.notificationPreferences = exports.notifications = exports.jobPhotoBeforeAfterPairs = exports.jobPhotos = exports.serviceContracts = exports.jobActivities = exports.jobs = exports.calendarEvents = exports.contactActivities = exports.contacts = exports.reviews = exports.galleryImages = exports.transactions = exports.tokenUsage = exports.siteSettings = exports.pushHistory = exports.deployments = exports.chatMessages = exports.generations = exports.prdMessages = exports.prds = exports.projects = exports.emailLogs = exports.emailTemplates = exports.activityLog = exports.companyUsers = exports.companies = exports.users = void 0;
 const pg_core_1 = require("drizzle-orm/pg-core");
+const drizzle_orm_1 = require("drizzle-orm");
 exports.users = (0, pg_core_1.pgTable)('users', {
     id: (0, pg_core_1.serial)('id').primaryKey(),
     email: (0, pg_core_1.varchar)('email', { length: 255 }).notNull().unique(),
@@ -672,3 +673,6 @@ exports.dataImports = (0, pg_core_1.pgTable)('data_imports', {
     completedAt: (0, pg_core_1.timestamp)('completed_at'),
     createdAt: (0, pg_core_1.timestamp)('created_at').defaultNow()
 });
+exports.serviceContractsRelations = (0, drizzle_orm_1.relations)(exports.serviceContracts, ({ one }) => ({
+    contact: one(exports.contacts),
+}));

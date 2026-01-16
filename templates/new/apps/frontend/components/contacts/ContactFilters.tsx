@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { ContactFilters as ContactFiltersType, ContactStatus, ContactSource } from '@/types/contacts';
 import { Search, Filter, X, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -46,6 +46,17 @@ export function ContactFiltersBar({ filters, onFiltersChange, totalCount }: Cont
     e.preventDefault();
     onFiltersChange({ ...filters, search: searchValue });
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      console.log('Debouncing search:', searchValue);
+      if (searchValue !== filters.search) {
+        onFiltersChange({ ...filters, search: searchValue });
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [searchValue, filters, onFiltersChange]);
   
   const handleStatusChange = (status: ContactStatus) => {
     const currentStatuses = Array.isArray(filters.status) 

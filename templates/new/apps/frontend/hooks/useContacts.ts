@@ -97,6 +97,7 @@ export function useContacts(options: UseContactsOptions = {}): ContactsState & C
     
     try {
       const queryString = buildQueryString(currentFilters, currentPagination);
+      console.log('Fetching contacts with query:', queryString);
       const response = await fetch(`${API_BASE}/api/v1/contacts?${queryString}`, {
         headers: getAuthHeaders(),
       });

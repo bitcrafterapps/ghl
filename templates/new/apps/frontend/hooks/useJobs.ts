@@ -146,7 +146,7 @@ export function useJobs(options: UseJobsOptions = {}): JobsState & JobsActions {
       }
       
       const result = await response.json();
-      return (Array.isArray(result.data) ? result.data : []) as KanbanColumn[];
+      return (Array.isArray(result.data?.columns) ? result.data.columns : []) as KanbanColumn[];
     } catch (error) {
       setState(prev => ({
         ...prev,

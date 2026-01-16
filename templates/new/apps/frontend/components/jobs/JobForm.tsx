@@ -115,7 +115,12 @@ export function JobForm({ job, initialStatus, contactId, onSubmit, onCancel, isL
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
-      await onSubmit(formData);
+      // Ensure empty strings for UUID fields are converted to undefined
+      const submissionData = {
+        ...formData,
+        contactId: formData.contactId || undefined,
+      };
+      await onSubmit(submissionData);
     }
   };
   

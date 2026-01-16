@@ -20,14 +20,8 @@ export function Layout({ children, isAuthenticated, isAdmin, noPadding }: Layout
   const router = useRouter();
   const { theme } = useTheme();
   const { userProfile, refreshProfile, clearProfile } = useAuth();
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => {
-    // Initialize from localStorage or default to false
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem('sidebarCollapsed');
-      return stored ? stored === 'true' : false;
-    }
-    return false;
-  });
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Refresh profile when authenticated
@@ -35,6 +29,13 @@ export function Layout({ children, isAuthenticated, isAdmin, noPadding }: Layout
     if (isAuthenticated) {
       refreshProfile();
     }
+    
+    // Initialize sidebar state from local storage
+    const stored = localStorage.getItem('sidebarCollapsed');
+    if (stored !== null) {
+      setIsSidebarCollapsed(stored === 'true');
+    }
+    setIsLoaded(true);
   }, [isAuthenticated, refreshProfile]);
 
   const handleLogout = (isMobileLogout = false) => {
@@ -50,9 +51,12 @@ export function Layout({ children, isAuthenticated, isAdmin, noPadding }: Layout
   };
 
   // Persist sidebar state
+  // Persist sidebar state
   useEffect(() => {
-    localStorage.setItem('sidebarCollapsed', isSidebarCollapsed.toString());
-  }, [isSidebarCollapsed]);
+    if (isLoaded) {
+      localStorage.setItem('sidebarCollapsed', isSidebarCollapsed.toString());
+    }
+  }, [isSidebarCollapsed, isLoaded]);
 
   // Handle initial screen size and resize
   useEffect(() => {
