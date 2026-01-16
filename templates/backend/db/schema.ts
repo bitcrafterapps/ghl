@@ -718,7 +718,8 @@ export const serviceContracts = pgTable('service_contracts', {
   // Financial
   amount: integer('amount').notNull(), // in cents
   currency: varchar('currency', { length: 3 }).default('USD'),
-  frequency: varchar('frequency', { length: 30 }).default('monthly').$type<ContractFrequency>(),
+  billingFrequency: varchar('frequency', { length: 30 }).default('monthly').$type<ContractFrequency>(),
+  serviceFrequency: varchar('service_frequency', { length: 30 }).default('monthly').$type<ContractFrequency>(),
   
   // Duration
   startDate: timestamp('start_date').notNull(),

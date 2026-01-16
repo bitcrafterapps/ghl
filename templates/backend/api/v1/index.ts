@@ -162,11 +162,7 @@ logger.debug('Mounting calendar routes at /calendar');
 router.use('/calendar', calendarRouter);
 
 logger.debug('Mounting service-contracts routes at /service-contracts');
-router.use('/service-contracts', (req, res, next) => {
-  const debugLog = require('path').join(process.cwd(), 'service-contract-debug.log');
-  require('fs').appendFileSync(debugLog, `[${new Date().toISOString()}] V1 ROUTER /service-contracts MATCHED\n`);
-  next();
-}, serviceContractsRouter);
+router.use('/service-contracts', serviceContractsRouter);
 
 logger.debug('Mounting job-photos routes at /job-photos');
 router.use('/job-photos', jobPhotosRouter);

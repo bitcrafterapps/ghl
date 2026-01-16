@@ -504,7 +504,8 @@ exports.serviceContracts = (0, pg_core_1.pgTable)('service_contracts', {
     // Financial
     amount: (0, pg_core_1.integer)('amount').notNull(), // in cents
     currency: (0, pg_core_1.varchar)('currency', { length: 3 }).default('USD'),
-    frequency: (0, pg_core_1.varchar)('frequency', { length: 30 }).default('monthly').$type(),
+    billingFrequency: (0, pg_core_1.varchar)('frequency', { length: 30 }).default('monthly').$type(),
+    serviceFrequency: (0, pg_core_1.varchar)('service_frequency', { length: 30 }).default('monthly').$type(),
     // Duration
     startDate: (0, pg_core_1.timestamp)('start_date').notNull(),
     endDate: (0, pg_core_1.timestamp)('end_date'),
