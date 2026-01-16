@@ -9,6 +9,7 @@ import { PublicLayout } from "@/components/PublicLayout";
 import { services, siteConfig } from "@/data/config";
 import { Button } from "@/components/ui/button";
 import { formatPhone, formatPhoneLink } from "@/lib/utils";
+import { PageHero } from "@/components/sections/PageHero";
 
 export default function ServiceDetailPage() {
   const params = useParams();
@@ -37,8 +38,7 @@ export default function ServiceDetailPage() {
   return (
     <PublicLayout>
       {/* Hero Section */}
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 min-h-[600px] flex items-center overflow-hidden">
+      <PageHero className="min-h-[600px] flex items-center py-0" noContainer={true}>
         <div className="container-custom relative z-10 py-20 lg:py-24">
           <div className="grid lg:grid-cols-2 gap-12">
             <motion.div
@@ -110,7 +110,7 @@ export default function ServiceDetailPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-gray-900/50 to-transparent" />
         </motion.div>
-      </section>
+      </PageHero>
 
       {/* Service Details */}
       <section className="section-padding bg-white">

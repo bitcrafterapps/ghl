@@ -7,6 +7,7 @@ import { PublicLayout } from "@/components/PublicLayout";
 import { siteConfig } from "@/data/config";
 import { Button } from "@/components/ui/button";
 import { formatPhone, formatPhoneLink } from "@/lib/utils";
+import { PageHero } from "@/components/sections/PageHero";
 
 export default function ServiceAreasPage() {
   const areas = siteConfig.serviceArea.areas;
@@ -14,34 +15,32 @@ export default function ServiceAreasPage() {
   return (
     <PublicLayout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-20">
-        <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center max-w-3xl mx-auto"
-          >
-            <h1 className="text-4xl sm:text-5xl font-heading font-bold text-white mb-6">
-              Areas We Serve
-            </h1>
-            <p className="text-xl text-white/80 mb-8">
-              {siteConfig.company.name} provides professional {siteConfig.industry.type.toLowerCase()} services 
-              throughout {siteConfig.serviceArea.primaryCity} and the surrounding {siteConfig.serviceArea.radius}-mile area.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button size="lg" asChild>
-                <Link href="/free-estimate">Get Free Estimate</Link>
-              </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-gray-900" asChild>
-                <a href={formatPhoneLink(siteConfig.company.phone)}>
-                  <Phone className="h-5 w-5 mr-2" />
-                  {formatPhone(siteConfig.company.phone)}
-                </a>
-              </Button>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center max-w-3xl mx-auto"
+        >
+          <h1 className="text-4xl sm:text-5xl font-heading font-bold text-white mb-6">
+            Areas We Serve
+          </h1>
+          <p className="text-xl text-white/80 mb-8">
+            {siteConfig.company.name} provides professional {siteConfig.industry.type.toLowerCase()} services 
+            throughout {siteConfig.serviceArea.primaryCity} and the surrounding {siteConfig.serviceArea.radius}-mile area.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Button size="lg" asChild>
+              <Link href="/free-estimate">Get Free Estimate</Link>
+            </Button>
+            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-gray-900" asChild>
+              <a href={formatPhoneLink(siteConfig.company.phone)}>
+                <Phone className="h-5 w-5 mr-2" />
+                {formatPhone(siteConfig.company.phone)}
+              </a>
+            </Button>
+          </div>
+        </motion.div>
+      </PageHero>
 
       {/* Service Areas Grid */}
       <section className="section-padding bg-white">

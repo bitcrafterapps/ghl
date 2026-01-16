@@ -10,7 +10,16 @@ export const getApiUrl = (): string => {
 };
 
 /**
+ * Get the unique site ID for multi-tenant scoping
+ * This is set during site generation and stored in .env
+ */
+export const getSiteId = (): string | undefined => {
+  return process.env.NEXT_PUBLIC_SITE_ID;
+};
+
+/**
  * Make a fetch request to the API with the correct base URL
+ * Automatically includes x-site-id header for multi-tenant site scoping
  */
 export const fetchApi = async (
   endpoint: string,
@@ -18,13 +27,21 @@ export const fetchApi = async (
 ): Promise<Response> => {
   const apiUrl = getApiUrl();
   const url = `${apiUrl}${endpoint}`;
+  const siteId = getSiteId();
   
   // Log the request details
   console.log(`API Request: ${options.method || 'GET'} ${url}`);
   
+  // Merge headers with x-site-id for multi-tenant scoping
+  const headers: HeadersInit = {
+    ...(options.headers as Record<string, string> || {}),
+    ...(siteId ? { 'x-site-id': siteId } : {})
+  };
+  
   try {
     const response = await fetch(url, {
       ...options,
+      headers,
       // Add credentials: 'include' to ensure cookies are sent
       credentials: 'include'
     });
@@ -200,13 +217,15 @@ export const fetchCurrentUserProfile = async (token: string): Promise<any> => {
       throw new Error('Invalid response format');
     }
     
-    if (!result.data) {
+    if (!result.data && !result.id) {
       console.error('API: Invalid profile response format:', result);
       throw new Error('Invalid profile response format');
     }
     
-    console.log('API: Profile fetched successfully:', result.data);
-    return result.data;
+    // API may return data directly or wrapped in 'data' property
+    const profileData = result.data || result;
+    console.log('API: Profile fetched successfully:', profileData);
+    return profileData;
   } catch (error) {
     console.error('API: Error in fetchCurrentUserProfile:', error);
     throw error;
@@ -234,5 +253,6 @@ export const fetchUserProfileById = async (userId: number | string, token: strin
     throw new Error(`Failed to fetch user profile: ${response.status} ${response.statusText}`);
   }
   const result = await response.json();
-  return result.data;
+  // API may return data directly or wrapped in 'data' property
+  return result.data || result;
 }; 

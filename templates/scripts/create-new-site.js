@@ -902,6 +902,9 @@ function configToTokenMap(config) {
   tokenMap['ACCENT_COLOR'] = config.branding?.accentColor || '#f59e0b';
   tokenMap['HEADER_FOOTER_BG'] = config.branding?.headerFooterBg || '#1e293b';
   tokenMap['HEADER_FOOTER_TEXT'] = config.branding?.headerFooterText || '#ffffff';
+  tokenMap['HERO_BG_FROM'] = config.branding?.heroBgFrom || ''; // Empty = default gradient
+  tokenMap['HERO_BG_TO'] = config.branding?.heroBgTo || ''; // Empty = default gradient
+  tokenMap['HERO_PATTERN'] = config.branding?.heroPattern || 'none'; // Default = no pattern
 
   // Company icon/tagline tokens with smart defaults based on industry
   const industryIcons = {

@@ -77,6 +77,7 @@ export class GalleryImageService {
       const [image] = await db.insert(galleryImages).values({
         userId: actorUserId || null,
         companyId: metadata.companyId || null,
+        siteId: metadata.siteId || null, // Create with siteId
         title: metadata.title || filename,
         description: metadata.description || null,
         altText: metadata.altText || metadata.title || filename,
@@ -129,6 +130,10 @@ export class GalleryImageService {
 
       if (params.companyId) {
         conditions.push(eq(galleryImages.companyId, params.companyId));
+      }
+
+      if (params.siteId) {
+        conditions.push(eq(galleryImages.siteId, params.siteId));
       }
 
       let query = db.select().from(galleryImages);
@@ -347,13 +352,30 @@ export class GalleryImageService {
   /**
    * Get distinct categories
    */
-  static async getCategories(): Promise<string[]> {
+  static async getCategories(siteId?: string): Promise<string[]> {
     try {
-      const results = await db
+      let query = db
         .selectDistinct({ category: galleryImages.category })
         .from(galleryImages)
         .where(sql`${galleryImages.category} IS NOT NULL`);
-
+      
+      if (siteId) {
+        // We can't easily chain .where() after .where() with Drizzle's query builder this way 
+        // if using the selectDistinct shorthand, but let's try constructing conditions first
+        // Refactoring to use conditions array similar to getImages
+        
+        const conditions = [sql`${galleryImages.category} IS NOT NULL`];
+        conditions.push(eq(galleryImages.siteId, siteId));
+        
+        const results = await db
+          .selectDistinct({ category: galleryImages.category })
+          .from(galleryImages)
+          .where(and(...conditions));
+          
+        return results.map(r => r.category).filter((c): c is string => c !== null);
+      }
+      
+      const results = await query;
       return results.map(r => r.category).filter((c): c is string => c !== null);
     } catch (error) {
       logger.error('Error fetching categories:', error);
@@ -369,6 +391,7 @@ export class GalleryImageService {
       id: image.id,
       userId: image.userId,
       companyId: image.companyId,
+      siteId: image.siteId,
       title: image.title,
       description: image.description,
       altText: image.altText,

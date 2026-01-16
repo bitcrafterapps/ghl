@@ -20,6 +20,7 @@ const readline = require('readline');
 const { execSync } = require('child_process');
 const { Pool } = require('pg');
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 
 const TEMPLATES_DIR = path.resolve(__dirname, '..');
 const BASE_TEMPLATE = path.join(TEMPLATES_DIR, 'new', 'apps', 'frontend');
@@ -915,6 +916,9 @@ function configToTokenMap(config) {
   tokenMap['ACCENT_COLOR'] = config.branding?.accentColor || '#f59e0b';
   tokenMap['HEADER_FOOTER_BG'] = config.branding?.headerFooterBg || '#1e293b';
   tokenMap['HEADER_FOOTER_TEXT'] = config.branding?.headerFooterText || '#ffffff';
+  tokenMap['HERO_BG_FROM'] = config.branding?.heroBgFrom || ''; // Empty = default gradient
+  tokenMap['HERO_BG_TO'] = config.branding?.heroBgTo || ''; // Empty = default gradient
+  tokenMap['HERO_PATTERN'] = config.branding?.heroPattern || 'none'; // Default = no pattern
 
   // Company icon/tagline tokens with smart defaults based on industry
   const industryIcons = {
@@ -1169,6 +1173,11 @@ async function main() {
   log(`Loading configuration from ${jsonConfigPath}...`, 'cyan');
   const loadedConfig = JSON.parse(fs.readFileSync(jsonConfigPath, 'utf8'));
 
+  // Generate unique site ID for multi-tenant scoping
+  const siteId = crypto.randomUUID();
+  loadedConfig.siteId = siteId; // Assign to loadedConfig first, then merge
+  log(`\n✓ Generated Site ID: ${siteId}`, 'green');
+
   // Build Default Config to ensure no missing tokens
   const indSlug = loadedConfig.industry?.slug;
   let bType = 'trades';
@@ -1353,6 +1362,17 @@ async function main() {
   const tokenMap = configToTokenMap(config);
   const stats = processFiles(destFolder, tokenMap);
   log(`✓ Replaced tokens in ${stats.modified} files`, 'green');
+
+  // Create .env file with site ID
+  const envContent = `# Auto-generated environment configuration
+# Unique Site ID for multi-tenant site scoping
+NEXT_PUBLIC_SITE_ID=${siteId}
+
+# API URL (configure for production)
+NEXT_PUBLIC_API_URL=http://localhost:3001
+`;
+  fs.writeFileSync(path.join(destFolder, '.env'), envContent);
+  log('✓ Created .env file with site ID', 'green');
 
   // Inject arrays in config.ts
   const configFilePath = path.join(destFolder, 'data', 'config.ts');

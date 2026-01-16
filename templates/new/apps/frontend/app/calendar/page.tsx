@@ -24,6 +24,7 @@ import {
   X,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { SubHeader } from '@/components/SubHeader';
 
 const MONTHS = [
   'January', 'February', 'March', 'April', 'May', 'June',
@@ -177,41 +178,31 @@ export default function CalendarPage() {
   return (
     <Layout isAuthenticated={true} noPadding>
       <div className="bg-[#0a0a0f] min-h-full">
-      {/* Header */}
-      <div className="sticky top-0 z-30 bg-[#0a0a0f]/80 backdrop-blur-xl border-b border-white/5">
-        <div className="max-w-full mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="p-2.5 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-xl">
-                <CalendarIcon className="w-6 h-6 text-cyan-400" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-white">Calendar</h1>
-                <p className="text-sm text-gray-500">Schedule and manage your events</p>
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => refresh()}
-                disabled={loading}
-                className="p-2.5 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors disabled:opacity-50"
-                title="Refresh"
-              >
-                <RefreshCw className={cn("w-5 h-5", loading && "animate-spin")} />
-              </button>
-              
-              <button
-                onClick={() => { setSelectedDate(null); setShowEventForm(true); }}
-                className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 rounded-xl shadow-lg shadow-cyan-500/25 transition-all transform hover:scale-105"
-              >
-                <Plus className="w-4 h-4" />
-                New Event
-              </button>
-            </div>
+      <SubHeader
+        icon={CalendarIcon}
+        title="Calendar"
+        subtitle="Schedule and manage your events"
+        actions={
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => refresh()}
+              disabled={loading}
+              className="p-2.5 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors disabled:opacity-50"
+              title="Refresh"
+            >
+              <RefreshCw className={cn("w-5 h-5", loading && "animate-spin")} />
+            </button>
+
+            <button
+              onClick={() => { setSelectedDate(null); setShowEventForm(true); }}
+              className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 rounded-xl shadow-lg shadow-cyan-500/25 transition-all transform hover:scale-105"
+            >
+              <Plus className="w-4 h-4" />
+              New Event
+            </button>
           </div>
-        </div>
-      </div>
+        }
+      />
       
       {/* Toolbar */}
       <div className="sticky top-[73px] z-20 bg-[#0a0a0f]/80 backdrop-blur-xl border-b border-white/5">

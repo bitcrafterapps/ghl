@@ -29,6 +29,9 @@ export const siteConfig = {
     primaryColor: "#2563eb",
     secondaryColor: "#1e40af",
     accentColor: "#f59e0b",
+    heroBgFrom: "", // Hero gradient start color (empty = default)
+    heroBgTo: "", // Hero gradient end color (empty = default)
+    heroPattern: "none", // Hero background pattern: none, crosses, dots, grid, diagonal
     fontHeading: "{{FONT_HEADING}}",
     fontBody: "{{FONT_BODY}}",
     icon: "🔧",

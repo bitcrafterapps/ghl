@@ -32,6 +32,7 @@ class ReviewService {
                 const [review] = yield db_1.db.insert(schema_1.reviews).values({
                     userId: actorUserId || null,
                     companyId: data.companyId || null,
+                    siteId: data.siteId || null, // Multi-tenant site scoping
                     reviewerName: data.reviewerName,
                     reviewerLocation: data.reviewerLocation || null,
                     reviewerEmail: data.reviewerEmail || null,
@@ -42,7 +43,7 @@ class ReviewService {
                     featured: (_a = data.featured) !== null && _a !== void 0 ? _a : false,
                     sortOrder: (_b = data.sortOrder) !== null && _b !== void 0 ? _b : 0,
                     status: data.status || 'published',
-                    reviewDate: data.reviewDate || new Date()
+                    reviewDate: data.reviewDate ? new Date(data.reviewDate) : new Date()
                 }).returning();
                 // Log activity
                 if (actorUserId) {
@@ -88,6 +89,10 @@ class ReviewService {
                 }
                 if (params.companyId) {
                     conditions.push((0, drizzle_orm_1.eq)(schema_1.reviews.companyId, params.companyId));
+                }
+                // Multi-tenant site scoping - filter by siteId if provided
+                if (params.siteId) {
+                    conditions.push((0, drizzle_orm_1.eq)(schema_1.reviews.siteId, params.siteId));
                 }
                 let query = db_1.db.select().from(schema_1.reviews);
                 if (conditions.length > 0) {
@@ -163,7 +168,7 @@ class ReviewService {
                 if (data.status !== undefined)
                     updateData.status = data.status;
                 if (data.reviewDate !== undefined)
-                    updateData.reviewDate = data.reviewDate;
+                    updateData.reviewDate = data.reviewDate ? new Date(data.reviewDate) : null;
                 const [updated] = yield db_1.db
                     .update(schema_1.reviews)
                     .set(updateData)
@@ -356,12 +361,13 @@ class ReviewService {
      * Get featured reviews (for frontend display)
      */
     static getFeaturedReviews() {
-        return __awaiter(this, arguments, void 0, function* (limit = 6, companyId) {
+        return __awaiter(this, arguments, void 0, function* (limit = 6, companyId, siteId) {
             return this.getReviews({
                 status: 'published',
                 featured: true,
                 limit,
-                companyId
+                companyId,
+                siteId
             });
         });
     }
@@ -392,6 +398,7 @@ class ReviewService {
             id: review.id,
             userId: review.userId,
             companyId: review.companyId,
+            siteId: review.siteId, // Multi-tenant site scoping
             reviewerName: review.reviewerName,
             reviewerLocation: review.reviewerLocation,
             reviewerEmail: review.reviewerEmail,

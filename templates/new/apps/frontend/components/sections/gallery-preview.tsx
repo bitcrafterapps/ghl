@@ -1,17 +1,53 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { galleryImages, siteConfig } from "@/data/config";
+import { galleryImages as staticGalleryImages, siteConfig } from "@/data/config";
+import { getApiUrl, getSiteId } from "@/lib/api";
 
 export function GalleryPreview() {
+  const [images, setImages] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const apiUrl = getApiUrl();
+        const siteId = getSiteId();
+        const headers: HeadersInit = siteId ? { 'x-site-id': siteId } : {};
+        
+        const response = await fetch(`${apiUrl}/api/v1/gallery-images?limit=6&status=active`, { headers });
+        if (response.ok) {
+          const result = await response.json();
+          const apiImages = result.data || result || [];
+          if (apiImages.length > 0) {
+            setImages(apiImages);
+          } else {
+             // Fallback to static if API empty
+             setImages(staticGalleryImages);
+          }
+        } else {
+          setImages(staticGalleryImages);
+        }
+      } catch (error) {
+        console.error('Error fetching gallery images:', error);
+        setImages(staticGalleryImages);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchImages();
+  }, []);
+
   // Show only first 6 images on homepage
-  const displayImages = galleryImages.slice(0, 6);
+  const displayImages = images.slice(0, 6);
 
   // If no gallery images, don't show section
-  if (!galleryImages || galleryImages.length === 0) {
+  if (!isLoading && (!images || images.length === 0)) {
     return null;
   }
 
@@ -52,8 +88,8 @@ export function GalleryPreview() {
               }`}
             >
               <Image
-                src={image.src || image.url || `https://placehold.co/600x400/1a1a2e/ffffff?text=Project+${index + 1}`}
-                alt={image.alt || image.title || `${siteConfig.industry.type} project`}
+                src={image.blobUrl || image.src || image.url || `https://placehold.co/600x400/1a1a2e/ffffff?text=Project+${index + 1}`}
+                alt={image.altText || image.alt || image.title || `${siteConfig.industry.type} project`}
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-500"
               />
@@ -72,7 +108,7 @@ export function GalleryPreview() {
         </div>
 
         {/* View All Link */}
-        {galleryImages.length > 6 && (
+        {images.length > 6 && (
           <div className="text-center mt-12">
             <Link
               href="/gallery"

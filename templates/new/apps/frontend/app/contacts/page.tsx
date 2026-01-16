@@ -11,6 +11,7 @@ import { ContactFiltersBar } from '@/components/contacts/ContactFilters';
 import type { Contact, CreateContactDTO, ContactFilters } from '@/types/contacts';
 import { Plus, Users, Loader2, RefreshCw, LayoutGrid, List } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { SubHeader } from '@/components/SubHeader';
 
 export default function ContactsPage() {
   const router = useRouter();
@@ -78,62 +79,52 @@ export default function ContactsPage() {
   return (
     <Layout isAuthenticated={true} noPadding>
       <div className="bg-[#0a0a0f] min-h-full">
-      {/* Header */}
-      <div className="sticky top-0 z-30 bg-[#0a0a0f]/80 backdrop-blur-xl border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="p-2.5 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-xl">
-                <Users className="w-6 h-6 text-blue-400" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-white">Contacts</h1>
-                <p className="text-sm text-gray-500">Manage your customers and leads</p>
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-3">
+      <SubHeader
+        icon={Users}
+        title="Contacts"
+        subtitle="Manage your customers and leads"
+        actions={
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => refresh()}
+              disabled={loading}
+              className="p-2.5 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors disabled:opacity-50"
+              title="Refresh"
+            >
+              <RefreshCw className={cn("w-5 h-5", loading && "animate-spin")} />
+            </button>
+
+            <div className="flex items-center bg-[#1C1C1C] rounded-lg p-1">
               <button
-                onClick={() => refresh()}
-                disabled={loading}
-                className="p-2.5 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors disabled:opacity-50"
-                title="Refresh"
+                onClick={() => setViewMode('grid')}
+                className={cn(
+                  "p-2 rounded-md transition-colors",
+                  viewMode === 'grid' ? "bg-white/10 text-white" : "text-gray-500 hover:text-gray-300"
+                )}
               >
-                <RefreshCw className={cn("w-5 h-5", loading && "animate-spin")} />
+                <LayoutGrid className="w-4 h-4" />
               </button>
-              
-              <div className="flex items-center bg-[#1C1C1C] rounded-lg p-1">
-                <button
-                  onClick={() => setViewMode('grid')}
-                  className={cn(
-                    "p-2 rounded-md transition-colors",
-                    viewMode === 'grid' ? "bg-white/10 text-white" : "text-gray-500 hover:text-gray-300"
-                  )}
-                >
-                  <LayoutGrid className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={() => setViewMode('list')}
-                  className={cn(
-                    "p-2 rounded-md transition-colors",
-                    viewMode === 'list' ? "bg-white/10 text-white" : "text-gray-500 hover:text-gray-300"
-                  )}
-                >
-                  <List className="w-4 h-4" />
-                </button>
-              </div>
-              
               <button
-                onClick={() => setShowForm(true)}
-                className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 rounded-xl shadow-lg shadow-blue-500/25 transition-all transform hover:scale-105"
+                onClick={() => setViewMode('list')}
+                className={cn(
+                  "p-2 rounded-md transition-colors",
+                  viewMode === 'list' ? "bg-white/10 text-white" : "text-gray-500 hover:text-gray-300"
+                )}
               >
-                <Plus className="w-4 h-4" />
-                Add Contact
+                <List className="w-4 h-4" />
               </button>
             </div>
+
+            <button
+              onClick={() => setShowForm(true)}
+              className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 rounded-xl shadow-lg shadow-blue-500/25 transition-all transform hover:scale-105"
+            >
+              <Plus className="w-4 h-4" />
+              Add Contact
+            </button>
           </div>
-        </div>
-      </div>
+        }
+      />
       
       {/* Content */}
       <div className="max-w-7xl mx-auto px-6 py-8">

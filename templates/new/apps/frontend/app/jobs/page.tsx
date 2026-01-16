@@ -22,6 +22,7 @@ import {
   X
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { SubHeader } from '@/components/SubHeader';
 
 type ViewMode = 'kanban' | 'grid';
 
@@ -133,65 +134,55 @@ export default function JobsPage() {
   return (
     <Layout isAuthenticated={true} noPadding>
       <div className="bg-[#0a0a0f] min-h-full">
-      {/* Header */}
-      <div className="sticky top-0 z-30 bg-[#0a0a0f]/80 backdrop-blur-xl border-b border-white/5">
-        <div className="max-w-full mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="p-2.5 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-xl">
-                <FolderKanban className="w-6 h-6 text-purple-400" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-white">Jobs</h1>
-                <p className="text-sm text-gray-500">Track and manage your work orders</p>
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-3">
+      <SubHeader
+        icon={FolderKanban}
+        title="Jobs"
+        subtitle="Track and manage your work orders"
+        actions={
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => viewMode === 'kanban' ? loadKanban() : refresh()}
+              disabled={loading || kanbanLoading}
+              className="p-2.5 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors disabled:opacity-50"
+              title="Refresh"
+            >
+              <RefreshCw className={cn("w-5 h-5", (loading || kanbanLoading) && "animate-spin")} />
+            </button>
+
+            {/* View Mode Toggle */}
+            <div className="flex items-center bg-[#1C1C1C] rounded-lg p-1">
               <button
-                onClick={() => viewMode === 'kanban' ? loadKanban() : refresh()}
-                disabled={loading || kanbanLoading}
-                className="p-2.5 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors disabled:opacity-50"
-                title="Refresh"
+                onClick={() => setViewMode('kanban')}
+                className={cn(
+                  "p-2 rounded-md transition-colors flex items-center gap-1.5",
+                  viewMode === 'kanban' ? "bg-white/10 text-white" : "text-gray-500 hover:text-gray-300"
+                )}
               >
-                <RefreshCw className={cn("w-5 h-5", (loading || kanbanLoading) && "animate-spin")} />
+                <Columns className="w-4 h-4" />
+                <span className="text-sm">Kanban</span>
               </button>
-              
-              {/* View Mode Toggle */}
-              <div className="flex items-center bg-[#1C1C1C] rounded-lg p-1">
-                <button
-                  onClick={() => setViewMode('kanban')}
-                  className={cn(
-                    "p-2 rounded-md transition-colors flex items-center gap-1.5",
-                    viewMode === 'kanban' ? "bg-white/10 text-white" : "text-gray-500 hover:text-gray-300"
-                  )}
-                >
-                  <Columns className="w-4 h-4" />
-                  <span className="text-sm">Kanban</span>
-                </button>
-                <button
-                  onClick={() => setViewMode('grid')}
-                  className={cn(
-                    "p-2 rounded-md transition-colors flex items-center gap-1.5",
-                    viewMode === 'grid' ? "bg-white/10 text-white" : "text-gray-500 hover:text-gray-300"
-                  )}
-                >
-                  <LayoutGrid className="w-4 h-4" />
-                  <span className="text-sm">Grid</span>
-                </button>
-              </div>
-              
               <button
-                onClick={() => handleAddJob()}
-                className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 rounded-xl shadow-lg shadow-purple-500/25 transition-all transform hover:scale-105"
+                onClick={() => setViewMode('grid')}
+                className={cn(
+                  "p-2 rounded-md transition-colors flex items-center gap-1.5",
+                  viewMode === 'grid' ? "bg-white/10 text-white" : "text-gray-500 hover:text-gray-300"
+                )}
               >
-                <Plus className="w-4 h-4" />
-                New Job
+                <LayoutGrid className="w-4 h-4" />
+                <span className="text-sm">Grid</span>
               </button>
             </div>
+
+            <button
+              onClick={() => handleAddJob()}
+              className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 rounded-xl shadow-lg shadow-purple-500/25 transition-all transform hover:scale-105"
+            >
+              <Plus className="w-4 h-4" />
+              New Job
+            </button>
           </div>
-        </div>
-      </div>
+        }
+      />
       
       {/* Content */}
       <div className="max-w-full mx-auto px-6 py-8">

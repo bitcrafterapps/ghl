@@ -6,27 +6,16 @@ import { PublicLayout } from "@/components/PublicLayout";
 import { siteConfig } from "@/data/config";
 import { Button } from "@/components/ui/button";
 import { formatPhone, formatPhoneLink } from "@/lib/utils";
+import { PageHero } from "@/components/sections/PageHero";
 
 export default function ContactPage() {
   return (
     <PublicLayout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-20">
-        <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center max-w-3xl mx-auto"
-          >
-            <h1 className="text-4xl sm:text-5xl font-heading font-bold text-white mb-6">
-              Contact Us
-            </h1>
-            <p className="text-xl text-white/80">
-              Have questions or need a quote? We're here to help. Reach out to us today!
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        title="Contact Us"
+        description="Have questions or need a quote? We're here to help. Reach out to us today!"
+      />
 
       {/* Contact Section */}
       <section className="section-padding bg-white">

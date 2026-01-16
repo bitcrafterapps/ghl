@@ -1,0 +1,152 @@
+{
+  "company": {
+    "name": "SAmazon",
+    "slug": "samazon",
+    "phone": "9492923136",
+    "email": "frnak@gmail.com",
+    "address": "15 Las Castanetas",
+    "city": "Rancho Santa Margarita",
+    "state": "CA",
+    "stateFullName": "CA",
+    "zip": "92688",
+    "license": "A45545456",
+    "yearsInBusiness": "10"
+  },
+  "branding": {
+    "logoUrl": "",
+    "faviconUrl": "",
+    "primaryColor": "#2563eb",
+    "secondaryColor": "#f1f5f9",
+    "accentColor": "#10b981",
+    "headerFooterBg": "#0f172a",
+    "headerFooterText": "#ffffff",
+    "fontHeading": "Poppins",
+    "fontBody": "Inter",
+    "icon": "🔧",
+    "tagline": "Your tagline here"
+  },
+  "industry": {
+    "slug": "landscaping",
+    "type": "Landscaping",
+    "emergencyService": false,
+    "services": [
+      {
+        "name": "Landscape Design",
+        "slug": "landscape-design",
+        "shortDescription": "Custom landscape design services.",
+        "longDescription": "Our custom landscape design services bring your vision to life. We create beautiful, functional outdoor spaces tailored to your style and local climate.",
+        "featured": true
+      },
+      {
+        "name": "Hardscaping",
+        "slug": "hardscaping",
+        "shortDescription": "Patios, walkways, and retaining walls.",
+        "longDescription": "Add structure and elegance with hardscaping. We design and install patios, walkways, retaining walls, and fire pits using high-quality stone and pavers.",
+        "featured": true
+      },
+      {
+        "name": "Tree Service",
+        "slug": "tree-service",
+        "shortDescription": "Tree trimming, removal, and care.",
+        "longDescription": "Maintain the health and safety of your trees. Our certified arborists offer trimming, pruning, and removal services to protect your property and enhance curb appeal."
+      },
+      {
+        "name": "Irrigation Systems",
+        "slug": "irrigation",
+        "shortDescription": "Sprinkler installation and repair.",
+        "longDescription": "Efficient watering is key to a healthy landscape. We design, install, and repair irrigation systems to ensure your plants get the right amount of water."
+      },
+      {
+        "name": "Lawn Maintenance",
+        "slug": "lawn-maintenance",
+        "shortDescription": "Weekly lawn care and maintenance.",
+        "longDescription": "Keep your lawn lush and healthy with our weekly maintenance. Mowing, edging, and fertilization ensure your yard looks its best throughout the season.",
+        "featured": true
+      }
+    ],
+    "faq": []
+  },
+  "serviceArea": {
+    "areas": [],
+    "radius": "25",
+    "primaryCity": "Rancho Santa Margarita"
+  },
+  "social": {
+    "facebook": "",
+    "instagram": "",
+    "google": "",
+    "yelp": "",
+    "bbb": "",
+    "nextdoor": ""
+  },
+  "ghl": {
+    "calendarEmbed": "",
+    "formEmbed": "",
+    "chatWidget": "",
+    "webhookUrl": "",
+    "trackingId": ""
+  },
+  "seo": {
+    "googleAnalyticsId": "",
+    "googleTagManagerId": "",
+    "facebookPixelId": "",
+    "metaDescription": "SAmazon provides professional landscaping services in Rancho Santa Margarita, CA. 10+ years experience. Licensed & insured. Call for a free estimate!",
+    "metaKeywords": "landscaping, Rancho Santa Margarita, CA, landscape design, hardscaping, tree service, irrigation systems, lawn maintenance"
+  },
+  "siteUrl": "",
+  "reviews": {
+    "rating": "5.0",
+    "count": "100",
+    "googleReviewLink": ""
+  },
+  "hours": {
+    "weekdays": "8:00 AM - 6:00 PM",
+    "saturday": "9:00 AM - 4:00 PM",
+    "sunday": "Closed",
+    "emergencyNote": ""
+  },
+  "services": [
+    {
+      "name": "Landscape Design",
+      "slug": "landscape-design",
+      "shortDescription": "Custom landscape design services.",
+      "longDescription": "Our custom landscape design services bring your vision to life. We create beautiful, functional outdoor spaces tailored to your style and local climate.",
+      "featured": true
+    },
+    {
+      "name": "Hardscaping",
+      "slug": "hardscaping",
+      "shortDescription": "Patios, walkways, and retaining walls.",
+      "longDescription": "Add structure and elegance with hardscaping. We design and install patios, walkways, retaining walls, and fire pits using high-quality stone and pavers.",
+      "featured": true
+    },
+    {
+      "name": "Tree Service",
+      "slug": "tree-service",
+      "shortDescription": "Tree trimming, removal, and care.",
+      "longDescription": "Maintain the health and safety of your trees. Our certified arborists offer trimming, pruning, and removal services to protect your property and enhance curb appeal."
+    },
+    {
+      "name": "Irrigation Systems",
+      "slug": "irrigation",
+      "shortDescription": "Sprinkler installation and repair.",
+      "longDescription": "Efficient watering is key to a healthy landscape. We design, install, and repair irrigation systems to ensure your plants get the right amount of water."
+    },
+    {
+      "name": "Lawn Maintenance",
+      "slug": "lawn-maintenance",
+      "shortDescription": "Weekly lawn care and maintenance.",
+      "longDescription": "Keep your lawn lush and healthy with our weekly maintenance. Mowing, edging, and fertilization ensure your yard looks its best throughout the season.",
+      "featured": true
+    }
+  ],
+  "testimonials": [],
+  "faq": [],
+  "gallery": [],
+  "team": [],
+  "_generator": {
+    "projectName": "samazon",
+    "businessType": "services",
+    "iconEmoji": "🔧"
+  }
+}

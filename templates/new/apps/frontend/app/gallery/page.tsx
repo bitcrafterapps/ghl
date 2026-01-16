@@ -6,7 +6,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { PublicLayout } from "@/components/PublicLayout";
 import { siteConfig } from "@/data/config";
-import { getApiUrl } from "@/lib/api";
+import { getApiUrl, getSiteId } from "@/lib/api";
+import { PageHero } from "@/components/sections/PageHero";
 
 interface GalleryImage {
   id: number;
@@ -36,7 +37,11 @@ export default function GalleryPage() {
         if (companyId) {
           queryUrl += `&companyId=${companyId}`;
         }
-        const response = await fetch(queryUrl);
+        
+        const siteId = getSiteId();
+        const headers: HeadersInit = siteId ? { 'x-site-id': siteId } : {};
+        
+        const response = await fetch(queryUrl, { headers });
         if (response.ok) {
           const result = await response.json();
           // API returns data directly or wrapped in data property
@@ -82,23 +87,10 @@ export default function GalleryPage() {
   return (
     <PublicLayout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-20">
-        <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center max-w-3xl mx-auto"
-          >
-            <h1 className="text-4xl sm:text-5xl font-heading font-bold text-white mb-6">
-              Our Work Gallery
-            </h1>
-            <p className="text-xl text-white/80">
-              Browse our portfolio of completed {siteConfig.industry.type.toLowerCase()} projects.
-              Quality workmanship you can trust.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        title="Our Work Gallery"
+        description={`Browse our portfolio of completed ${siteConfig.industry.type.toLowerCase()} projects. Quality workmanship you can trust.`}
+      />
 
       {/* Category Filter */}
       {categories.length > 0 && (

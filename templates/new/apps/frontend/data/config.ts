@@ -29,6 +29,9 @@ export const siteConfig = {
     primaryColor: "{{PRIMARY_COLOR}}",
     secondaryColor: "{{SECONDARY_COLOR}}",
     accentColor: "{{ACCENT_COLOR}}",
+    heroBgFrom: "{{HERO_BG_FROM}}", // Hero gradient start color
+    heroBgTo: "{{HERO_BG_TO}}", // Hero gradient end color
+    heroPattern: "{{HERO_PATTERN}}", // Hero background pattern
     fontHeading: "{{FONT_HEADING}}",
     fontBody: "{{FONT_BODY}}",
     icon: "{{COMPANY_ICON}}",

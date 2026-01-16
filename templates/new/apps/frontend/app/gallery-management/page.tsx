@@ -27,7 +27,7 @@ import { Reorder } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/components/ui/use-toast';
 import { logActivity } from '@/lib/activity';
-import { getApiUrl } from '@/lib/api';
+import { getApiUrl, getSiteId } from '@/lib/api';
 
 interface GalleryImage {
   id: number;
@@ -522,8 +522,17 @@ export default function GalleryManagementPage() {
           if (hasAdminRole && !hasSiteAdminRole && profileData.companyId) {
             galleryUrl += `?companyId=${profileData.companyId}`;
           }
+          
+          const siteId = getSiteId();
+          const headers: HeadersInit = {
+            'Authorization': `Bearer ${token}`
+          };
+          if (siteId) {
+            (headers as any)['x-site-id'] = siteId;
+          }
+
           return fetch(galleryUrl, {
-            headers: { 'Authorization': `Bearer ${token}` }
+            headers
           });
         })
         .then(res => {
@@ -568,9 +577,20 @@ export default function GalleryManagementPage() {
     // Include user's company ID to associate the image with their company
     if (userCompanyId) formData.append('companyId', String(userCompanyId));
 
+    const siteId = getSiteId();
+    if (siteId) formData.append('siteId', siteId);
+    
+    // We also send in header for consistency/middleware usage
+    const headers: HeadersInit = {
+      'Authorization': `Bearer ${token}`
+    };
+    if (siteId) {
+      (headers as any)['x-site-id'] = siteId;
+    }
+
     const response = await fetch(`${apiUrl}/api/v1/gallery-images`, {
       method: 'POST',
-      headers: { 'Authorization': `Bearer ${token}` },
+      headers,
       body: formData
     });
 
@@ -612,12 +632,18 @@ export default function GalleryManagementPage() {
     const token = localStorage.getItem('token');
     const apiUrl = getApiUrl();
 
+    const siteId = getSiteId();
+    const headers: HeadersInit = {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    };
+    if (siteId) {
+      (headers as any)['x-site-id'] = siteId;
+    }
+
     const response = await fetch(`${apiUrl}/api/v1/gallery-images/${id}`, {
       method: 'PUT',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      },
+      headers,
       body: JSON.stringify(data)
     });
 
@@ -651,11 +677,17 @@ export default function GalleryManagementPage() {
   const handleDelete = async (image: GalleryImage) => {
     try {
       const apiUrl = getApiUrl();
+      const siteId = getSiteId();
+      const headers: HeadersInit = {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      };
+      if (siteId) {
+        (headers as any)['x-site-id'] = siteId;
+      }
+      
       const response = await fetch(`${apiUrl}/api/v1/gallery-images/${image.id}`, {
         method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
+        headers
       });
 
       if (!response.ok) throw new Error('Failed to delete image');
@@ -696,6 +728,7 @@ export default function GalleryManagementPage() {
     try {
       const token = localStorage.getItem('token');
       const apiUrl = getApiUrl();
+      const siteId = getSiteId();
 
       // Create reorder payload with new sort orders
       const reorderData = {
@@ -705,12 +738,17 @@ export default function GalleryManagementPage() {
         }))
       };
 
+      const headers: HeadersInit = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      };
+      if (siteId) {
+        (headers as any)['x-site-id'] = siteId;
+      }
+
       const response = await fetch(`${apiUrl}/api/v1/gallery-images/reorder`, {
         method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
+        headers,
         body: JSON.stringify(reorderData)
       });
 
@@ -743,13 +781,19 @@ export default function GalleryManagementPage() {
     try {
       const token = localStorage.getItem('token');
       const apiUrl = getApiUrl();
+      const siteId = getSiteId();
+
+      const headers: HeadersInit = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      };
+      if (siteId) {
+        (headers as any)['x-site-id'] = siteId;
+      }
 
       const response = await fetch(`${apiUrl}/api/v1/gallery-images/${image.id}`, {
         method: 'PUT',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
+        headers,
         body: JSON.stringify({ status: newStatus })
       });
 

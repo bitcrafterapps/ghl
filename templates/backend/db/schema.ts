@@ -404,12 +404,16 @@ export const galleryImages = pgTable('gallery_images', {
 
   // Timestamps
   createdAt: timestamp('created_at').defaultNow(),
-  updatedAt: timestamp('updated_at').defaultNow()
+  updatedAt: timestamp('updated_at').defaultNow(),
+  
+  // Site Scoping
+  siteId: uuid('site_id'),
 }, (table) => ({
   companyIdx: index('gallery_images_company_idx').on(table.companyId),
   categoryIdx: index('gallery_images_category_idx').on(table.category),
   statusIdx: index('gallery_images_status_idx').on(table.status),
-  sortOrderIdx: index('gallery_images_sort_order_idx').on(table.sortOrder)
+  sortOrderIdx: index('gallery_images_sort_order_idx').on(table.sortOrder),
+  siteIdIdx: index('gallery_images_site_id_idx').on(table.siteId)
 }));
 
 // ============================================
@@ -420,6 +424,9 @@ export const reviews = pgTable('reviews', {
   id: serial('id').primaryKey(),
   userId: integer('user_id').references(() => users.id, { onDelete: 'set null' }),
   companyId: integer('company_id').references(() => companies.id, { onDelete: 'cascade' }),
+
+  // Site scoping for multi-tenant support
+  siteId: uuid('site_id'),
 
   // Reviewer info
   reviewerName: varchar('reviewer_name', { length: 255 }).notNull(),
@@ -452,6 +459,7 @@ export const reviews = pgTable('reviews', {
   updatedAt: timestamp('updated_at').defaultNow()
 }, (table) => ({
   companyIdx: index('reviews_company_idx').on(table.companyId),
+  siteIdx: index('reviews_site_idx').on(table.siteId),
   ratingIdx: index('reviews_rating_idx').on(table.rating),
   statusIdx: index('reviews_status_idx').on(table.status),
   sourceIdx: index('reviews_source_idx').on(table.source),

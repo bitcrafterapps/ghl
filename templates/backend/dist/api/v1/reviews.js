@@ -30,6 +30,7 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         logger.debug('Getting reviews');
         const params = {
+            siteId: req.query.siteId || req.headers['x-site-id'], // Multi-tenant site scoping
             status: req.query.status,
             source: req.query.source,
             featured: req.query.featured === 'true' ? true : req.query.featured === 'false' ? false : undefined,
@@ -60,7 +61,8 @@ router.get('/featured', (req, res) => __awaiter(void 0, void 0, void 0, function
     try {
         const limit = req.query.limit ? parseInt(req.query.limit) : 6;
         const companyId = req.query.companyId ? parseInt(req.query.companyId) : undefined;
-        const reviews = yield review_service_1.ReviewService.getFeaturedReviews(limit, companyId);
+        const siteId = req.query.siteId || req.headers['x-site-id'] || undefined; // Multi-tenant site scoping
+        const reviews = yield review_service_1.ReviewService.getFeaturedReviews(limit, companyId, siteId);
         return res.json((0, response_types_1.createSuccessResponse)(reviews));
     }
     catch (error) {
@@ -146,7 +148,10 @@ router.post('/', auth_middleware_1.authenticate, (req, res) => __awaiter(void 0,
         if (req.body.rating < 1 || req.body.rating > 5) {
             return res.status(400).json((0, response_types_1.createErrorResponse)('VALIDATION_ERROR', 'Rating must be between 1 and 5'));
         }
-        const review = yield review_service_1.ReviewService.createReview(req.body, req.user.userId);
+        // Get siteId from header or body for multi-tenant scoping
+        const siteId = req.body.siteId || req.headers['x-site-id'] || undefined;
+        const reviewData = Object.assign(Object.assign({}, req.body), { siteId });
+        const review = yield review_service_1.ReviewService.createReview(reviewData, req.user.userId);
         logger.debug(`Review created with ID: ${review.id}`);
         return res.status(201).json((0, response_types_1.createSuccessResponse)(review));
     }

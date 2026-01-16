@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight, Quote, Loader2 } from "lucide-react";
 import { siteConfig } from "@/data/config";
-import { getApiUrl } from "@/lib/api";
+import { getApiUrl, getSiteId } from "@/lib/api";
 
 interface Review {
   id: number;
@@ -24,10 +24,12 @@ export function TestimonialsSection() {
     const fetchFeaturedReviews = async () => {
       try {
         const apiUrl = getApiUrl();
-        const response = await fetch(`${apiUrl}/api/v1/reviews/featured?limit=6`);
+        const siteId = getSiteId();
+        const headers: HeadersInit = siteId ? { 'x-site-id': siteId } : {};
+        const response = await fetch(`${apiUrl}/api/v1/reviews/featured?limit=6`, { headers });
         if (response.ok) {
           const result = await response.json();
-          setReviews(result.data || []);
+          setReviews(result.data || result || []);
         }
       } catch (error) {
         console.error('Error fetching featured reviews:', error);

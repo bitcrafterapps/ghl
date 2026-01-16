@@ -8,7 +8,8 @@ import { PublicLayout } from "@/components/PublicLayout";
 import { siteConfig } from "@/data/config";
 import { Button } from "@/components/ui/button";
 import { formatPhone, formatPhoneLink } from "@/lib/utils";
-import { getApiUrl } from "@/lib/api";
+import { getApiUrl, getSiteId } from "@/lib/api";
+import { PageHero } from "@/components/sections/PageHero";
 
 interface Review {
   id: number;
@@ -39,21 +40,23 @@ export default function ReviewsPage() {
     const fetchReviews = async () => {
       try {
         const apiUrl = getApiUrl();
+        const siteId = getSiteId();
+        const headers: HeadersInit = siteId ? { 'x-site-id': siteId } : {};
 
-        // Fetch reviews and stats in parallel
+        // Fetch reviews and stats in parallel with site scoping
         const [reviewsResponse, statsResponse] = await Promise.all([
-          fetch(`${apiUrl}/api/v1/reviews?status=published`),
-          fetch(`${apiUrl}/api/v1/reviews/stats`)
+          fetch(`${apiUrl}/api/v1/reviews?status=published`, { headers }),
+          fetch(`${apiUrl}/api/v1/reviews/stats`, { headers })
         ]);
 
         if (reviewsResponse.ok) {
           const reviewsResult = await reviewsResponse.json();
-          setReviews(reviewsResult.data || []);
+          setReviews(reviewsResult.data || reviewsResult || []);
         }
 
         if (statsResponse.ok) {
           const statsResult = await statsResponse.json();
-          setStats(statsResult.data);
+          setStats(statsResult.data || statsResult);
         }
       } catch (error) {
         console.error('Error fetching reviews:', error);
@@ -83,48 +86,46 @@ export default function ReviewsPage() {
   return (
     <PublicLayout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-20">
-        <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center max-w-3xl mx-auto"
-          >
-            <h1 className="text-4xl sm:text-5xl font-heading font-bold text-white mb-6">
-              Customer Reviews
-            </h1>
-            <p className="text-xl text-white/80 mb-8">
-              See what our customers are saying about {siteConfig.company.name}.
-              We're proud of our {displayRating}-star rating!
-            </p>
+      <PageHero>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center max-w-3xl mx-auto"
+        >
+          <h1 className="text-4xl sm:text-5xl font-heading font-bold text-white mb-6">
+            Customer Reviews
+          </h1>
+          <p className="text-xl text-white/80 mb-8">
+            See what our customers are saying about {siteConfig.company.name}.
+            We're proud of our {displayRating}-star rating!
+          </p>
 
-            {/* Rating Summary */}
-            <div className="inline-flex items-center gap-3 bg-white/10 backdrop-blur px-6 py-4 rounded-xl">
-              <div className="flex gap-1">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="h-6 w-6 text-yellow-400 fill-yellow-400" />
-                ))}
-              </div>
-              <span className="text-2xl font-bold text-white">{displayRating}</span>
-              <span className="text-white/70">({displayCount}+ reviews)</span>
+          {/* Rating Summary */}
+          <div className="inline-flex items-center gap-3 bg-white/10 backdrop-blur px-6 py-4 rounded-xl">
+            <div className="flex gap-1">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="h-6 w-6 text-yellow-400 fill-yellow-400" />
+              ))}
             </div>
+            <span className="text-2xl font-bold text-white">{displayRating}</span>
+            <span className="text-white/70">({displayCount}+ reviews)</span>
+          </div>
 
-            {siteConfig.reviews.googleReviewLink && (
-              <div className="mt-6">
-                <a
-                  href={siteConfig.reviews.googleReviewLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-white hover:text-primary transition-colors"
-                >
-                  View our Google Reviews
-                  <ExternalLink className="h-4 w-4" />
-                </a>
-              </div>
-            )}
-          </motion.div>
-        </div>
-      </section>
+          {siteConfig.reviews.googleReviewLink && (
+            <div className="mt-6">
+              <a
+                href={siteConfig.reviews.googleReviewLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-white hover:text-primary transition-colors"
+              >
+                View our Google Reviews
+                <ExternalLink className="h-4 w-4" />
+              </a>
+            </div>
+          )}
+        </motion.div>
+      </PageHero>
 
       {/* Testimonials Section */}
       <section className="section-padding bg-white">

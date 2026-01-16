@@ -7,44 +7,43 @@ import { PublicLayout } from "@/components/PublicLayout";
 import { siteConfig } from "@/data/config";
 import { Button } from "@/components/ui/button";
 import { formatPhone, formatPhoneLink } from "@/lib/utils";
+import { PageHero } from "@/components/sections/PageHero";
 
 export default function FreeEstimatePage() {
   return (
     <PublicLayout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-20">
-        <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center max-w-3xl mx-auto"
-          >
-            <h1 className="text-4xl sm:text-5xl font-heading font-bold text-white mb-6">
-              Get Your Free Estimate
-            </h1>
-            <p className="text-xl text-white/80 mb-8">
-              Schedule a free, no-obligation estimate for your {siteConfig.industry.type.toLowerCase()} project. 
-              Our experts will assess your needs and provide transparent pricing.
-            </p>
-            
-            {/* Trust Badges */}
-            <div className="flex flex-wrap justify-center gap-4">
-              <div className="flex items-center gap-2 bg-white/10 backdrop-blur px-4 py-2 rounded-full text-white text-sm">
-                <CheckCircle className="h-4 w-4 text-green-400" />
-                <span>No Obligation</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white/10 backdrop-blur px-4 py-2 rounded-full text-white text-sm">
-                <CheckCircle className="h-4 w-4 text-green-400" />
-                <span>Transparent Pricing</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white/10 backdrop-blur px-4 py-2 rounded-full text-white text-sm">
-                <CheckCircle className="h-4 w-4 text-green-400" />
-                <span>Expert Consultation</span>
-              </div>
+      <PageHero>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center max-w-3xl mx-auto"
+        >
+          <h1 className="text-4xl sm:text-5xl font-heading font-bold text-white mb-6">
+            Get Your Free Estimate
+          </h1>
+          <p className="text-xl text-white/80 mb-8">
+            Schedule a free, no-obligation estimate for your {siteConfig.industry.type.toLowerCase()} project. 
+            Our experts will assess your needs and provide transparent pricing.
+          </p>
+          
+          {/* Trust Badges */}
+          <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex items-center gap-2 bg-white/10 backdrop-blur px-4 py-2 rounded-full text-white text-sm">
+              <CheckCircle className="h-4 w-4 text-green-400" />
+              <span>No Obligation</span>
             </div>
-          </motion.div>
-        </div>
-      </section>
+            <div className="flex items-center gap-2 bg-white/10 backdrop-blur px-4 py-2 rounded-full text-white text-sm">
+              <CheckCircle className="h-4 w-4 text-green-400" />
+              <span>Transparent Pricing</span>
+            </div>
+            <div className="flex items-center gap-2 bg-white/10 backdrop-blur px-4 py-2 rounded-full text-white text-sm">
+              <CheckCircle className="h-4 w-4 text-green-400" />
+              <span>Expert Consultation</span>
+            </div>
+          </div>
+        </motion.div>
+      </PageHero>
 
       {/* Form Section */}
       <section className="section-padding bg-white">

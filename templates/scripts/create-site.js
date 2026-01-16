@@ -18,6 +18,7 @@ const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
 const { execSync } = require('child_process');
+const crypto = require('crypto');
 
 const TEMPLATES_DIR = path.resolve(__dirname, '..');
 const BASE_TEMPLATE = path.join(TEMPLATES_DIR, 'base');
@@ -568,8 +569,13 @@ async function main() {
 
   rl.close();
 
+  // Generate unique site ID for multi-tenant scoping
+  const siteId = crypto.randomUUID();
+  log(`\n✓ Generated Site ID: ${siteId}`, 'green');
+
   // Build configuration
   const config = {
+    siteId: siteId,  // Unique identifier for multi-tenant site scoping
     company: {
       name: companyName,
       slug: companySlug,
@@ -676,6 +682,17 @@ async function main() {
   const tokenMap = configToTokenMap(config);
   const stats = processFiles(destFolder, tokenMap);
   log(`✓ Replaced tokens in ${stats.modified} files`, 'green');
+
+  // Create .env file with site ID
+  const envContent = `# Auto-generated environment configuration
+# Unique Site ID for multi-tenant site scoping
+NEXT_PUBLIC_SITE_ID=${siteId}
+
+# API URL (configure for production)
+NEXT_PUBLIC_API_URL=http://localhost:3001
+`;
+  fs.writeFileSync(path.join(destFolder, '.env'), envContent);
+  log('✓ Created .env file with site ID', 'green');
 
   // Summary
   console.log();

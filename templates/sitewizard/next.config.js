@@ -81,7 +81,8 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/api/:path*',
+        // Proxy API calls to backend, but exclude local API routes (site-builder, upload)
+        source: '/api/:path((?!site-builder|upload).*)',
         destination: `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/:path*`,
         basePath: false
       }

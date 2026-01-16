@@ -23,7 +23,7 @@ import {
 import { cn } from '@/lib/utils';
 import { useToast } from '@/components/ui/use-toast';
 import { logActivity } from '@/lib/activity';
-import { getApiUrl } from '@/lib/api';
+import { getApiUrl, getSiteId } from '@/lib/api';
 
 interface Review {
   id: number;
@@ -359,6 +359,7 @@ export default function ReviewsManagementPage() {
     if (token) {
       setIsAuthenticated(true);
       const apiUrl = getApiUrl();
+      const siteId = getSiteId();
 
       // Fetch user profile to check admin status
       fetch(`${apiUrl}/api/v1/users/profile`, {
@@ -376,12 +377,17 @@ export default function ReviewsManagementPage() {
             return;
           }
 
-          // Fetch reviews and services in parallel
+          // Fetch reviews and services in parallel with site scoping
           return Promise.all([
             fetch(`${apiUrl}/api/v1/reviews`, {
-              headers: { 'Authorization': `Bearer ${token}` }
+              headers: { 
+                'Authorization': `Bearer ${token}`,
+                ...(siteId ? { 'x-site-id': siteId } : {})
+              }
             }),
-            fetch(`${apiUrl}/api/v1/reviews/services`)
+            fetch(`${apiUrl}/api/v1/reviews/services`, {
+              headers: siteId ? { 'x-site-id': siteId } : {}
+            })
           ]);
         })
         .then(responses => {
@@ -391,8 +397,11 @@ export default function ReviewsManagementPage() {
         })
         .then(results => {
           if (results) {
-            setReviews(results[0]?.data || []);
-            setServices(results[1]?.data || []);
+            // API returns data directly, or wrapped in 'data' for arrays
+            const reviewsData = results[0]?.data || results[0] || [];
+            const servicesData = results[1]?.data || results[1] || [];
+            setReviews(Array.isArray(reviewsData) ? reviewsData : []);
+            setServices(Array.isArray(servicesData) ? servicesData : []);
           }
           setIsLoading(false);
         })
@@ -411,22 +420,39 @@ export default function ReviewsManagementPage() {
   const handleCreate = async (data: Partial<Review>) => {
     const token = localStorage.getItem('token');
     const apiUrl = getApiUrl();
+    const siteId = getSiteId();
 
     const response = await fetch(`${apiUrl}/api/v1/reviews`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        ...(siteId ? { 'x-site-id': siteId } : {})
       },
       body: JSON.stringify(data)
     });
 
     if (!response.ok) {
-      throw new Error('Failed to create review');
+      // Try to parse error message from response
+      let errorMessage = 'Failed to create review';
+      try {
+        const errorData = await response.json();
+        errorMessage = errorData.error?.message || errorData.message || errorMessage;
+      } catch {
+        // Ignore JSON parse errors
+      }
+      toast({
+        title: "Error",
+        description: errorMessage,
+        variant: "destructive"
+      });
+      throw new Error(errorMessage);
     }
 
     const result = await response.json();
-    setReviews(prev => [result.data, ...prev]);
+    // API returns data directly, not wrapped in a 'data' property
+    const reviewData = result.data || result;
+    setReviews(prev => [reviewData, ...prev]);
 
     // Update services if new one was added
     if (data.service && !services.includes(data.service)) {
@@ -437,7 +463,7 @@ export default function ReviewsManagementPage() {
       type: 'review',
       action: 'created',
       title: `Review from "${data.reviewerName}"`,
-      entityId: result.data.id
+      entityId: reviewData.id
     });
 
     toast({
@@ -451,22 +477,39 @@ export default function ReviewsManagementPage() {
 
     const token = localStorage.getItem('token');
     const apiUrl = getApiUrl();
+    const siteId = getSiteId();
 
     const response = await fetch(`${apiUrl}/api/v1/reviews/${reviewToEdit.id}`, {
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        ...(siteId ? { 'x-site-id': siteId } : {})
       },
       body: JSON.stringify(data)
     });
 
     if (!response.ok) {
-      throw new Error('Failed to update review');
+      // Try to parse error message from response
+      let errorMessage = 'Failed to update review';
+      try {
+        const errorData = await response.json();
+        errorMessage = errorData.error?.message || errorData.error || errorData.message || errorMessage;
+      } catch {
+        // Ignore JSON parse errors
+      }
+      toast({
+        title: "Error",
+        description: errorMessage,
+        variant: "destructive"
+      });
+      throw new Error(errorMessage);
     }
 
     const result = await response.json();
-    setReviews(prev => prev.map(r => r.id === reviewToEdit.id ? result.data : r));
+    // API returns data directly, not wrapped in a 'data' property
+    const reviewData = result.data || result;
+    setReviews(prev => prev.map(r => r.id === reviewToEdit.id ? reviewData : r));
 
     // Update services if new one was added
     if (data.service && !services.includes(data.service)) {
@@ -491,10 +534,12 @@ export default function ReviewsManagementPage() {
   const handleDelete = async (review: Review) => {
     try {
       const apiUrl = getApiUrl();
+      const siteId = getSiteId();
       const response = await fetch(`${apiUrl}/api/v1/reviews/${review.id}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          ...(siteId ? { 'x-site-id': siteId } : {})
         }
       });
 
@@ -527,13 +572,15 @@ export default function ReviewsManagementPage() {
   const toggleFeatured = async (review: Review) => {
     const token = localStorage.getItem('token');
     const apiUrl = getApiUrl();
+    const siteId = getSiteId();
 
     try {
       const response = await fetch(`${apiUrl}/api/v1/reviews/${review.id}/featured`, {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          ...(siteId ? { 'x-site-id': siteId } : {})
         },
         body: JSON.stringify({ featured: !review.featured })
       });
@@ -541,7 +588,9 @@ export default function ReviewsManagementPage() {
       if (!response.ok) throw new Error('Failed to toggle featured');
 
       const result = await response.json();
-      setReviews(prev => prev.map(r => r.id === review.id ? result.data : r));
+      // API returns data directly, not wrapped in a 'data' property
+      const reviewData = result.data || result;
+      setReviews(prev => prev.map(r => r.id === review.id ? reviewData : r));
 
       toast({
         title: "Success",

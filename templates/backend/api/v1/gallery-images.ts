@@ -71,7 +71,8 @@ router.get('/', async (req: Request, res: Response) => {
       status: req.query.status as any,
       companyId: req.query.companyId ? parseInt(req.query.companyId as string) : undefined,
       limit: req.query.limit ? parseInt(req.query.limit as string) : undefined,
-      offset: req.query.offset ? parseInt(req.query.offset as string) : undefined
+      offset: req.query.offset ? parseInt(req.query.offset as string) : undefined,
+      siteId: (req.headers['x-site-id'] as string) || (req.query.siteId as string)
     };
 
     const images = await GalleryImageService.getImages(params);
@@ -95,7 +96,8 @@ router.get('/', async (req: Request, res: Response) => {
  */
 router.get('/categories', async (req: Request, res: Response) => {
   try {
-    const categories = await GalleryImageService.getCategories();
+    const siteId = (req.headers['x-site-id'] as string) || (req.query.siteId as string);
+    const categories = await GalleryImageService.getCategories(siteId);
     return res.json(createSuccessResponse(categories));
   } catch (error) {
     logger.error('Error getting categories:', error);
@@ -182,7 +184,8 @@ router.post('/', authenticate, (req: Request, res: Response, next: NextFunction)
       tags: req.body.tags ? JSON.parse(req.body.tags) : undefined,
       sortOrder: req.body.sortOrder ? parseInt(req.body.sortOrder) : undefined,
       status: req.body.status,
-      companyId: req.body.companyId ? parseInt(req.body.companyId) : undefined
+      companyId: req.body.companyId ? parseInt(req.body.companyId) : undefined,
+      siteId: (req.headers['x-site-id'] as string) || req.body.siteId
     };
 
     logger.debug('Metadata prepared:', metadata);

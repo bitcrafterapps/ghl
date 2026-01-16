@@ -90,6 +90,9 @@ const DEFAULT_CONFIG = {
   accentColor: '#10b981',
   headerFooterBg: '#0f172a',
   headerFooterText: '#ffffff',
+  heroBgFrom: '', // Hero gradient start color (empty = default)
+  heroBgTo: '', // Hero gradient end color (empty = default)
+  heroPattern: 'none', // Hero background pattern: none, crosses, dots, grid, diagonal
   logoType: 'emoji',
   icon: '🔧',
   tagline: 'Your tagline here',
@@ -243,7 +246,7 @@ export default function SiteBuilderPage() {
 
      // Resolve services
      const resolvedServices = config.services.map(slugOrName => {
-        const knownService = availableServices.find(s => s.slug === slugOrName || s.name === slugOrName);
+        const knownService = availableServices.find((s: { slug: string; name: string }) => s.slug === slugOrName || s.name === slugOrName);
         if (knownService) return knownService;
         return {
            name: slugOrName,
@@ -276,6 +279,9 @@ export default function SiteBuilderPage() {
           accentColor: config.accentColor,
           headerFooterBg: config.headerFooterBg,
           headerFooterText: config.headerFooterText,
+          heroBgFrom: config.heroBgFrom,
+          heroBgTo: config.heroBgTo,
+          heroPattern: config.heroPattern,
           fontHeading: config.fontHeading,
           fontBody: config.fontBody,
           icon: config.icon,
@@ -502,9 +508,9 @@ export default function SiteBuilderPage() {
                       <CardTitle>Branding</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-6">
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                           <div className="space-y-2">
-                            <label className="text-sm font-medium">Primary Info</label>
+                            <label className="text-sm font-medium">Primary</label>
                             <Input type="color" className="h-10 w-full" value={config.primaryColor} onChange={e => setConfig({...config, primaryColor: e.target.value})} />
                           </div>
                           <div className="space-y-2">
@@ -519,7 +525,96 @@ export default function SiteBuilderPage() {
                             <label className="text-sm font-medium">Header/Footer Bg</label>
                             <Input type="color" className="h-10 w-full" value={config.headerFooterBg} onChange={e => setConfig({...config, headerFooterBg: e.target.value})} />
                           </div>
+                          <div className="space-y-2 col-span-2">
+                            <label className="text-sm font-medium">Hero Gradient</label>
+                            <div className="flex gap-3 items-center">
+                              <div className="flex-1 space-y-1">
+                                <span className="text-xs text-muted-foreground">From</span>
+                                <Input type="color" className="h-10 w-full" value={config.heroBgFrom || '#1f2937'} onChange={e => setConfig({...config, heroBgFrom: e.target.value})} />
+                              </div>
+                              <div className="flex-1 space-y-1">
+                                <span className="text-xs text-muted-foreground">To</span>
+                                <Input type="color" className="h-10 w-full" value={config.heroBgTo || '#111827'} onChange={e => setConfig({...config, heroBgTo: e.target.value})} />
+                              </div>
+                              {(config.heroBgFrom || config.heroBgTo) && (
+                                <button 
+                                  type="button"
+                                  onClick={() => setConfig({...config, heroBgFrom: '', heroBgTo: ''})}
+                                  className="text-xs text-muted-foreground hover:text-foreground px-2 pt-4"
+                                  title="Reset to default gradient"
+                                >
+                                  Reset
+                                </button>
+                              )}
+                            </div>
+                            <p className="text-xs text-muted-foreground">Leave empty for default dark gradient</p>
+                          </div>
                       </div>
+                      
+                      {/* Hero Pattern Selector */}
+                      <div className="space-y-3">
+                        <label className="text-sm font-medium">Hero Background Pattern</label>
+                        <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">
+                          {[
+                            { id: 'none', label: 'None' },
+                            { id: 'dots', label: 'Dots' },
+                            { id: 'grid', label: 'Grid' },
+                            { id: 'crosses', label: 'Crosses' },
+                            { id: 'diagonal', label: 'Diagonal' },
+                            { id: 'waves', label: 'Waves' },
+                            { id: 'hexagons', label: 'Hexagons' },
+                            { id: 'circles', label: 'Circles' },
+                          ].map((pattern) => (
+                            <button
+                              key={pattern.id}
+                              type="button"
+                              onClick={() => setConfig({...config, heroPattern: pattern.id})}
+                              className={`relative aspect-square rounded-lg border-2 overflow-hidden transition-all ${
+                                config.heroPattern === pattern.id 
+                                  ? 'border-primary ring-2 ring-primary/20' 
+                                  : 'border-border hover:border-muted-foreground/50'
+                              }`}
+                              title={pattern.label}
+                            >
+                              <div className="absolute inset-0 bg-slate-800">
+                                {pattern.id === 'none' && (
+                                  <div className="absolute inset-0 flex items-center justify-center text-slate-600">
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" /></svg>
+                                  </div>
+                                )}
+                                {pattern.id === 'dots' && (
+                                  <svg className="w-full h-full opacity-40" viewBox="0 0 40 40"><pattern id="dots-prev" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="white"/></pattern><rect fill="url(#dots-prev)" width="40" height="40"/></svg>
+                                )}
+                                {pattern.id === 'grid' && (
+                                  <svg className="w-full h-full opacity-30" viewBox="0 0 40 40"><pattern id="grid-prev" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M0 5h10M5 0v10" stroke="white" strokeWidth="0.5" fill="none"/></pattern><rect fill="url(#grid-prev)" width="40" height="40"/></svg>
+                                )}
+                                {pattern.id === 'crosses' && (
+                                  <svg className="w-full h-full opacity-30" viewBox="0 0 40 40"><pattern id="cross-prev" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M5 3v4M3 5h4" stroke="white" strokeWidth="1" fill="none"/></pattern><rect fill="url(#cross-prev)" width="40" height="40"/></svg>
+                                )}
+                                {pattern.id === 'diagonal' && (
+                                  <svg className="w-full h-full opacity-25" viewBox="0 0 40 40"><pattern id="diag-prev" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse"><path d="M0 8L8 0" stroke="white" strokeWidth="0.5" fill="none"/></pattern><rect fill="url(#diag-prev)" width="40" height="40"/></svg>
+                                )}
+                                {pattern.id === 'waves' && (
+                                  <svg className="w-full h-full opacity-25" viewBox="0 0 40 40"><pattern id="wave-prev" x="0" y="0" width="20" height="10" patternUnits="userSpaceOnUse"><path d="M0 5 Q5 0, 10 5 T20 5" stroke="white" strokeWidth="0.5" fill="none"/></pattern><rect fill="url(#wave-prev)" width="40" height="40"/></svg>
+                                )}
+                                {pattern.id === 'hexagons' && (
+                                  <svg className="w-full h-full opacity-25" viewBox="0 0 40 40"><pattern id="hex-prev" x="0" y="0" width="14" height="12" patternUnits="userSpaceOnUse"><path d="M7 0L14 3.5L14 8.5L7 12L0 8.5L0 3.5Z" stroke="white" strokeWidth="0.5" fill="none"/></pattern><rect fill="url(#hex-prev)" width="40" height="40"/></svg>
+                                )}
+                                {pattern.id === 'circles' && (
+                                  <svg className="w-full h-full opacity-20" viewBox="0 0 40 40"><pattern id="circ-prev" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="8" cy="8" r="5" stroke="white" strokeWidth="0.5" fill="none"/></pattern><rect fill="url(#circ-prev)" width="40" height="40"/></svg>
+                                )}
+                              </div>
+                              {config.heroPattern === pattern.id && (
+                                <div className="absolute bottom-0.5 right-0.5 w-3 h-3 bg-primary rounded-full flex items-center justify-center">
+                                  <svg className="w-2 h-2 text-white" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+                                </div>
+                              )}
+                            </button>
+                          ))}
+                        </div>
+                        <p className="text-xs text-muted-foreground">Select a subtle background pattern for the hero section</p>
+                      </div>
+
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div className="space-y-2">
                              <label className="text-sm font-medium">Footer Text Color</label>
@@ -638,7 +733,7 @@ export default function SiteBuilderPage() {
                                 <CardContent className="p-3">
                                     <div className="flex flex-wrap gap-2 mb-3">
                                         {config.services.length > 0 ? config.services.map(s => {
-                                            const serviceObj = availableServices.find(as => as.slug === s);
+                                            const serviceObj = availableServices.find((as: { slug: string; name: string }) => as.slug === s);
                                             const label = serviceObj ? serviceObj.name : s;
                                             return (
                                                 <Badge key={s} variant="secondary" className="pl-2 pr-1 h-7 cursor-pointer hover:bg-destructive hover:text-destructive-foreground transition-colors group" onClick={() => removeService(s)}>
@@ -665,7 +760,7 @@ export default function SiteBuilderPage() {
                                         <div className="mt-4">
                                             <p className="text-xs font-semibold text-muted-foreground mb-2 px-1 uppercase tracking-wider">Suggested for {config.industry}</p>
                                             <div className="flex flex-wrap gap-2">
-                                                {availableServices.filter(s => !config.services.includes(s.slug)).map(s => (
+                                                {availableServices.filter((s: { slug: string; name: string }) => !config.services.includes(s.slug)).map((s: { slug: string; name: string }) => (
                                                     <Badge 
                                                     key={s.slug} 
                                                     variant="outline" 
@@ -675,7 +770,7 @@ export default function SiteBuilderPage() {
                                                     + {s.name}
                                                     </Badge>
                                                 ))}
-                                                {availableServices.every(s => config.services.includes(s.slug)) && (
+                                                {availableServices.every((s: { slug: string; name: string }) => config.services.includes(s.slug)) && (
                                                     <span className="text-xs text-muted-foreground px-1">All suggested services selected.</span>
                                                 )}
                                             </div>

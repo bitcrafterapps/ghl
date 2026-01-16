@@ -4,6 +4,7 @@ export type { ReviewStatus, ReviewSource };
 
 // Create DTO for adding a new review
 export interface ReviewCreateDto {
+  siteId?: string;  // UUID for multi-tenant site scoping
   reviewerName: string;
   reviewerLocation?: string;
   reviewerEmail?: string;
@@ -38,6 +39,7 @@ export interface ReviewResponse {
   id: number;
   userId: number | null;
   companyId: number | null;
+  siteId: string | null;  // UUID for multi-tenant site scoping
   reviewerName: string;
   reviewerLocation: string | null;
   reviewerEmail: string | null;
@@ -73,6 +75,7 @@ export interface GoogleBusinessPostResult {
 
 // Query parameters
 export interface ReviewQueryParams {
+  siteId?: string;  // UUID for multi-tenant site scoping
   status?: ReviewStatus;
   source?: ReviewSource;
   featured?: boolean;

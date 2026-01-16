@@ -2,26 +2,58 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Phone, Star, Shield, Clock, CheckCircle, Sparkles, ArrowRight } from "lucide-react";
+import { Phone, Star, Shield, Clock, CheckCircle, Sparkles, ArrowRight, User, Mail, MessageSquare } from "lucide-react";
 import { siteConfig, services } from "@/data/config";
 import { formatPhone, formatPhoneLink } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 export function HeroSection() {
+  // Get hero gradient colors from branding, fallback to default dark gradient
+  const heroBgFrom = siteConfig.branding.heroBgFrom || '';
+  const heroBgTo = siteConfig.branding.heroBgTo || '';
+  const heroPattern = siteConfig.branding.heroPattern || 'none';
+  const hasCustomGradient = heroBgFrom && heroBgTo && heroBgFrom !== '' && heroBgTo !== '';
+  
+  // Build gradient style
+  const gradientStyle = hasCustomGradient 
+    ? { background: `linear-gradient(135deg, ${heroBgFrom} 0%, ${heroBgTo} 100%)` }
+    : undefined;
+
+  // Pattern SVG options
+  const patterns: Record<string, string> = {
+    crosses: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+    dots: `url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.3'%3E%3Ccircle cx='3' cy='3' r='1.5'/%3E%3C/g%3E%3C/svg%3E")`,
+    grid: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.2'%3E%3Cpath d='M0 20h40M20 0v40'/%3E%3C/g%3E%3C/svg%3E")`,
+    diagonal: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.15'%3E%3Cpath d='M0 40L40 0M-10 10L10 -10M30 50L50 30'/%3E%3C/g%3E%3C/svg%3E")`,
+    waves: `url("data:image/svg+xml,%3Csvg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10 Q25 0, 50 10 T100 10' stroke='%23ffffff' stroke-opacity='0.15' fill='none'/%3E%3C/svg%3E")`,
+    hexagons: `url("data:image/svg+xml,%3Csvg width='28' height='49' viewBox='0 0 28 49' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.15'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.35 11-6.35V17.9l-11-6.35L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/svg%3E")`,
+    circles: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='12' stroke='%23ffffff' stroke-opacity='0.12' fill='none'/%3E%3C/svg%3E")`,
+  };
+  
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-        }} />
-      </div>
+    <section 
+      className="relative min-h-[85vh] flex items-center overflow-hidden"
+      style={gradientStyle}
+    >
+      {/* Background - Either custom gradient or default gradient */}
+      {!hasCustomGradient && (
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900" />
+      )}
+      
+      {/* Background Pattern - Only if pattern is selected */}
+      {heroPattern !== 'none' && patterns[heroPattern] && (
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: patterns[heroPattern],
+          }} />
+        </div>
+      )}
 
       {/* Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent" />
 
-      <div className="container-custom relative z-10 py-12">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="container-custom relative z-10 py-8 lg:py-12">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Content */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -94,23 +126,23 @@ export function HeroSection() {
             </div>
           </motion.div>
 
-          {/* Right Content - Quote Form */}
+          {/* Right Content - Compact Modern Quote Form */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="bg-white rounded-2xl p-6 sm:p-8 shadow-2xl"
+            className="bg-white/95 backdrop-blur-md rounded-xl p-5 shadow-2xl border border-white/20"
           >
-            {/* Form Header */}
-            <div className="text-center mb-6">
-              <div className="inline-flex items-center gap-2 text-primary font-medium text-sm mb-2">
-                <Sparkles className="h-4 w-4" />
+            {/* Compact Form Header */}
+            <div className="text-center mb-4">
+              <div className="inline-flex items-center gap-1.5 text-primary font-medium text-xs uppercase tracking-wider mb-1">
+                <Sparkles className="h-3.5 w-3.5" />
                 <span>Free Quote</span>
               </div>
-              <h2 className="text-2xl font-heading font-bold text-gray-900 mb-2">
+              <h2 className="text-xl font-heading font-bold text-gray-900">
                 Get Your Free Estimate
               </h2>
-              <p className="text-gray-600 text-sm">
+              <p className="text-gray-500 text-xs mt-1">
                 Fast response • No obligation • Free quote
               </p>
             </div>
@@ -125,43 +157,53 @@ export function HeroSection() {
               <form 
                 action="#" 
                 method="POST" 
-                className="space-y-4"
+                className="space-y-2.5"
               >
                 {/* Hidden fields for GHL tracking */}
                 <input type="hidden" name="source" value="website-hero" />
                 <input type="hidden" name="page_url" value={typeof window !== 'undefined' ? window.location.href : ''} />
                 
-                <div>
-                  <input 
-                    type="text" 
-                    name="name"
-                    placeholder="Full Name *" 
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white text-gray-900 placeholder-gray-500" 
-                    required 
-                  />
+                {/* Name & Phone Row */}
+                <div className="grid grid-cols-2 gap-2.5">
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                    <input 
+                      type="text" 
+                      name="name"
+                      placeholder="Full Name *" 
+                      className="w-full pl-9 pr-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary bg-gray-50/50 text-gray-900 placeholder-gray-400 transition-all" 
+                      required 
+                    />
+                  </div>
+                  <div className="relative">
+                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                    <input 
+                      type="tel" 
+                      name="phone"
+                      placeholder="Phone *" 
+                      className="w-full pl-9 pr-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary bg-gray-50/50 text-gray-900 placeholder-gray-400 transition-all" 
+                      required 
+                    />
+                  </div>
                 </div>
-                <div>
-                  <input 
-                    type="tel" 
-                    name="phone"
-                    placeholder="Phone Number *" 
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white text-gray-900 placeholder-gray-500" 
-                    required 
-                  />
-                </div>
-                <div>
+
+                {/* Email */}
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                   <input 
                     type="email" 
                     name="email"
                     placeholder="Email Address *" 
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white text-gray-900 placeholder-gray-500" 
+                    className="w-full pl-9 pr-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary bg-gray-50/50 text-gray-900 placeholder-gray-400 transition-all" 
                     required 
                   />
                 </div>
-                <div>
+
+                {/* Service Select */}
+                <div className="relative">
                   <select 
                     name="service"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white text-gray-900"
+                    className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary bg-gray-50/50 text-gray-900 appearance-none cursor-pointer transition-all"
                   >
                     <option value="">Select Service Needed</option>
                     {services.map((service: { slug: string; name: string }) => (
@@ -170,26 +212,36 @@ export function HeroSection() {
                       </option>
                     ))}
                   </select>
+                  <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
                 </div>
-                <div>
+
+                {/* Message */}
+                <div className="relative">
+                  <MessageSquare className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                   <textarea 
                     name="message"
                     placeholder="Describe your project..." 
-                    rows={3} 
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white text-gray-900 placeholder-gray-500 resize-none"
+                    rows={2} 
+                    className="w-full pl-9 pr-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary bg-gray-50/50 text-gray-900 placeholder-gray-400 resize-none transition-all"
                   />
                 </div>
+
+                {/* Submit Button */}
                 <button 
                   type="submit" 
-                  className="w-full bg-primary text-white py-4 rounded-lg font-semibold hover:bg-primary/90 transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
+                  className="w-full bg-primary text-white py-3 rounded-lg font-semibold text-sm hover:bg-primary/90 transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0"
                 >
                   Get My Free Estimate
-                  <ArrowRight className="h-5 w-5" />
+                  <ArrowRight className="h-4 w-4" />
                 </button>
               </form>
             )}
             
-            <p className="text-xs text-center text-gray-500 mt-4">
+            <p className="text-[10px] text-center text-gray-400 mt-3">
               By submitting, you agree to receive calls and texts about your inquiry.
             </p>
           </motion.div>

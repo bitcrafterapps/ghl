@@ -20,7 +20,14 @@ import {
   Activity,
   Coins,
   Mail,
-  ClipboardList
+  ClipboardList,
+  Image,
+  Star,
+  Calendar,
+  Contact2,
+  Camera,
+  ScrollText,
+  Shield
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -113,24 +120,31 @@ export function Sidebar({
     navigation.push(
       { name: 'Companies', href: '/companies', icon: Building2 },
       { name: 'Users', href: '/users', icon: Users },
-      { name: 'Site Settings', href: '/site-settings', icon: Settings },
-      { name: 'Site Status', href: '/site-status', icon: Activity },
-      { name: 'Email Templates', href: '/email-templates', icon: Mail },
-      { name: 'Email Logs', href: '/email-logs', icon: FileText },
-      { name: 'Release Notes', href: '/release-notes', icon: Newspaper },
-      { name: 'Log Viewer', href: '/log-viewer', icon: List }
+      { name: 'Gallery Items', href: '/gallery-management', icon: Image },
+      { name: 'Reviews', href: '/reviews-management', icon: Star },
+      { name: 'System Admin', href: '/system-admin', icon: Shield }
     );
   } else if (userProfile?.roles?.includes('Admin')) {
     navigation.push(
       { name: 'Companies', href: '/companies', icon: Building2 },
-      { name: 'Email Templates', href: '/email-templates', icon: Mail },
-      { name: 'Email Logs', href: '/email-logs', icon: FileText },
-      { name: 'Log Viewer', href: '/log-viewer', icon: List }
+      { name: 'Gallery Items', href: '/gallery-management', icon: Image },
+      { name: 'Reviews', href: '/reviews-management', icon: Star }
     );
   } else if (userProfile?.companyId) {
     // Regular users with a company can access their company page
     navigation.push(
       { name: 'My Company', href: `/companies/${userProfile.companyId}`, icon: Building2 }
+    );
+  }
+
+  // Private Pages navigation - available to all authenticated users with a company
+  if (userProfile?.companyId || userProfile?.roles?.includes('Admin') || userProfile?.roles?.includes('Site Admin')) {
+    // Add after main navigation items
+    navigation.splice(2, 0,
+      { name: 'Contacts', href: '/contacts', icon: Contact2 },
+      { name: 'Jobs', href: '/jobs', icon: FolderKanban },
+      { name: 'Service Contracts', href: '/service-contracts', icon: ScrollText },
+      { name: 'Calendar', href: '/calendar', icon: Calendar }
     );
   }
 

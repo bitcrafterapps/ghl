@@ -294,6 +294,8 @@ exports.reviews = (0, pg_core_1.pgTable)('reviews', {
     id: (0, pg_core_1.serial)('id').primaryKey(),
     userId: (0, pg_core_1.integer)('user_id').references(() => exports.users.id, { onDelete: 'set null' }),
     companyId: (0, pg_core_1.integer)('company_id').references(() => exports.companies.id, { onDelete: 'cascade' }),
+    // Site scoping for multi-tenant support
+    siteId: (0, pg_core_1.uuid)('site_id'),
     // Reviewer info
     reviewerName: (0, pg_core_1.varchar)('reviewer_name', { length: 255 }).notNull(),
     reviewerLocation: (0, pg_core_1.varchar)('reviewer_location', { length: 255 }),
@@ -319,6 +321,7 @@ exports.reviews = (0, pg_core_1.pgTable)('reviews', {
     updatedAt: (0, pg_core_1.timestamp)('updated_at').defaultNow()
 }, (table) => ({
     companyIdx: (0, pg_core_1.index)('reviews_company_idx').on(table.companyId),
+    siteIdx: (0, pg_core_1.index)('reviews_site_idx').on(table.siteId),
     ratingIdx: (0, pg_core_1.index)('reviews_rating_idx').on(table.rating),
     statusIdx: (0, pg_core_1.index)('reviews_status_idx').on(table.status),
     sourceIdx: (0, pg_core_1.index)('reviews_source_idx').on(table.source),

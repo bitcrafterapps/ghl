@@ -28,6 +28,7 @@ router.get('/', async (req: Request, res: Response) => {
     logger.debug('Getting reviews');
 
     const params: ReviewQueryParams = {
+      siteId: (req.query.siteId as string) || (req.headers['x-site-id'] as string),  // Multi-tenant site scoping
       status: req.query.status as any,
       source: req.query.source as any,
       featured: req.query.featured === 'true' ? true : req.query.featured === 'false' ? false : undefined,
@@ -66,8 +67,9 @@ router.get('/featured', async (req: Request, res: Response) => {
   try {
     const limit = req.query.limit ? parseInt(req.query.limit as string) : 6;
     const companyId = req.query.companyId ? parseInt(req.query.companyId as string) : undefined;
+    const siteId = (req.query.siteId as string) || (req.headers['x-site-id'] as string) || undefined;  // Multi-tenant site scoping
 
-    const reviews = await ReviewService.getFeaturedReviews(limit, companyId);
+    const reviews = await ReviewService.getFeaturedReviews(limit, companyId, siteId);
     return res.json(createSuccessResponse(reviews));
   } catch (error) {
     logger.error('Error getting featured reviews:', error);
@@ -192,7 +194,14 @@ router.post('/', authenticate, async (req: Request<{}, {}, ReviewCreateDto>, res
       );
     }
 
-    const review = await ReviewService.createReview(req.body, req.user!.userId);
+    // Get siteId from header or body for multi-tenant scoping
+    const siteId = req.body.siteId || (req.headers['x-site-id'] as string) || undefined;
+    const reviewData = {
+      ...req.body,
+      siteId
+    };
+
+    const review = await ReviewService.createReview(reviewData, req.user!.userId);
     logger.debug(`Review created with ID: ${review.id}`);
 
     return res.status(201).json(createSuccessResponse(review));

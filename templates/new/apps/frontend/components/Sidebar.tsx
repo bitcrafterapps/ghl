@@ -26,7 +26,8 @@ import {
   Calendar,
   Contact2,
   Camera,
-  ScrollText
+  ScrollText,
+  Shield
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -121,12 +122,7 @@ export function Sidebar({
       { name: 'Users', href: '/users', icon: Users },
       { name: 'Gallery Items', href: '/gallery-management', icon: Image },
       { name: 'Reviews', href: '/reviews-management', icon: Star },
-      { name: 'Site Settings', href: '/site-settings', icon: Settings },
-      { name: 'Site Status', href: '/site-status', icon: Activity },
-      { name: 'Email Templates', href: '/email-templates', icon: Mail },
-      { name: 'Email Logs', href: '/email-logs', icon: FileText },
-      { name: 'Release Notes', href: '/release-notes', icon: Newspaper },
-      { name: 'Log Viewer', href: '/log-viewer', icon: List }
+      { name: 'System Admin', href: '/system-admin', icon: Shield }
     );
   } else if (userProfile?.roles?.includes('Admin')) {
     navigation.push(

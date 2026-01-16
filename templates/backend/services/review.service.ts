@@ -33,6 +33,7 @@ export class ReviewService {
       const [review] = await db.insert(reviews).values({
         userId: actorUserId || null,
         companyId: data.companyId || null,
+        siteId: data.siteId || null,  // Multi-tenant site scoping
         reviewerName: data.reviewerName,
         reviewerLocation: data.reviewerLocation || null,
         reviewerEmail: data.reviewerEmail || null,
@@ -43,7 +44,7 @@ export class ReviewService {
         featured: data.featured ?? false,
         sortOrder: data.sortOrder ?? 0,
         status: data.status || 'published',
-        reviewDate: data.reviewDate || new Date()
+        reviewDate: data.reviewDate ? new Date(data.reviewDate) : new Date()
       }).returning();
 
       // Log activity
@@ -97,6 +98,11 @@ export class ReviewService {
 
       if (params.companyId) {
         conditions.push(eq(reviews.companyId, params.companyId));
+      }
+
+      // Multi-tenant site scoping - filter by siteId if provided
+      if (params.siteId) {
+        conditions.push(eq(reviews.siteId, params.siteId));
       }
 
       let query = db.select().from(reviews);
@@ -174,7 +180,7 @@ export class ReviewService {
       if (data.featured !== undefined) updateData.featured = data.featured;
       if (data.sortOrder !== undefined) updateData.sortOrder = data.sortOrder;
       if (data.status !== undefined) updateData.status = data.status;
-      if (data.reviewDate !== undefined) updateData.reviewDate = data.reviewDate;
+      if (data.reviewDate !== undefined) updateData.reviewDate = data.reviewDate ? new Date(data.reviewDate) : null;
 
       const [updated] = await db
         .update(reviews)
@@ -395,12 +401,13 @@ export class ReviewService {
   /**
    * Get featured reviews (for frontend display)
    */
-  static async getFeaturedReviews(limit: number = 6, companyId?: number): Promise<ReviewResponse[]> {
+  static async getFeaturedReviews(limit: number = 6, companyId?: number, siteId?: string): Promise<ReviewResponse[]> {
     return this.getReviews({
       status: 'published',
       featured: true,
       limit,
-      companyId
+      companyId,
+      siteId
     });
   }
 
@@ -429,6 +436,7 @@ export class ReviewService {
       id: review.id,
       userId: review.userId,
       companyId: review.companyId,
+      siteId: review.siteId,  // Multi-tenant site scoping
       reviewerName: review.reviewerName,
       reviewerLocation: review.reviewerLocation,
       reviewerEmail: review.reviewerEmail,

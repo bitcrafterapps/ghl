@@ -1,4 +1,4 @@
-CREATE TABLE "audit_logs" (
+CREATE TABLE IF NOT EXISTS "audit_logs" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"company_id" integer,
 	"user_id" integer,
@@ -14,7 +14,7 @@ CREATE TABLE "audit_logs" (
 	"created_at" timestamp DEFAULT now()
 );
 --> statement-breakpoint
-CREATE TABLE "calendar_events" (
+CREATE TABLE IF NOT EXISTS "calendar_events" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"company_id" integer,
 	"ghl_calendar_id" varchar(100),
@@ -49,7 +49,7 @@ CREATE TABLE "calendar_events" (
 	"updated_at" timestamp DEFAULT now()
 );
 --> statement-breakpoint
-CREATE TABLE "contact_activities" (
+CREATE TABLE IF NOT EXISTS "contact_activities" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"contact_id" uuid,
 	"user_id" integer,
@@ -60,7 +60,7 @@ CREATE TABLE "contact_activities" (
 	"created_at" timestamp DEFAULT now()
 );
 --> statement-breakpoint
-CREATE TABLE "contacts" (
+CREATE TABLE IF NOT EXISTS "contacts" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"company_id" integer,
 	"ghl_contact_id" varchar(100),
@@ -88,7 +88,7 @@ CREATE TABLE "contacts" (
 	"updated_at" timestamp DEFAULT now()
 );
 --> statement-breakpoint
-CREATE TABLE "data_exports" (
+CREATE TABLE IF NOT EXISTS "data_exports" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"company_id" integer,
 	"user_id" integer,
@@ -107,7 +107,7 @@ CREATE TABLE "data_exports" (
 	"created_at" timestamp DEFAULT now()
 );
 --> statement-breakpoint
-CREATE TABLE "data_imports" (
+CREATE TABLE IF NOT EXISTS "data_imports" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"company_id" integer,
 	"user_id" integer,
@@ -125,7 +125,7 @@ CREATE TABLE "data_imports" (
 	"created_at" timestamp DEFAULT now()
 );
 --> statement-breakpoint
-CREATE TABLE "email_logs" (
+CREATE TABLE IF NOT EXISTS "email_logs" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"template_key" varchar(50),
 	"recipient_email" varchar(255) NOT NULL,
@@ -137,7 +137,7 @@ CREATE TABLE "email_logs" (
 	"created_at" timestamp DEFAULT now()
 );
 --> statement-breakpoint
-CREATE TABLE "email_templates" (
+CREATE TABLE IF NOT EXISTS "email_templates" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"key" varchar(50) NOT NULL,
 	"name" varchar(100) NOT NULL,
@@ -149,7 +149,7 @@ CREATE TABLE "email_templates" (
 	CONSTRAINT "email_templates_key_unique" UNIQUE("key")
 );
 --> statement-breakpoint
-CREATE TABLE "gallery_images" (
+CREATE TABLE IF NOT EXISTS "gallery_images" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"user_id" integer,
 	"company_id" integer,
@@ -169,7 +169,7 @@ CREATE TABLE "gallery_images" (
 	"updated_at" timestamp DEFAULT now()
 );
 --> statement-breakpoint
-CREATE TABLE "job_activities" (
+CREATE TABLE IF NOT EXISTS "job_activities" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"job_id" uuid,
 	"user_id" integer,
@@ -180,7 +180,7 @@ CREATE TABLE "job_activities" (
 	"created_at" timestamp DEFAULT now()
 );
 --> statement-breakpoint
-CREATE TABLE "job_photo_before_after_pairs" (
+CREATE TABLE IF NOT EXISTS "job_photo_before_after_pairs" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"job_id" uuid,
 	"before_photo_id" uuid,
@@ -192,7 +192,7 @@ CREATE TABLE "job_photo_before_after_pairs" (
 	"created_at" timestamp DEFAULT now()
 );
 --> statement-breakpoint
-CREATE TABLE "job_photos" (
+CREATE TABLE IF NOT EXISTS "job_photos" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"job_id" uuid,
 	"company_id" integer,
@@ -223,7 +223,7 @@ CREATE TABLE "job_photos" (
 	"updated_at" timestamp DEFAULT now()
 );
 --> statement-breakpoint
-CREATE TABLE "jobs" (
+CREATE TABLE IF NOT EXISTS "jobs" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"company_id" integer,
 	"job_number" varchar(50) NOT NULL,
@@ -256,7 +256,7 @@ CREATE TABLE "jobs" (
 	"updated_at" timestamp DEFAULT now()
 );
 --> statement-breakpoint
-CREATE TABLE "notification_preferences" (
+CREATE TABLE IF NOT EXISTS "notification_preferences" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"user_id" integer,
 	"event_reminder" jsonb,
@@ -270,7 +270,7 @@ CREATE TABLE "notification_preferences" (
 	CONSTRAINT "notification_preferences_user_id_unique" UNIQUE("user_id")
 );
 --> statement-breakpoint
-CREATE TABLE "notifications" (
+CREATE TABLE IF NOT EXISTS "notifications" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"company_id" integer,
 	"user_id" integer,
@@ -290,7 +290,7 @@ CREATE TABLE "notifications" (
 	"created_at" timestamp DEFAULT now()
 );
 --> statement-breakpoint
-CREATE TABLE "push_history" (
+CREATE TABLE IF NOT EXISTS "push_history" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"project_id" uuid NOT NULL,
 	"user_id" integer,
@@ -303,7 +303,7 @@ CREATE TABLE "push_history" (
 	"created_at" timestamp DEFAULT now()
 );
 --> statement-breakpoint
-CREATE TABLE "reviews" (
+CREATE TABLE IF NOT EXISTS "reviews" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"user_id" integer,
 	"company_id" integer,
@@ -325,7 +325,7 @@ CREATE TABLE "reviews" (
 	"updated_at" timestamp DEFAULT now()
 );
 --> statement-breakpoint
-CREATE TABLE "service_contracts" (
+CREATE TABLE IF NOT EXISTS "service_contracts" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"company_id" integer,
 	"contact_id" uuid,
@@ -351,7 +351,7 @@ CREATE TABLE "service_contracts" (
 	"updated_at" timestamp DEFAULT now()
 );
 --> statement-breakpoint
-CREATE TABLE "transactions" (
+CREATE TABLE IF NOT EXISTS "transactions" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"user_id" integer,
 	"user_email" varchar(255) NOT NULL,

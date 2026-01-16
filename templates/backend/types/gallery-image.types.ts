@@ -12,6 +12,7 @@ export interface GalleryImageCreateDto {
   sortOrder?: number;
   status?: GalleryImageStatus;
   companyId?: number;
+  siteId?: string;
 }
 
 // Update DTO
@@ -30,6 +31,7 @@ export interface GalleryImageResponse {
   id: number;
   userId: number | null;
   companyId: number | null;
+  siteId: string | null;
   title: string | null;
   description: string | null;
   altText: string | null;
@@ -70,6 +72,7 @@ export interface GalleryImageQueryParams {
   category?: string;
   status?: GalleryImageStatus;
   companyId?: number;
+  siteId?: string;
   limit?: number;
   offset?: number;
 }
