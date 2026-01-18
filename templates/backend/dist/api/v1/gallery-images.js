@@ -99,7 +99,8 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             status: req.query.status,
             companyId: req.query.companyId ? parseInt(req.query.companyId) : undefined,
             limit: req.query.limit ? parseInt(req.query.limit) : undefined,
-            offset: req.query.offset ? parseInt(req.query.offset) : undefined
+            offset: req.query.offset ? parseInt(req.query.offset) : undefined,
+            siteId: req.headers['x-site-id'] || req.query.siteId
         };
         const images = yield gallery_image_service_1.GalleryImageService.getImages(params);
         logger.debug(`Retrieved ${images.length} gallery images`);
@@ -116,7 +117,8 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
  */
 router.get('/categories', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const categories = yield gallery_image_service_1.GalleryImageService.getCategories();
+        const siteId = req.headers['x-site-id'] || req.query.siteId;
+        const categories = yield gallery_image_service_1.GalleryImageService.getCategories(siteId);
         return res.json((0, response_types_1.createSuccessResponse)(categories));
     }
     catch (error) {
@@ -181,7 +183,8 @@ router.post('/', auth_middleware_1.authenticate, (req, res, next) => {
             tags: req.body.tags ? JSON.parse(req.body.tags) : undefined,
             sortOrder: req.body.sortOrder ? parseInt(req.body.sortOrder) : undefined,
             status: req.body.status,
-            companyId: req.body.companyId ? parseInt(req.body.companyId) : undefined
+            companyId: req.body.companyId ? parseInt(req.body.companyId) : undefined,
+            siteId: req.headers['x-site-id'] || req.body.siteId
         };
         logger.debug('Metadata prepared:', metadata);
         const image = yield gallery_image_service_1.GalleryImageService.uploadImage(req.file.buffer, req.file.originalname, req.file.mimetype, metadata, req.user.userId);

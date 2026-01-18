@@ -31,6 +31,7 @@ router.get('/stats', authenticate, async (req: Request, res: Response) => {
     }
     
     const isSiteAdmin = authReq.user.roles?.includes('Site Admin') ?? false;
+    console.log(`[DashboardAPI] GET /stats - User ID: ${authReq.user.userId}, Roles: ${JSON.stringify(authReq.user.roles)}, isSiteAdmin: ${isSiteAdmin}`);
     logger.debug(`User ${authReq.user.userId} is admin: ${isSiteAdmin}`);
     
     const stats = await DashboardService.getDashboardStats(

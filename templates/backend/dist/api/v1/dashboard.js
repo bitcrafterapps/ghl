@@ -68,6 +68,7 @@ router.get('/stats', auth_middleware_1.authenticate, (req, res) => __awaiter(voi
             return res.status(401).json((0, response_types_1.createErrorResponse)('AUTH_REQUIRED', 'Authentication required'));
         }
         const isSiteAdmin = (_b = (_a = authReq.user.roles) === null || _a === void 0 ? void 0 : _a.includes('Site Admin')) !== null && _b !== void 0 ? _b : false;
+        console.log(`[DashboardAPI] GET /stats - User ID: ${authReq.user.userId}, Roles: ${JSON.stringify(authReq.user.roles)}, isSiteAdmin: ${isSiteAdmin}`);
         logger.debug(`User ${authReq.user.userId} is admin: ${isSiteAdmin}`);
         const stats = yield dashboard_service_1.DashboardService.getDashboardStats(authReq.user.userId, isSiteAdmin);
         logger.debug('Dashboard stats retrieved:', stats);

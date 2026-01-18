@@ -177,7 +177,7 @@ export default function CalendarPage() {
   
   return (
     <Layout isAuthenticated={true} noPadding>
-      <div className="bg-[#0a0a0f] min-h-full">
+      <div className="bg-gray-50 dark:bg-[#0a0a0f] min-h-full">
       <SubHeader
         icon={CalendarIcon}
         title="Calendar"
@@ -187,7 +187,7 @@ export default function CalendarPage() {
             <button
               onClick={() => refresh()}
               disabled={loading}
-              className="p-2.5 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors disabled:opacity-50"
+              className="p-2.5 text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg transition-colors disabled:opacity-50"
               title="Refresh"
             >
               <RefreshCw className={cn("w-5 h-5", loading && "animate-spin")} />
@@ -205,40 +205,42 @@ export default function CalendarPage() {
       />
       
       {/* Toolbar */}
-      <div className="sticky top-[73px] z-20 bg-[#0a0a0f]/80 backdrop-blur-xl border-b border-white/5">
+      <div className="sticky top-[73px] z-20 bg-white/80 dark:bg-[#0a0a0f]/80 backdrop-blur-xl border-b border-gray-200 dark:border-white/5">
         <div className="max-w-full mx-auto px-6 py-3">
           <div className="flex items-center justify-between">
             {/* Navigation */}
             <div className="flex items-center gap-2">
               <button
                 onClick={handlePrevious}
-                className="p-2 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 rounded-lg transition-colors"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
               <button
                 onClick={handleNext}
-                className="p-2 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 rounded-lg transition-colors"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
               <button
                 onClick={handleToday}
-                className="px-3 py-1.5 text-sm text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                className="px-3 py-1.5 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 rounded-lg transition-colors"
               >
                 Today
               </button>
               
-              <h2 className="ml-4 text-lg font-semibold text-white">{getViewTitle()}</h2>
+              <h2 className="ml-4 text-lg font-semibold text-gray-900 dark:text-white">{getViewTitle()}</h2>
             </div>
             
             {/* View Toggle */}
-            <div className="flex items-center bg-[#1C1C1C] rounded-lg p-1">
+            <div className="flex items-center bg-gray-100 dark:bg-[#1C1C1C] rounded-lg p-1">
               <button
                 onClick={() => setView('month')}
                 className={cn(
                   "p-2 rounded-md transition-colors flex items-center gap-1.5",
-                  view === 'month' ? "bg-white/10 text-white" : "text-gray-500 hover:text-gray-300"
+                  view === 'month' 
+                    ? "bg-white dark:bg-white/10 text-gray-900 dark:text-white shadow-sm" 
+                    : "text-gray-500 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-300"
                 )}
               >
                 <LayoutGrid className="w-4 h-4" />
@@ -248,7 +250,9 @@ export default function CalendarPage() {
                 onClick={() => setView('week')}
                 className={cn(
                   "p-2 rounded-md transition-colors flex items-center gap-1.5",
-                  view === 'week' ? "bg-white/10 text-white" : "text-gray-500 hover:text-gray-300"
+                  view === 'week' 
+                    ? "bg-white dark:bg-white/10 text-gray-900 dark:text-white shadow-sm" 
+                    : "text-gray-500 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-300"
                 )}
               >
                 <Columns className="w-4 h-4" />
@@ -263,7 +267,7 @@ export default function CalendarPage() {
       <div className="max-w-full mx-auto px-6 py-8">
         {/* Error State */}
         {error && (
-          <div className="mb-8 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400">
+          <div className="mb-8 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-600 dark:text-red-400">
             {error}
           </div>
         )}
@@ -318,13 +322,13 @@ export default function CalendarPage() {
             className="absolute inset-0 bg-black/40"
             onClick={() => setShowEventDetails(null)}
           />
-          <div className="relative w-full max-w-md bg-[#0a0a0f] border-l border-white/10 shadow-2xl animate-in slide-in-from-right duration-300">
+          <div className="relative w-full max-w-md bg-white dark:bg-[#0a0a0f] border-l border-gray-200 dark:border-white/10 shadow-2xl animate-in slide-in-from-right duration-300">
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
-              <h3 className="text-lg font-semibold text-white">Event Details</h3>
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-white/10">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Event Details</h3>
               <button
                 onClick={() => setShowEventDetails(null)}
-                className="p-2 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 rounded-lg transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -343,14 +347,14 @@ export default function CalendarPage() {
                     {EVENT_TYPE_COLORS[showEventDetails.eventType].label}
                   </span>
                 </div>
-                <h2 className="text-2xl font-bold text-white">{showEventDetails.title}</h2>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{showEventDetails.title}</h2>
               </div>
               
               {/* Time */}
-              <div className="flex items-center gap-3 text-gray-400">
-                <Clock className="w-5 h-5 text-cyan-400" />
+              <div className="flex items-center gap-3 text-gray-500 dark:text-gray-400">
+                <Clock className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
                 <div>
-                  <p className="text-white">{formatDate(showEventDetails.startTime)}</p>
+                  <p className="text-gray-900 dark:text-white">{formatDate(showEventDetails.startTime)}</p>
                   <p className="text-sm">
                     {formatTime(showEventDetails.startTime)} - {formatTime(showEventDetails.endTime)}
                   </p>
@@ -360,16 +364,16 @@ export default function CalendarPage() {
               {/* Description */}
               {showEventDetails.description && (
                 <div>
-                  <h4 className="text-sm font-medium text-gray-400 mb-2">Description</h4>
-                  <p className="text-gray-300">{showEventDetails.description}</p>
+                  <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Description</h4>
+                  <p className="text-gray-700 dark:text-gray-300">{showEventDetails.description}</p>
                 </div>
               )}
               
               {/* Location */}
               {(showEventDetails.location || showEventDetails.isVirtual) && (
                 <div>
-                  <h4 className="text-sm font-medium text-gray-400 mb-2">Location</h4>
-                  <p className="text-gray-300">
+                  <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Location</h4>
+                  <p className="text-gray-700 dark:text-gray-300">
                     {showEventDetails.isVirtual ? 'Virtual Meeting' : showEventDetails.location}
                   </p>
                 </div>
@@ -378,8 +382,8 @@ export default function CalendarPage() {
               {/* Contact */}
               {showEventDetails.contact && (
                 <div>
-                  <h4 className="text-sm font-medium text-gray-400 mb-2">Contact</h4>
-                  <p className="text-white">
+                  <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Contact</h4>
+                  <p className="text-gray-900 dark:text-white">
                     {showEventDetails.contact.firstName} {showEventDetails.contact.lastName}
                   </p>
                 </div>
@@ -387,20 +391,20 @@ export default function CalendarPage() {
             </div>
             
             {/* Actions */}
-            <div className="absolute bottom-0 left-0 right-0 p-6 bg-[#0a0a0f] border-t border-white/10">
+            <div className="absolute bottom-0 left-0 right-0 p-6 bg-white dark:bg-[#0a0a0f] border-t border-gray-200 dark:border-white/10">
               <div className="flex gap-3">
                 <button
                   onClick={() => {
                     setEditingEvent(showEventDetails);
                     setShowEventDetails(null);
                   }}
-                  className="flex-1 px-4 py-2.5 text-sm font-medium text-gray-300 bg-white/5 hover:bg-white/10 rounded-lg transition-colors"
+                  className="flex-1 px-4 py-2.5 text-sm font-medium text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg transition-colors"
                 >
                   Edit
                 </button>
                 <button
                   onClick={handleDeleteEvent}
-                  className="px-4 py-2.5 text-sm font-medium text-red-400 bg-red-500/10 hover:bg-red-500/20 rounded-lg transition-colors"
+                  className="px-4 py-2.5 text-sm font-medium text-red-600 dark:text-red-400 bg-red-500/10 hover:bg-red-500/20 rounded-lg transition-colors"
                 >
                   Delete
                 </button>

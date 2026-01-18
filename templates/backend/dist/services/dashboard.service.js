@@ -64,14 +64,17 @@ class DashboardService {
                 stats.notifications = Number((notificationsCount === null || notificationsCount === void 0 ? void 0 : notificationsCount.count) || 0);
                 // Company specific stats
                 const companyId = yield (0, company_1.getUserCompanyId)(userId);
-                logger.debug(`DashboardStats: User ${userId} -> Company ${companyId}`);
+                console.log(`[DashboardService] User ${userId} (SiteAdmin: ${isSiteAdmin}) -> Company ${companyId}`);
                 if (companyId) {
+                    console.log(`[DashboardService] Fetching stats for Company ${companyId}`);
+                    // --- JOBS ---
                     // --- JOBS ---
                     // Active: scheduled, in_progress, approved
                     const [activeJobsCount] = yield db_1.db
                         .select({ count: (0, drizzle_orm_1.sql) `count(*)` })
                         .from(schema_1.jobs)
                         .where((0, drizzle_orm_1.and)((0, drizzle_orm_1.eq)(schema_1.jobs.companyId, companyId), (0, drizzle_orm_1.inArray)(schema_1.jobs.status, ['scheduled', 'in_progress', 'approved'])));
+                    console.log(`[DashboardService] Active Jobs: ${activeJobsCount === null || activeJobsCount === void 0 ? void 0 : activeJobsCount.count}`);
                     logger.debug(`DashboardStats: Active Jobs Count Raw:`, activeJobsCount);
                     // Pending: lead, quoted
                     const [pendingJobsCount] = yield db_1.db
@@ -120,21 +123,23 @@ class DashboardService {
                     stats.totalContacts = Number((contactsCount === null || contactsCount === void 0 ? void 0 : contactsCount.count) || 0);
                     stats.newContacts = Number((newContactsCount === null || newContactsCount === void 0 ? void 0 : newContactsCount.count) || 0);
                     // --- REVIEWS ---
+                    // Count reviews that have this companyId, or all reviews if using siteId-based storage
+                    // Note: Some reviews may have companyId=null but are still valid (siteId-based multi-tenant)
                     const [reviewsCount] = yield db_1.db
                         .select({ count: (0, drizzle_orm_1.sql) `count(*)` })
                         .from(schema_1.reviews)
-                        .where((0, drizzle_orm_1.eq)(schema_1.reviews.companyId, companyId));
+                        .where((0, drizzle_orm_1.sql) `${schema_1.reviews.companyId} = ${companyId} OR ${schema_1.reviews.companyId} IS NULL`);
                     const [avgRatingResult] = yield db_1.db
                         .select({ avg: (0, drizzle_orm_1.sql) `avg(${schema_1.reviews.rating})` })
                         .from(schema_1.reviews)
-                        .where((0, drizzle_orm_1.eq)(schema_1.reviews.companyId, companyId));
+                        .where((0, drizzle_orm_1.sql) `${schema_1.reviews.companyId} = ${companyId} OR ${schema_1.reviews.companyId} IS NULL`);
                     stats.totalReviews = Number((reviewsCount === null || reviewsCount === void 0 ? void 0 : reviewsCount.count) || 0);
                     stats.averageRating = Number((avgRatingResult === null || avgRatingResult === void 0 ? void 0 : avgRatingResult.avg) || 0);
                     // --- GALLERY ---
                     const [galleryCount] = yield db_1.db
                         .select({ count: (0, drizzle_orm_1.sql) `count(*)` })
-                        .from(schema_1.jobPhotos)
-                        .where((0, drizzle_orm_1.and)((0, drizzle_orm_1.eq)(schema_1.jobPhotos.companyId, companyId), (0, drizzle_orm_1.eq)(schema_1.jobPhotos.publishStatus, 'published')));
+                        .from(schema_1.galleryImages)
+                        .where((0, drizzle_orm_1.and)((0, drizzle_orm_1.eq)(schema_1.galleryImages.companyId, companyId), (0, drizzle_orm_1.eq)(schema_1.galleryImages.status, 'active')));
                     stats.galleryItems = Number((galleryCount === null || galleryCount === void 0 ? void 0 : galleryCount.count) || 0);
                     // Job Distribution
                     const distribution = yield db_1.db
@@ -149,6 +154,12 @@ class DashboardService {
                         status: d.status || 'unknown',
                         count: d.count
                     }));
+                    // --- USERS (Company) ---
+                    const [companyUserCount] = yield db_1.db
+                        .select({ count: (0, drizzle_orm_1.sql) `count(*)` })
+                        .from(schema_1.companyUsers)
+                        .where((0, drizzle_orm_1.eq)(schema_1.companyUsers.companyId, companyId));
+                    stats.users = Number((companyUserCount === null || companyUserCount === void 0 ? void 0 : companyUserCount.count) || 0);
                 }
                 return stats;
             }

@@ -11,7 +11,10 @@ import {
   Calendar,
   Clock,
   CheckCircle,
-  AlertCircle
+  AlertCircle,
+  Star,
+  Image as ImageIcon,
+  Users
 } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
@@ -30,6 +33,9 @@ interface DashboardStats {
   contractRevenue: number;
   jobStatusDistribution: { status: string; count: number }[];
   notifications: number;
+  totalReviews?: number;
+  galleryItems?: number;
+  users?: number;
 }
 
 const COLORS = ['#10B981', '#F59E0B', '#3B82F6', '#EF4444', '#8B5CF6'];
@@ -46,7 +52,10 @@ export default function DashboardPage() {
     activeContracts: 0,
     contractRevenue: 0,
     jobStatusDistribution: [],
-    notifications: 0
+    notifications: 0,
+    totalReviews: 0,
+    galleryItems: 0,
+    users: 0
   });
   const [isLoading, setIsLoading] = useState(true);
 
@@ -66,8 +75,10 @@ export default function DashboardPage() {
     })
       .then(res => res.ok ? res.json() : null)
       .then(response => {
-        if (response?.data) {
-          setStats(prev => ({ ...prev, ...response.data }));
+        if (response) {
+          // Handle both wrapped { data: ... } and unwrapped responses
+          const statsData = response.data || response;
+          setStats(prev => ({ ...prev, ...statsData }));
         }
       })
       .catch((err) => console.error('Failed to fetch stats:', err))
@@ -79,6 +90,7 @@ export default function DashboardPage() {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
+      maximumFractionDigits: 0,
     }).format(cents / 100);
   };
 
@@ -90,7 +102,7 @@ export default function DashboardPage() {
   if (isLoading) {
     return (
       <Layout isAuthenticated={isAuthenticated} noPadding>
-        <div className="flex items-center justify-center h-full bg-[#0a0a0f]">
+        <div className="flex items-center justify-center h-full bg-gray-50 dark:bg-[#0a0a0f]">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-500" />
         </div>
       </Layout>
@@ -99,76 +111,116 @@ export default function DashboardPage() {
 
   return (
     <Layout isAuthenticated={isAuthenticated} noPadding>
-      <div className="bg-[#0a0a0f] min-h-screen text-white">
+      <div className="bg-gray-50 dark:bg-[#0a0a0f] min-h-screen text-gray-900 dark:text-white">
         <SubHeader 
           icon={Activity}
           title="Dashboard"
-          subtitle="Business Overview & Performance"
+          subtitle="Business Overview"
         />
 
-        <div className="max-w-7xl mx-auto px-6 py-8 space-y-8">
+        <div className="max-w-7xl mx-auto px-4 py-6 space-y-6">
           
           {/* Top Stats Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
+            
             {/* Revenue */}
-            <div className="bg-[#1C1C1C] border border-white/10 p-6 rounded-xl hover:border-teal-500/50 transition-colors">
-              <div className="flex items-center justify-between mb-4">
-                <div className="p-3 bg-teal-500/20 text-teal-400 rounded-lg">
-                  <DollarSign className="w-6 h-6" />
+            <div className="bg-white dark:bg-[#1C1C1C] border border-gray-200 dark:border-white/10 p-4 rounded-xl hover:border-teal-500/50 transition-colors">
+              <div className="flex items-center justify-between mb-3">
+                <div className="p-2 bg-teal-500/20 text-teal-600 dark:text-teal-400 rounded-lg">
+                  <DollarSign className="w-5 h-5" />
                 </div>
-                <span className="text-xs font-medium text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-full">Paid</span>
+                <span className="text-[10px] font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded-full">Paid</span>
               </div>
-              <h3 className="text-gray-400 text-sm font-medium">Total Revenue</h3>
-              <p className="text-2xl font-bold text-white mt-1">{formatCurrency(stats.totalRevenue)}</p>
+              <h3 className="text-gray-500 dark:text-gray-400 text-xs font-medium">Revenue</h3>
+              <p className="text-xl font-bold text-gray-900 dark:text-white mt-0.5">{formatCurrency(stats.totalRevenue)}</p>
             </div>
 
             {/* Active Jobs */}
-            <div className="bg-[#1C1C1C] border border-white/10 p-6 rounded-xl hover:border-blue-500/50 transition-colors cursor-pointer" onClick={() => router.push('/jobs')}>
-              <div className="flex items-center justify-between mb-4">
-                <div className="p-3 bg-blue-500/20 text-blue-400 rounded-lg">
-                  <Briefcase className="w-6 h-6" />
+            <div className="bg-white dark:bg-[#1C1C1C] border border-gray-200 dark:border-white/10 p-4 rounded-xl hover:border-blue-500/50 transition-colors cursor-pointer" onClick={() => router.push('/jobs')}>
+              <div className="flex items-center justify-between mb-3">
+                <div className="p-2 bg-blue-500/20 text-blue-600 dark:text-blue-400 rounded-lg">
+                  <Briefcase className="w-5 h-5" />
                 </div>
-                <span className="text-xs font-medium text-blue-400 bg-blue-500/10 px-2 py-1 rounded-full">{stats.activeJobs} Active</span>
+                <span className="text-[10px] font-medium text-blue-600 dark:text-blue-400 bg-blue-500/10 px-1.5 py-0.5 rounded-full">{stats.activeJobs} Active</span>
               </div>
-              <h3 className="text-gray-400 text-sm font-medium">Active Jobs</h3>
-              <p className="text-2xl font-bold text-white mt-1">{stats.activeJobs}</p>
+              <h3 className="text-gray-500 dark:text-gray-400 text-xs font-medium">Jobs</h3>
+              <p className="text-xl font-bold text-gray-900 dark:text-white mt-0.5">{stats.activeJobs}</p>
             </div>
 
-            {/* Pending Quotes */}
-            <div className="bg-[#1C1C1C] border border-white/10 p-6 rounded-xl hover:border-orange-500/50 transition-colors cursor-pointer" onClick={() => router.push('/jobs?status=quote')}>
-              <div className="flex items-center justify-between mb-4">
-                <div className="p-3 bg-orange-500/20 text-orange-400 rounded-lg">
-                  <Clock className="w-6 h-6" />
+            {/* Pending Jobs */}
+            <div className="bg-white dark:bg-[#1C1C1C] border border-gray-200 dark:border-white/10 p-4 rounded-xl hover:border-orange-500/50 transition-colors cursor-pointer" onClick={() => router.push('/jobs?status=quote')}>
+              <div className="flex items-center justify-between mb-3">
+                <div className="p-2 bg-orange-500/20 text-orange-600 dark:text-orange-400 rounded-lg">
+                  <Clock className="w-5 h-5" />
                 </div>
-                <span className="text-xs font-medium text-orange-400 bg-orange-500/10 px-2 py-1 rounded-full">Needs Action</span>
+                <span className="text-[10px] font-medium text-orange-600 dark:text-orange-400 bg-orange-500/10 px-1.5 py-0.5 rounded-full">Action</span>
               </div>
-              <h3 className="text-gray-400 text-sm font-medium">Pending Jobs</h3>
-              <p className="text-2xl font-bold text-white mt-1">{stats.pendingJobs}</p>
+              <h3 className="text-gray-500 dark:text-gray-400 text-xs font-medium">Pending</h3>
+              <p className="text-xl font-bold text-gray-900 dark:text-white mt-0.5">{stats.pendingJobs}</p>
             </div>
 
             {/* Active Contracts */}
-            <div className="bg-[#1C1C1C] border border-white/10 p-6 rounded-xl hover:border-purple-500/50 transition-colors cursor-pointer" onClick={() => router.push('/service-contracts')}>
-              <div className="flex items-center justify-between mb-4">
-                <div className="p-3 bg-purple-500/20 text-purple-400 rounded-lg">
-                  <FileText className="w-6 h-6" />
+            <div className="bg-white dark:bg-[#1C1C1C] border border-gray-200 dark:border-white/10 p-4 rounded-xl hover:border-purple-500/50 transition-colors cursor-pointer" onClick={() => router.push('/service-contracts')}>
+              <div className="flex items-center justify-between mb-3">
+                <div className="p-2 bg-purple-500/20 text-purple-600 dark:text-purple-400 rounded-lg">
+                  <FileText className="w-5 h-5" />
                 </div>
-                <span className="text-xs font-medium text-purple-400 bg-purple-500/10 px-2 py-1 rounded-full">MRR {formatCurrency(stats.contractRevenue)}</span>
+                <span className="text-[10px] font-medium text-purple-600 dark:text-purple-400 bg-purple-500/10 px-1.5 py-0.5 rounded-full">MRR</span>
               </div>
-              <h3 className="text-gray-400 text-sm font-medium">Active Contracts</h3>
-              <p className="text-2xl font-bold text-white mt-1">{stats.activeContracts}</p>
+              <h3 className="text-gray-500 dark:text-gray-400 text-xs font-medium">Contracts</h3>
+              <p className="text-xl font-bold text-gray-900 dark:text-white mt-0.5">{stats.activeContracts}</p>
             </div>
+
+            {/* Reviews */}
+            <div className="bg-white dark:bg-[#1C1C1C] border border-gray-200 dark:border-white/10 p-4 rounded-xl hover:border-yellow-500/50 transition-colors cursor-pointer" onClick={() => router.push('/reviews-management')}>
+              <div className="flex items-center justify-between mb-3">
+                <div className="p-2 bg-yellow-500/20 text-yellow-600 dark:text-yellow-400 rounded-lg">
+                  <Star className="w-5 h-5" />
+                </div>
+                <span className="text-[10px] font-medium text-yellow-600 dark:text-yellow-400 bg-yellow-500/10 px-1.5 py-0.5 rounded-full">Total</span>
+              </div>
+              <h3 className="text-gray-500 dark:text-gray-400 text-xs font-medium">Reviews</h3>
+              <p className="text-xl font-bold text-gray-900 dark:text-white mt-0.5">{stats.totalReviews || 0}</p>
+            </div>
+
+            {/* Gallery Items */}
+            <div className="bg-white dark:bg-[#1C1C1C] border border-gray-200 dark:border-white/10 p-4 rounded-xl hover:border-pink-500/50 transition-colors cursor-pointer" onClick={() => router.push('/gallery-management')}>
+              <div className="flex items-center justify-between mb-3">
+                <div className="p-2 bg-pink-500/20 text-pink-600 dark:text-pink-400 rounded-lg">
+                  <ImageIcon className="w-5 h-5" />
+                </div>
+                <span className="text-[10px] font-medium text-pink-600 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full">Live</span>
+              </div>
+              <h3 className="text-gray-500 dark:text-gray-400 text-xs font-medium">Gallery</h3>
+              <p className="text-xl font-bold text-gray-900 dark:text-white mt-0.5">{stats.galleryItems || 0}</p>
+            </div>
+
+            {/* Users */}
+            <div className="bg-white dark:bg-[#1C1C1C] border border-gray-200 dark:border-white/10 p-4 rounded-xl hover:border-indigo-500/50 transition-colors cursor-pointer" onClick={() => router.push('/users')}>
+              <div className="flex items-center justify-between mb-3">
+                <div className="p-2 bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 rounded-lg">
+                  <Users className="w-5 h-5" />
+                </div>
+                <span className="text-[10px] font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-500/10 px-1.5 py-0.5 rounded-full">Active</span>
+              </div>
+              <h3 className="text-gray-500 dark:text-gray-400 text-xs font-medium">Users</h3>
+              <p className="text-xl font-bold text-gray-900 dark:text-white mt-0.5">{stats.users || 0}</p>
+            </div>
+            
+            {/* Notifications (Bonus card replacing a gap or just to fill 8 slots logic if needed, but we have 7 slots now. Let's leave it 7.) */}
+            
           </div>
 
           {/* Charts Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             
             {/* Job Distribution Chart */}
-            <div className="bg-[#1C1C1C] border border-white/10 p-6 rounded-xl">
-              <h3 className="text-white font-semibold mb-6 flex items-center gap-2">
+            <div className="bg-white dark:bg-[#1C1C1C] border border-gray-200 dark:border-white/10 p-4 rounded-xl">
+              <h3 className="text-gray-900 dark:text-white text-sm font-semibold mb-4 flex items-center gap-2">
                 <PieChart className="w-4 h-4 text-gray-400" />
-                Job Status Distribution
+                Job Status
               </h3>
-              <div className="h-[300px] w-full">
+              <div className="h-[250px] w-full">
                 {pieData.length > 0 ? (
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
@@ -177,7 +229,7 @@ export default function DashboardPage() {
                         cx="50%"
                         cy="50%"
                         labelLine={false}
-                        outerRadius={100}
+                        outerRadius={80}
                         fill="#8884d8"
                         dataKey="value"
                       >
@@ -186,27 +238,27 @@ export default function DashboardPage() {
                         ))}
                       </Pie>
                       <RechartsTooltip 
-                        contentStyle={{ backgroundColor: '#0a0a0f', borderColor: '#333' }}
+                        contentStyle={{ backgroundColor: '#1C1C1C', borderColor: '#333', color: '#fff', fontSize: '12px' }}
                         itemStyle={{ color: '#fff' }}
                       />
-                      <Legend />
+                      <Legend wrapperStyle={{ fontSize: '12px' }} />
                     </PieChart>
                   </ResponsiveContainer>
                 ) : (
-                  <div className="flex items-center justify-center h-full text-gray-500">
+                  <div className="flex items-center justify-center h-full text-xs text-gray-500">
                     No job data available
                   </div>
                 )}
               </div>
             </div>
 
-            {/* Activity / Performance Chart (Placeholder using Job Counts) */}
-            <div className="bg-[#1C1C1C] border border-white/10 p-6 rounded-xl">
-              <h3 className="text-white font-semibold mb-6 flex items-center gap-2">
+            {/* Performance Chart */}
+            <div className="bg-white dark:bg-[#1C1C1C] border border-gray-200 dark:border-white/10 p-4 rounded-xl">
+              <h3 className="text-gray-900 dark:text-white text-sm font-semibold mb-4 flex items-center gap-2">
                 <BarChart className="w-4 h-4 text-gray-400" />
-                Job Performance
+                Performance
               </h3>
-              <div className="h-[300px] w-full">
+              <div className="h-[250px] w-full">
                  <ResponsiveContainer width="100%" height="100%">
                     <BarChart
                       data={[
@@ -214,16 +266,16 @@ export default function DashboardPage() {
                         { name: 'Active', value: stats.activeJobs },
                         { name: 'Pending', value: stats.pendingJobs },
                       ]}
-                      margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                      margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
                     >
-                      <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                      <XAxis dataKey="name" stroke="#666" />
-                      <YAxis stroke="#666" />
+                      <CartesianGrid strokeDasharray="3 3" stroke="#333" vertical={false} />
+                      <XAxis dataKey="name" stroke="#666" fontSize={11} tickLine={false} axisLine={false} />
+                      <YAxis stroke="#666" fontSize={11} tickLine={false} axisLine={false} />
                       <RechartsTooltip
-                        contentStyle={{ backgroundColor: '#0a0a0f', borderColor: '#333' }}
+                        contentStyle={{ backgroundColor: '#1C1C1C', borderColor: '#333', color: '#fff', fontSize: '12px' }}
                         cursor={{ fill: 'rgba(255, 255, 255, 0.05)' }} 
                       />
-                      <Bar dataKey="value" fill="#14b8a6" radius={[4, 4, 0, 0]} barSize={50} />
+                      <Bar dataKey="value" fill="#14b8a6" radius={[4, 4, 0, 0]} barSize={40} />
                     </BarChart>
                   </ResponsiveContainer>
               </div>

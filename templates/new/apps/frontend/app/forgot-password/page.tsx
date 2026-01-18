@@ -6,6 +6,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Mail, ArrowRight, Loader2, ArrowLeft } from 'lucide-react';
 import { getApiUrl } from '@/lib/api';
+import { siteConfig } from '@/data/config';
 
 const API_URL = getApiUrl();
 
@@ -14,7 +15,30 @@ export default function ForgotPasswordPage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
 
+  // Get hero gradient colors from branding
+  const heroBgFrom = siteConfig.branding.heroBgFrom || '';
+  const heroBgTo = siteConfig.branding.heroBgTo || '';
+  const heroPattern = siteConfig.branding.heroPattern || 'none';
+  const hasCustomGradient = heroBgFrom && heroBgTo && heroBgFrom !== '' && heroBgTo !== '';
+  
+  // Build gradient style
+  const gradientStyle = hasCustomGradient 
+    ? { background: `linear-gradient(135deg, ${heroBgFrom} 0%, ${heroBgTo} 100%)` }
+    : undefined;
+
+  // Pattern SVG options
+  const patterns: Record<string, string> = {
+    crosses: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+    dots: `url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.3'%3E%3Ccircle cx='3' cy='3' r='1.5'/%3E%3C/g%3E%3C/svg%3E")`,
+    grid: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.2'%3E%3Cpath d='M0 20h40M20 0v40'/%3E%3C/g%3E%3C/svg%3E")`,
+    diagonal: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.15'%3E%3Cpath d='M0 40L40 0M-10 10L10 -10M30 50L50 30'/%3E%3C/g%3E%3C/svg%3E")`,
+    waves: `url("data:image/svg+xml,%3Csvg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10 Q25 0, 50 10 T100 10' stroke='%23ffffff' stroke-opacity='0.15' fill='none'/%3E%3C/svg%3E")`,
+    hexagons: `url("data:image/svg+xml,%3Csvg width='28' height='49' viewBox='0 0 28 49' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.15'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.35 11-6.35V17.9l-11-6.35L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/svg%3E")`,
+    circles: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='12' stroke='%23ffffff' stroke-opacity='0.12' fill='none'/%3E%3C/svg%3E")`,
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    // ... (existing logic)
     e.preventDefault();
     setIsLoading(true);
     setError('');
@@ -49,19 +73,34 @@ export default function ForgotPasswordPage() {
       
       <main className="flex-grow flex">
         {/* Left Panel - Branding */}
-        <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
-          {/* Background effects */}
-          <div className="absolute inset-0 bg-gradient-to-br from-sky-600/20 via-blue-600/10 to-transparent" />
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl" />
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl" />
+        <div 
+          className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-zinc-900 items-center"
+          style={gradientStyle}
+        >
+          {/* Default Background if no custom gradient */}
+          {!hasCustomGradient && (
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900" />
+          )}
+
+          {/* Background Pattern */}
+          {heroPattern !== 'none' && patterns[heroPattern] && (
+            <div className="absolute inset-0 opacity-10">
+              <div className="absolute inset-0" style={{
+                backgroundImage: patterns[heroPattern],
+              }} />
+            </div>
+          )}
+
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent" />
           
           <div className="relative z-10 flex flex-col justify-center px-16">
             <h1 className="text-4xl font-bold text-white mb-4 leading-tight">
-              [Recovery Headline]
+              Account Recovery
             </h1>
             
             <p className="text-xl text-zinc-400 mb-8">
-              [Recovery Description]
+              Restore access to your {siteConfig.industry.type} business account.
             </p>
             
             <div className="space-y-4">
@@ -69,19 +108,19 @@ export default function ForgotPasswordPage() {
                 <div className="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center">
                   <span className="text-blue-400 text-sm">✓</span>
                 </div>
-                [Recovery Benefit 1]
+                Secure Verification
               </div>
               <div className="flex items-center gap-3 text-zinc-300">
                 <div className="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center">
                   <span className="text-blue-400 text-sm">✓</span>
                 </div>
-                [Recovery Benefit 2]
+                Fast Recovery
               </div>
               <div className="flex items-center gap-3 text-zinc-300">
                 <div className="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center">
                   <span className="text-blue-400 text-sm">✓</span>
                 </div>
-                [Recovery Benefit 3]
+                24/7 Support
               </div>
             </div>
           </div>
@@ -94,7 +133,7 @@ export default function ForgotPasswordPage() {
             <div className="lg:hidden text-center mb-8">
               <Link href="/" className="inline-flex items-center gap-2">
                 <span className="text-2xl">🌐</span>
-                <span className="text-2xl font-bold text-white">[MY_APP]</span>
+                <span className="text-2xl font-bold text-white">{siteConfig.company.name}</span>
               </Link>
             </div>
 

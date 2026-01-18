@@ -375,7 +375,7 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
             {!isAuthenticated && (
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="md:hidden mr-2 inline-flex items-center justify-center p-2 rounded-md text-[--header-text-secondary] hover:text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+                className="lg:hidden mr-2 inline-flex items-center justify-center p-2 rounded-md text-[--header-text-secondary] hover:text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
               >
                 <span className="sr-only">Open main menu</span>
                 {mobileMenuOpen ? (
@@ -405,9 +405,9 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
             </Link>
           </div>
 
-          {/* Center Navigation - Only show when not authenticated (desktop) */}
+          {/* Center Navigation - Only show when not authenticated (desktop/large tablets) */}
           {!isAuthenticated && (
-            <div className="hidden md:flex items-center justify-center absolute left-1/2 -translate-x-1/2 gap-1">
+            <div className="hidden lg:flex items-center justify-center absolute left-1/2 -translate-x-1/2 gap-1 xl:gap-2">
               <Link
                 href="/"
                 className={classNames(
@@ -763,9 +763,9 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
         </div>
       </div>
 
-      {/* Mobile menu panel */}
+      {/* Mobile/Tablet menu panel */}
       {!isAuthenticated && mobileMenuOpen && (
-        <div className="md:hidden">
+        <div className="lg:hidden">
           <div 
             className="space-y-1 px-4 pb-4 pt-2 border-t border-white/10"
             style={{

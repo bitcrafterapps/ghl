@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { 
   ServiceContract, 
   CreateServiceContractDTO, 
@@ -9,14 +9,16 @@ import type {
   ServiceFrequency 
 } from '@/types/service-contracts';
 import { BILLING_FREQUENCY_LABELS, SERVICE_FREQUENCY_LABELS } from '@/types/service-contracts';
+import { useContacts } from '@/hooks/useContacts';
 import { cn } from '@/lib/utils';
-import { X, Loader2, Calendar, DollarSign, Clock, Bell } from 'lucide-react';
+import { X, Loader2, Calendar, DollarSign, Clock, Bell, User } from 'lucide-react';
 
 interface ContractFormProps {
   contract?: ServiceContract | null;
   onSubmit: (data: CreateServiceContractDTO) => Promise<void>;
   onCancel: () => void;
   isLoading?: boolean;
+  error?: string | null;
 }
 
 const STATUS_OPTIONS: { value: ContractStatus; label: string }[] = [
@@ -45,7 +47,14 @@ const SERVICE_OPTIONS: { value: ServiceFrequency; label: string }[] = [
   { value: 'on_demand', label: 'On Demand' },
 ];
 
-export function ContractForm({ contract, onSubmit, onCancel, isLoading }: ContractFormProps) {
+export function ContractForm({ contract, onSubmit, onCancel, isLoading, error }: ContractFormProps) {
+  const { contacts, fetchContacts: fetchContactsList } = useContacts();
+
+  useEffect(() => {
+    // Fetch contacts for the select dropdown
+    fetchContactsList({}, { page: 1, limit: 100 });
+  }, []);
+
   const [formData, setFormData] = useState<CreateServiceContractDTO>({
     contactId: contract?.contactId || '',
     title: contract?.title || '',
@@ -132,34 +141,60 @@ export function ContractForm({ contract, onSubmit, onCancel, isLoading }: Contra
     }
   };
   
-  const inputClasses = "w-full px-4 py-2.5 bg-[#1C1C1C] border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500/50 transition-all";
-  const labelClasses = "block text-sm font-medium text-gray-300 mb-1.5";
-  const errorClasses = "text-xs text-red-400 mt-1";
+  const inputClasses = "w-full px-4 py-2.5 bg-white dark:bg-[#1C1C1C] border border-gray-200 dark:border-white/10 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500/50 transition-all";
+  const labelClasses = "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5";
+  const errorClasses = "text-xs text-red-500 dark:text-red-400 mt-1";
   
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-      <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-[#0a0a0f] border border-white/10 rounded-2xl shadow-2xl">
+      <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white dark:bg-[#0a0a0f] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl">
         {/* Header */}
-        <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-4 bg-[#0a0a0f] border-b border-white/10">
-          <h2 className="text-xl font-semibold text-white">
+        <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-4 bg-white dark:bg-[#0a0a0f] border-b border-gray-200 dark:border-white/10">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
             {contract ? 'Edit Contract' : 'New Service Contract'}
           </h2>
           <button
             onClick={onCancel}
-            className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
+            className="p-2 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
         
+        {/* Error Display */}
+        {error && (
+          <div className="mx-6 mt-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-sm text-red-600 dark:text-red-400">
+            {error}
+          </div>
+        )}
+        
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {/* Basic Info */}
           <div className="space-y-4">
-            <h3 className="text-sm font-medium text-gray-400 uppercase tracking-wider flex items-center gap-2">
-              <span className="w-6 h-6 rounded bg-teal-500/20 text-teal-400 flex items-center justify-center text-xs">1</span>
+            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-2">
+              <span className="w-6 h-6 rounded bg-teal-500/20 text-teal-600 dark:text-teal-400 flex items-center justify-center text-xs">1</span>
               Contract Details
             </h3>
+            
+            {/* Client (New) */}
+            <div>
+              <label htmlFor="contactId" className={labelClasses}>Client</label>
+              <select
+                id="contactId"
+                name="contactId"
+                value={formData.contactId}
+                onChange={handleChange}
+                className={inputClasses}
+              >
+                <option value="">Select Client</option>
+                {contacts.map(contact => (
+                  <option key={contact.id} value={contact.id}>
+                    {contact.firstName} {contact.lastName} {contact.contactCompanyName ? `(${contact.contactCompanyName})` : ''}
+                  </option>
+                ))}
+              </select>
+            </div>
             
             <div>
               <label htmlFor="title" className={labelClasses}>Contract Title *</label>
@@ -222,7 +257,7 @@ export function ContractForm({ contract, onSubmit, onCancel, isLoading }: Contra
           
           {/* Services Included */}
           <div className="space-y-4">
-            <h3 className="text-sm font-medium text-gray-400 uppercase tracking-wider">Services Included</h3>
+            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Services Included</h3>
             
             <div>
               <input
@@ -238,13 +273,13 @@ export function ContractForm({ contract, onSubmit, onCancel, isLoading }: Contra
                   {formData.servicesIncluded.map((service, i) => (
                     <span
                       key={i}
-                      className="inline-flex items-center gap-1 px-2.5 py-1 text-sm bg-teal-500/20 text-teal-400 rounded-full"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 text-sm bg-teal-100 dark:bg-teal-500/20 text-teal-700 dark:text-teal-400 rounded-full"
                     >
                       {service}
                       <button
                         type="button"
                         onClick={() => handleRemoveService(service)}
-                        className="p-0.5 hover:bg-teal-500/30 rounded-full"
+                        className="p-0.5 hover:bg-teal-200 dark:hover:bg-teal-500/30 rounded-full"
                       >
                         <X className="w-3 h-3" />
                       </button>
@@ -257,7 +292,7 @@ export function ContractForm({ contract, onSubmit, onCancel, isLoading }: Contra
           
           {/* Schedule */}
           <div className="space-y-4">
-            <h3 className="text-sm font-medium text-gray-400 uppercase tracking-wider flex items-center gap-2">
+            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-2">
               <Calendar className="w-4 h-4" />
               Schedule
             </h3>
@@ -307,7 +342,7 @@ export function ContractForm({ contract, onSubmit, onCancel, isLoading }: Contra
           
           {/* Billing */}
           <div className="space-y-4">
-            <h3 className="text-sm font-medium text-gray-400 uppercase tracking-wider flex items-center gap-2">
+            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-2">
               <DollarSign className="w-4 h-4" />
               Billing
             </h3>
@@ -348,20 +383,20 @@ export function ContractForm({ contract, onSubmit, onCancel, isLoading }: Contra
           
           {/* Renewal Settings */}
           <div className="space-y-4">
-            <h3 className="text-sm font-medium text-gray-400 uppercase tracking-wider flex items-center gap-2">
+            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-2">
               <Bell className="w-4 h-4" />
               Renewal Settings
             </h3>
             
             <div className="grid grid-cols-2 gap-4">
               <div className="flex items-center gap-3">
-                <label className="flex items-center gap-2 text-sm text-gray-400 cursor-pointer">
+                <label className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 cursor-pointer">
                   <input
                     type="checkbox"
                     name="autoRenew"
                     checked={formData.autoRenew}
                     onChange={handleChange}
-                    className="rounded bg-[#1C1C1C] border-white/10 text-teal-500 focus:ring-teal-500/50"
+                    className="rounded bg-white dark:bg-[#1C1C1C] border-gray-300 dark:border-white/10 text-teal-500 focus:ring-teal-500/50"
                   />
                   Auto-renew contract
                 </label>
@@ -384,7 +419,7 @@ export function ContractForm({ contract, onSubmit, onCancel, isLoading }: Contra
           
           {/* Notes */}
           <div className="space-y-4">
-            <h3 className="text-sm font-medium text-gray-400 uppercase tracking-wider">Terms & Notes</h3>
+            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Terms & Notes</h3>
             
             <div>
               <label htmlFor="terms" className={labelClasses}>Terms & Conditions</label>
@@ -414,11 +449,11 @@ export function ContractForm({ contract, onSubmit, onCancel, isLoading }: Contra
           </div>
           
           {/* Actions */}
-          <div className="flex justify-end gap-3 pt-4 border-t border-white/10">
+          <div className="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-white/10">
             <button
               type="button"
               onClick={onCancel}
-              className="px-5 py-2.5 text-sm font-medium text-gray-300 bg-white/5 hover:bg-white/10 rounded-lg transition-colors"
+              className="px-5 py-2.5 text-sm font-medium text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg transition-colors"
               disabled={isLoading}
             >
               Cancel

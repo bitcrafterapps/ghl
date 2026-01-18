@@ -1,5 +1,5 @@
 import { db } from '../db';
-import { users, companies, activityLog, jobs, serviceContracts, contacts, reviews, jobPhotos } from '../db/schema';
+import { users, companies, activityLog, jobs, serviceContracts, contacts, reviews, galleryImages, companyUsers } from '../db/schema';
 import { eq, sql, and, count, inArray } from 'drizzle-orm';
 import { LoggerFactory } from '../logger';
 import { getUserCompanyId } from '../utils/company';
@@ -89,9 +89,11 @@ export class DashboardService {
 
       // Company specific stats
       const companyId = await getUserCompanyId(userId);
-      logger.debug(`DashboardStats: User ${userId} -> Company ${companyId}`);
+      console.log(`[DashboardService] User ${userId} (SiteAdmin: ${isSiteAdmin}) -> Company ${companyId}`);
       
       if (companyId) {
+        console.log(`[DashboardService] Fetching stats for Company ${companyId}`);
+        // --- JOBS ---
         // --- JOBS ---
         // Active: scheduled, in_progress, approved
         const [activeJobsCount] = await db
@@ -101,6 +103,7 @@ export class DashboardService {
             eq(jobs.companyId, companyId),
             inArray(jobs.status, ['scheduled', 'in_progress', 'approved'])
           ));
+        console.log(`[DashboardService] Active Jobs: ${activeJobsCount?.count}`);
         logger.debug(`DashboardStats: Active Jobs Count Raw:`, activeJobsCount);
           
         // Pending: lead, quoted
@@ -179,6 +182,7 @@ export class DashboardService {
         stats.newContacts = Number(newContactsCount?.count || 0);
 
         // --- REVIEWS ---
+        // Only count reviews that belong to this company
         const [reviewsCount] = await db
           .select({ count: sql<number>`count(*)` })
           .from(reviews)
@@ -195,10 +199,10 @@ export class DashboardService {
         // --- GALLERY ---
         const [galleryCount] = await db
           .select({ count: sql<number>`count(*)` })
-          .from(jobPhotos)
+          .from(galleryImages)
           .where(and(
-              eq(jobPhotos.companyId, companyId),
-              eq(jobPhotos.publishStatus, 'published')
+              eq(galleryImages.companyId, companyId),
+              eq(galleryImages.status, 'active')
           ));
           
         stats.galleryItems = Number(galleryCount?.count || 0);
@@ -217,6 +221,13 @@ export class DashboardService {
           status: d.status || 'unknown', 
           count: d.count 
         }));
+
+        // --- USERS (Company) ---
+        const [companyUserCount] = await db
+          .select({ count: sql<number>`count(*)` })
+          .from(companyUsers)
+          .where(eq(companyUsers.companyId, companyId));
+        stats.users = Number(companyUserCount?.count || 0);
       }
 
       return stats;

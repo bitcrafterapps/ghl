@@ -4,6 +4,7 @@ import { Inter, Poppins } from 'next/font/google'
 import { ThemeProvider } from '../contexts/ThemeContext'
 import { AuthProvider } from '../contexts/AuthContext'
 import Script from 'next/script'
+import { Toaster } from '@/components/ui/toaster'
 
 // Font configuration - will be replaced with tokenized values
 const fontBody = Inter({ 
@@ -120,6 +121,7 @@ export default function RootLayout({
         <ThemeProvider>
           <AuthProvider>
             {children as any}
+            <Toaster />
           </AuthProvider>
         </ThemeProvider>
       </body>

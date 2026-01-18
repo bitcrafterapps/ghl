@@ -99,6 +99,7 @@ class GalleryImageService {
                 const [image] = yield db_1.db.insert(schema_1.galleryImages).values({
                     userId: actorUserId || null,
                     companyId: metadata.companyId || null,
+                    siteId: metadata.siteId || null, // Create with siteId
                     title: metadata.title || filename,
                     description: metadata.description || null,
                     altText: metadata.altText || metadata.title || filename,
@@ -146,6 +147,9 @@ class GalleryImageService {
                 }
                 if (params.companyId) {
                     conditions.push((0, drizzle_orm_1.eq)(schema_1.galleryImages.companyId, params.companyId));
+                }
+                if (params.siteId) {
+                    conditions.push((0, drizzle_orm_1.eq)(schema_1.galleryImages.siteId, params.siteId));
                 }
                 let query = db_1.db.select().from(schema_1.galleryImages);
                 if (conditions.length > 0) {
@@ -350,13 +354,26 @@ class GalleryImageService {
     /**
      * Get distinct categories
      */
-    static getCategories() {
+    static getCategories(siteId) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const results = yield db_1.db
+                let query = db_1.db
                     .selectDistinct({ category: schema_1.galleryImages.category })
                     .from(schema_1.galleryImages)
                     .where((0, drizzle_orm_1.sql) `${schema_1.galleryImages.category} IS NOT NULL`);
+                if (siteId) {
+                    // We can't easily chain .where() after .where() with Drizzle's query builder this way 
+                    // if using the selectDistinct shorthand, but let's try constructing conditions first
+                    // Refactoring to use conditions array similar to getImages
+                    const conditions = [(0, drizzle_orm_1.sql) `${schema_1.galleryImages.category} IS NOT NULL`];
+                    conditions.push((0, drizzle_orm_1.eq)(schema_1.galleryImages.siteId, siteId));
+                    const results = yield db_1.db
+                        .selectDistinct({ category: schema_1.galleryImages.category })
+                        .from(schema_1.galleryImages)
+                        .where((0, drizzle_orm_1.and)(...conditions));
+                    return results.map(r => r.category).filter((c) => c !== null);
+                }
+                const results = yield query;
                 return results.map(r => r.category).filter((c) => c !== null);
             }
             catch (error) {
@@ -374,6 +391,7 @@ class GalleryImageService {
             id: image.id,
             userId: image.userId,
             companyId: image.companyId,
+            siteId: image.siteId,
             title: image.title,
             description: image.description,
             altText: image.altText,

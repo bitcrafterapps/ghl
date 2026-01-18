@@ -29,17 +29,19 @@ configureLogger();
 const logger = LoggerFactory.getLogger('App');
 const app = express();
 
-// Configure CORS first
-app.use(cors({
+// Configure CORS
+const corsOptions = {
   origin: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-site-id', 'X-Site-Id'],
   credentials: true,
   maxAge: 86400,
-}));
+};
+
+app.use(cors(corsOptions));
 
 // Handle preflight requests
-app.options('*', cors());
+app.options('*', cors(corsOptions));
 
 // Basic middleware
 app.use(express.json({ limit: '50mb' }));

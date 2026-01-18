@@ -133,7 +133,7 @@ export default function JobsPage() {
   
   return (
     <Layout isAuthenticated={true} noPadding>
-      <div className="bg-[#0a0a0f] min-h-full">
+      <div className="bg-gray-50 dark:bg-[#0a0a0f] min-h-full">
       <SubHeader
         icon={FolderKanban}
         title="Jobs"
@@ -143,19 +143,21 @@ export default function JobsPage() {
             <button
               onClick={() => viewMode === 'kanban' ? loadKanban() : refresh()}
               disabled={loading || kanbanLoading}
-              className="p-2.5 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors disabled:opacity-50"
+              className="p-2.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 rounded-lg transition-colors disabled:opacity-50"
               title="Refresh"
             >
               <RefreshCw className={cn("w-5 h-5", (loading || kanbanLoading) && "animate-spin")} />
             </button>
 
             {/* View Mode Toggle */}
-            <div className="flex items-center bg-[#1C1C1C] rounded-lg p-1">
+            <div className="flex items-center bg-gray-100 dark:bg-[#1C1C1C] rounded-lg p-1">
               <button
                 onClick={() => setViewMode('kanban')}
                 className={cn(
                   "p-2 rounded-md transition-colors flex items-center gap-1.5",
-                  viewMode === 'kanban' ? "bg-white/10 text-white" : "text-gray-500 hover:text-gray-300"
+                  viewMode === 'kanban' 
+                    ? "bg-white dark:bg-white/10 text-gray-900 dark:text-white shadow-sm" 
+                    : "text-gray-500 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-300"
                 )}
               >
                 <Columns className="w-4 h-4" />
@@ -165,7 +167,9 @@ export default function JobsPage() {
                 onClick={() => setViewMode('grid')}
                 className={cn(
                   "p-2 rounded-md transition-colors flex items-center gap-1.5",
-                  viewMode === 'grid' ? "bg-white/10 text-white" : "text-gray-500 hover:text-gray-300"
+                  viewMode === 'grid' 
+                    ? "bg-white dark:bg-white/10 text-gray-900 dark:text-white shadow-sm" 
+                    : "text-gray-500 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-300"
                 )}
               >
                 <LayoutGrid className="w-4 h-4" />
@@ -197,7 +201,7 @@ export default function JobsPage() {
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
                   placeholder="Search jobs..."
-                  className="w-full pl-12 pr-4 py-3 bg-[#1C1C1C] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+                  className="w-full pl-12 pr-4 py-3 bg-white dark:bg-[#1C1C1C] border border-gray-200 dark:border-white/10 rounded-xl text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
                 />
               </form>
               
@@ -206,8 +210,8 @@ export default function JobsPage() {
                 className={cn(
                   "inline-flex items-center gap-2 px-4 py-3 rounded-xl border transition-all",
                   showFilters || activeFilterCount > 0
-                    ? "bg-purple-500/20 border-purple-500/30 text-purple-400"
-                    : "bg-[#1C1C1C] border-white/10 text-gray-400 hover:text-white hover:border-white/20"
+                    ? "bg-purple-500/10 border-purple-500/30 text-purple-600 dark:text-purple-400"
+                    : "bg-white dark:bg-[#1C1C1C] border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:border-gray-300 dark:hover:border-white/20"
                 )}
               >
                 <Filter className="w-5 h-5" />
@@ -223,7 +227,7 @@ export default function JobsPage() {
               {hasActiveFilters && (
                 <button
                   onClick={clearFilters}
-                  className="px-4 py-3 text-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-xl transition-colors"
+                  className="px-4 py-3 text-sm text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-xl transition-colors"
                 >
                   Clear All
                 </button>
@@ -232,16 +236,16 @@ export default function JobsPage() {
             
             {/* Results Count */}
             {pagination && (
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 {pagination.total} {pagination.total === 1 ? 'job' : 'jobs'} found
               </p>
             )}
             
             {/* Filter Panel */}
             {showFilters && (
-              <div className="p-5 bg-[#1C1C1C]/80 backdrop-blur-sm border border-white/10 rounded-xl space-y-5 animate-in fade-in slide-in-from-top-2 duration-200">
+              <div className="p-5 bg-white/50 dark:bg-[#1C1C1C]/80 backdrop-blur-sm border border-gray-200 dark:border-white/10 rounded-xl space-y-5 animate-in fade-in slide-in-from-top-2 duration-200">
                 <div>
-                  <h4 className="text-sm font-medium text-gray-300 mb-3">Status</h4>
+                  <h4 className="text-sm font-medium text-gray-900 dark:text-gray-300 mb-3">Status</h4>
                   <div className="flex flex-wrap gap-2">
                     {KANBAN_COLUMNS.map(({ status, label }) => {
                       const isSelected = Array.isArray(filters.status)
@@ -255,8 +259,8 @@ export default function JobsPage() {
                           className={cn(
                             "px-3 py-1.5 text-sm rounded-lg border transition-all",
                             isSelected
-                              ? "bg-purple-500/20 border-purple-500/50 text-purple-400"
-                              : "bg-white/5 border-white/10 text-gray-400 hover:text-white hover:bg-white/10"
+                              ? "bg-purple-500/10 border-purple-500/50 text-purple-600 dark:text-purple-400"
+                              : "bg-white dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/10"
                           )}
                         >
                           {label}
@@ -272,7 +276,7 @@ export default function JobsPage() {
         
         {/* Error State */}
         {error && (
-          <div className="mb-8 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400">
+          <div className="mb-8 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-600 dark:text-red-400">
             {error}
           </div>
         )}
@@ -304,11 +308,11 @@ export default function JobsPage() {
             {/* Empty State */}
             {!loading && jobs.length === 0 && (
               <div className="flex flex-col items-center justify-center py-20 text-center">
-                <div className="p-4 bg-gray-500/10 rounded-full mb-4">
+                <div className="p-4 bg-gray-100 dark:bg-gray-500/10 rounded-full mb-4">
                   <FolderKanban className="w-12 h-12 text-gray-500" />
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-2">No jobs yet</h3>
-                <p className="text-gray-500 mb-6 max-w-md">
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">No jobs yet</h3>
+                <p className="text-gray-500 dark:text-gray-400 mb-6 max-w-md">
                   Start tracking your work by creating your first job.
                 </p>
                 <button
@@ -347,7 +351,7 @@ export default function JobsPage() {
                       "w-10 h-10 rounded-lg text-sm font-medium transition-colors",
                       page === pagination.page
                         ? "bg-purple-600 text-white"
-                        : "bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white"
+                        : "bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10 hover:text-gray-900 dark:hover:text-white"
                     )}
                   >
                     {page}
@@ -362,17 +366,17 @@ export default function JobsPage() {
       {/* Delete Confirmation Modal */}
       {deleteConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div className="w-full max-w-md p-6 bg-[#1C1C1C] border border-white/10 rounded-2xl shadow-2xl">
-            <h3 className="text-xl font-semibold text-white mb-2">Delete Job</h3>
-            <p className="text-gray-400 mb-6">
+          <div className="w-full max-w-md p-6 bg-white dark:bg-[#1C1C1C] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Delete Job</h3>
+            <p className="text-gray-500 dark:text-gray-400 mb-6">
               Are you sure you want to delete{' '}
-              <span className="text-white font-medium">{deleteConfirm.title}</span>?
+              <span className="text-gray-900 dark:text-white font-medium">{deleteConfirm.title}</span>?
               This action cannot be undone.
             </p>
             <div className="flex justify-end gap-3">
               <button
                 onClick={() => setDeleteConfirm(null)}
-                className="px-4 py-2 text-sm font-medium text-gray-300 bg-white/5 hover:bg-white/10 rounded-lg transition-colors"
+                className="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg transition-colors"
               >
                 Cancel
               </button>

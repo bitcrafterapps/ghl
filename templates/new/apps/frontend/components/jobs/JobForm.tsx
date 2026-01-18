@@ -124,21 +124,21 @@ export function JobForm({ job, initialStatus, contactId, onSubmit, onCancel, isL
     }
   };
   
-  const inputClasses = "w-full px-4 py-2.5 bg-[#1C1C1C] border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all";
-  const labelClasses = "block text-sm font-medium text-gray-300 mb-1.5";
-  const errorClasses = "text-xs text-red-400 mt-1";
+  const inputClasses = "w-full px-4 py-2.5 bg-white dark:bg-[#1C1C1C] border border-gray-200 dark:border-white/10 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all";
+  const labelClasses = "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5";
+  const errorClasses = "text-xs text-red-500 dark:text-red-400 mt-1";
   
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-      <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-[#0a0a0f] border border-white/10 rounded-2xl shadow-2xl">
+      <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white dark:bg-[#0a0a0f] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl">
         {/* Header */}
-        <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-4 bg-[#0a0a0f] border-b border-white/10">
-          <h2 className="text-xl font-semibold text-white">
+        <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-4 bg-white dark:bg-[#0a0a0f] border-b border-gray-200 dark:border-white/10">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
             {job ? 'Edit Job' : 'New Job'}
           </h2>
           <button
             onClick={onCancel}
-            className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
+            className="p-2 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -148,8 +148,8 @@ export function JobForm({ job, initialStatus, contactId, onSubmit, onCancel, isL
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {/* Basic Info */}
           <div className="space-y-4">
-            <h3 className="text-sm font-medium text-gray-400 uppercase tracking-wider flex items-center gap-2">
-              <span className="w-6 h-6 rounded bg-purple-500/20 text-purple-400 flex items-center justify-center text-xs">1</span>
+            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-2">
+              <span className="w-6 h-6 rounded bg-purple-500/20 text-purple-600 dark:text-purple-400 flex items-center justify-center text-xs">1</span>
               Job Details
             </h3>
             
@@ -231,8 +231,8 @@ export function JobForm({ job, initialStatus, contactId, onSubmit, onCancel, isL
           
           {/* Scheduling */}
           <div className="space-y-4">
-            <h3 className="text-sm font-medium text-gray-400 uppercase tracking-wider flex items-center gap-2">
-              <span className="w-6 h-6 rounded bg-purple-500/20 text-purple-400 flex items-center justify-center text-xs">2</span>
+            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-2">
+              <span className="w-6 h-6 rounded bg-purple-500/20 text-purple-600 dark:text-purple-400 flex items-center justify-center text-xs">2</span>
               <Calendar className="w-4 h-4" />
               Scheduling
             </h3>
@@ -281,8 +281,8 @@ export function JobForm({ job, initialStatus, contactId, onSubmit, onCancel, isL
           
           {/* Financials */}
           <div className="space-y-4">
-            <h3 className="text-sm font-medium text-gray-400 uppercase tracking-wider flex items-center gap-2">
-              <span className="w-6 h-6 rounded bg-purple-500/20 text-purple-400 flex items-center justify-center text-xs">3</span>
+            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-2">
+              <span className="w-6 h-6 rounded bg-purple-500/20 text-purple-600 dark:text-purple-400 flex items-center justify-center text-xs">3</span>
               <DollarSign className="w-4 h-4" />
               Financials
             </h3>
@@ -307,8 +307,8 @@ export function JobForm({ job, initialStatus, contactId, onSubmit, onCancel, isL
           
           {/* Site Address */}
           <div className="space-y-4">
-            <h3 className="text-sm font-medium text-gray-400 uppercase tracking-wider flex items-center gap-2">
-              <span className="w-6 h-6 rounded bg-purple-500/20 text-purple-400 flex items-center justify-center text-xs">4</span>
+            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-2">
+              <span className="w-6 h-6 rounded bg-purple-500/20 text-purple-600 dark:text-purple-400 flex items-center justify-center text-xs">4</span>
               <MapPin className="w-4 h-4" />
               Job Site Address
             </h3>
@@ -385,7 +385,7 @@ export function JobForm({ job, initialStatus, contactId, onSubmit, onCancel, isL
           
           {/* Tags */}
           <div className="space-y-4">
-            <h3 className="text-sm font-medium text-gray-400 uppercase tracking-wider">Tags</h3>
+            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Tags</h3>
             
             <div>
               <input
@@ -401,13 +401,13 @@ export function JobForm({ job, initialStatus, contactId, onSubmit, onCancel, isL
                   {formData.tags.map(tag => (
                     <span
                       key={tag}
-                      className="inline-flex items-center gap-1 px-2.5 py-1 text-sm bg-purple-500/20 text-purple-400 rounded-full"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 text-sm bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-400 rounded-full"
                     >
                       {tag}
                       <button
                         type="button"
                         onClick={() => handleRemoveTag(tag)}
-                        className="p-0.5 hover:bg-purple-500/30 rounded-full"
+                        className="p-0.5 hover:bg-purple-200 dark:hover:bg-purple-500/30 rounded-full"
                       >
                         <X className="w-3 h-3" />
                       </button>
@@ -420,7 +420,7 @@ export function JobForm({ job, initialStatus, contactId, onSubmit, onCancel, isL
           
           {/* Notes */}
           <div className="space-y-4">
-            <h3 className="text-sm font-medium text-gray-400 uppercase tracking-wider">Notes</h3>
+            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Notes</h3>
             
             <textarea
               id="notes"
@@ -434,11 +434,11 @@ export function JobForm({ job, initialStatus, contactId, onSubmit, onCancel, isL
           </div>
           
           {/* Actions */}
-          <div className="flex justify-end gap-3 pt-4 border-t border-white/10">
+          <div className="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-white/10">
             <button
               type="button"
               onClick={onCancel}
-              className="px-5 py-2.5 text-sm font-medium text-gray-300 bg-white/5 hover:bg-white/10 rounded-lg transition-colors"
+              className="px-5 py-2.5 text-sm font-medium text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg transition-colors"
               disabled={isLoading}
             >
               Cancel

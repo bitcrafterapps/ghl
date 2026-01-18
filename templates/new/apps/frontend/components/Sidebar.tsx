@@ -127,6 +127,7 @@ export function Sidebar({
   } else if (userProfile?.roles?.includes('Admin')) {
     navigation.push(
       { name: 'Companies', href: '/companies', icon: Building2 },
+      { name: 'Users', href: '/users', icon: Users },
       { name: 'Gallery Items', href: '/gallery-management', icon: Image },
       { name: 'Reviews', href: '/reviews-management', icon: Star }
     );

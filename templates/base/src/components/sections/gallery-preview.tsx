@@ -36,38 +36,46 @@ export function GalleryPreview() {
 
         {/* Gallery Grid - Asymmetric Layout */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {galleryImages.slice(0, 6).map((image: any, index: number) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className={`relative group overflow-hidden rounded-xl ${
-                index === 0 || index === 3
-                  ? "col-span-2 row-span-2 aspect-square"
-                  : "aspect-[4/3]"
-              }`}
-            >
-              <Image
-                src={image.src || `https://placehold.co/600x600/1a1a2e/ffffff?text=Project+${index + 1}`}
-                alt={image.alt || `${siteConfig.industry.type} project ${index + 1}`}
-                fill
-                className="object-cover group-hover:scale-110 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          {galleryImages.slice(0, 6).map((image: any, index: number) => {
+            const imgSrc = image.src || `https://placehold.co/600x600/1a1a2e/ffffff?text=Project+${index + 1}`;
+            const isExternal = imgSrc.startsWith('http') && !imgSrc.includes('localhost');
+            const isLarge = index === 0 || index === 3;
+            
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className={`relative group overflow-hidden rounded-xl ${
+                  isLarge
+                    ? "col-span-2 row-span-2 aspect-square"
+                    : "aspect-[4/3]"
+                }`}
+              >
+                <Image
+                  src={imgSrc}
+                  alt={image.alt || `${siteConfig.industry.type} project ${index + 1}`}
+                  fill
+                  sizes={isLarge ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 50vw, 25vw"}
+                  className="object-cover group-hover:scale-110 transition-transform duration-500"
+                  unoptimized={isExternal}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-              {/* Hover Overlay Content */}
-              <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                {image.title && (
-                  <h4 className="font-heading font-semibold">{image.title}</h4>
-                )}
-                {image.category && (
-                  <p className="text-sm text-white/80">{image.category}</p>
-                )}
-              </div>
-            </motion.div>
-          ))}
+                {/* Hover Overlay Content */}
+                <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                  {image.title && (
+                    <h4 className="font-heading font-semibold">{image.title}</h4>
+                  )}
+                  {image.category && (
+                    <p className="text-sm text-white/80">{image.category}</p>
+                  )}
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
 
         {/* View All CTA */}

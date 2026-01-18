@@ -1,5 +1,5 @@
 // Contact Types
-export type ContactStatus = 'new' | 'contacted' | 'qualified' | 'proposal' | 'negotiation' | 'won' | 'lost';
+export type ContactStatus = 'new' | 'contacted' | 'qualified' | 'proposal' | 'negotiation' | 'won' | 'lost' | 'converted';
 export type ContactSource = 'website' | 'referral' | 'social' | 'advertising' | 'cold_call' | 'event' | 'ghl' | 'manual' | 'other';
 
 export interface Contact {
@@ -115,8 +115,9 @@ export const CONTACT_STATUS_COLORS: Record<ContactStatus, { bg: string; text: st
   qualified: { bg: 'bg-cyan-500/20', text: 'text-cyan-400', border: 'border-cyan-500/30' },
   proposal: { bg: 'bg-orange-500/20', text: 'text-orange-400', border: 'border-orange-500/30' },
   negotiation: { bg: 'bg-yellow-500/20', text: 'text-yellow-400', border: 'border-yellow-500/30' },
-  won: { bg: 'bg-green-500/20', text: 'text-green-400', border: 'border-green-500/30' },
+  won: { bg: 'bg-emerald-500/20', text: 'text-emerald-400', border: 'border-emerald-500/30' },
   lost: { bg: 'bg-red-500/20', text: 'text-red-400', border: 'border-red-500/30' },
+  converted: { bg: 'bg-emerald-500/20', text: 'text-emerald-400', border: 'border-emerald-500/30' },
 };
 
 export const SOURCE_LABELS: Record<ContactSource, string> = {

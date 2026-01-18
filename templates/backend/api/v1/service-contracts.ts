@@ -15,7 +15,7 @@ const createContractSchema = z.object({
   serviceType: z.string().min(1),
   serviceFrequency: z.enum(['weekly', 'biweekly', 'monthly', 'quarterly', 'semi_annual', 'annual', 'on_demand']),
   servicesIncluded: z.array(z.string()).optional(),
-  status: z.enum(['draft', 'active', 'paused', 'expired', 'cancelled']).optional(),
+  status: z.enum(['draft', 'active', 'paused', 'expired', 'cancelled', 'pending_renewal']).optional(),
   startDate: z.string(),
   endDate: z.string().optional().transform(v => v === '' ? undefined : v),
   billingFrequency: z.enum(['monthly', 'quarterly', 'semi_annual', 'annual']),

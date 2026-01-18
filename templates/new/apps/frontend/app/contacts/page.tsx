@@ -78,7 +78,7 @@ export default function ContactsPage() {
   
   return (
     <Layout isAuthenticated={true} noPadding>
-      <div className="bg-[#0a0a0f] min-h-full">
+      <div className="bg-gray-50 dark:bg-[#0a0a0f] min-h-full">
       <SubHeader
         icon={Users}
         title="Contacts"
@@ -88,18 +88,20 @@ export default function ContactsPage() {
             <button
               onClick={() => refresh()}
               disabled={loading}
-              className="p-2.5 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors disabled:opacity-50"
+              className="p-2.5 text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 rounded-lg transition-colors disabled:opacity-50"
               title="Refresh"
             >
               <RefreshCw className={cn("w-5 h-5", loading && "animate-spin")} />
             </button>
 
-            <div className="flex items-center bg-[#1C1C1C] rounded-lg p-1">
+            <div className="flex items-center bg-white dark:bg-[#1C1C1C] border border-gray-200 dark:border-white/10 rounded-lg p-1">
               <button
                 onClick={() => setViewMode('grid')}
                 className={cn(
                   "p-2 rounded-md transition-colors",
-                  viewMode === 'grid' ? "bg-white/10 text-white" : "text-gray-500 hover:text-gray-300"
+                  viewMode === 'grid' 
+                    ? "bg-gray-100 dark:bg-white/10 text-gray-900 dark:text-white" 
+                    : "text-gray-500 hover:text-gray-900 dark:hover:text-gray-300"
                 )}
               >
                 <LayoutGrid className="w-4 h-4" />
@@ -108,7 +110,9 @@ export default function ContactsPage() {
                 onClick={() => setViewMode('list')}
                 className={cn(
                   "p-2 rounded-md transition-colors",
-                  viewMode === 'list' ? "bg-white/10 text-white" : "text-gray-500 hover:text-gray-300"
+                  viewMode === 'list' 
+                    ? "bg-gray-100 dark:bg-white/10 text-gray-900 dark:text-white" 
+                    : "text-gray-500 hover:text-gray-900 dark:hover:text-gray-300"
                 )}
               >
                 <List className="w-4 h-4" />
@@ -139,7 +143,7 @@ export default function ContactsPage() {
         
         {/* Error State */}
         {error && (
-          <div className="mb-8 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400">
+          <div className="mb-8 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-600 dark:text-red-400">
             {error}
           </div>
         )}
@@ -154,10 +158,10 @@ export default function ContactsPage() {
         {/* Empty State */}
         {!loading && contacts.length === 0 && (
           <div className="flex flex-col items-center justify-center py-20 text-center">
-            <div className="p-4 bg-gray-500/10 rounded-full mb-4">
-              <Users className="w-12 h-12 text-gray-500" />
+            <div className="p-4 bg-gray-100 dark:bg-gray-500/10 rounded-full mb-4">
+              <Users className="w-12 h-12 text-gray-400 dark:text-gray-500" />
             </div>
-            <h3 className="text-xl font-semibold text-white mb-2">No contacts yet</h3>
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">No contacts yet</h3>
             <p className="text-gray-500 mb-6 max-w-md">
               Start building your customer database by adding your first contact.
             </p>
@@ -202,7 +206,7 @@ export default function ContactsPage() {
                   "w-10 h-10 rounded-lg text-sm font-medium transition-colors",
                   page === pagination.page
                     ? "bg-blue-600 text-white"
-                    : "bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white"
+                    : "bg-white dark:bg-white/5 text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-transparent hover:bg-gray-100 dark:hover:bg-white/10 hover:text-gray-900 dark:hover:text-white"
                 )}
               >
                 {page}
@@ -228,11 +232,11 @@ export default function ContactsPage() {
       {/* Delete Confirmation Modal */}
       {deleteConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div className="w-full max-w-md p-6 bg-[#1C1C1C] border border-white/10 rounded-2xl shadow-2xl">
-            <h3 className="text-xl font-semibold text-white mb-2">Delete Contact</h3>
-            <p className="text-gray-400 mb-6">
+          <div className="w-full max-w-md p-6 bg-white dark:bg-[#1C1C1C] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Delete Contact</h3>
+            <p className="text-gray-500 dark:text-gray-400 mb-6">
               Are you sure you want to delete{' '}
-              <span className="text-white font-medium">
+              <span className="text-gray-900 dark:text-white font-medium">
                 {deleteConfirm.firstName} {deleteConfirm.lastName}
               </span>
               ? This action cannot be undone.
@@ -240,7 +244,7 @@ export default function ContactsPage() {
             <div className="flex justify-end gap-3">
               <button
                 onClick={() => setDeleteConfirm(null)}
-                className="px-4 py-2 text-sm font-medium text-gray-300 bg-white/5 hover:bg-white/10 rounded-lg transition-colors"
+                className="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg transition-colors"
               >
                 Cancel
               </button>

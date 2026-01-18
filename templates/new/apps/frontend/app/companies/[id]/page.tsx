@@ -7,7 +7,7 @@ import { Building2, Users, Save, Loader2, MapPin, Mail, Phone, UserPlus, Trash2,
 import { cn } from '@/lib/utils';
 import { useRouter, useParams } from 'next/navigation';
 import { logActivity } from '@/lib/activity';
-import { getApiUrl } from '@/lib/api';
+import { get, getApiUrl } from '@/lib/api';
 
 // Helper function to safely format dates
 const formatDate = (dateString?: string): string => {
@@ -166,6 +166,7 @@ export default function CompanyEditPage() {
           }
 
           if (!isNewCompany) {
+            const apiUrl = getApiUrl();
             return fetch(`${apiUrl}/api/v1/companies/${params.id}`, {
               headers: {
                 'Authorization': `Bearer ${token}`
@@ -178,9 +179,11 @@ export default function CompanyEditPage() {
             return res.json();
           }
         })
-        .then(companyData => {
-          if (companyData) {
-            const company = companyData.company || companyData;
+        .then(payload => {
+          if (payload) {
+            // Handle backend response wrapper ({ success: true, data: { company: ..., users: ... } })
+            const data = payload.data || payload;
+            const company = data.company || data;
             
             setFormData({
               name: company.name || '',
@@ -194,7 +197,7 @@ export default function CompanyEditPage() {
               size: company.size || ''
             });
             
-            setUsers(companyData.users || []);
+            setUsers(data.users || []);
           }
           setIsLoading(false);
         })

@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Image from "next/image";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { PublicLayout } from "@/components/PublicLayout";
@@ -20,10 +19,136 @@ interface GalleryImage {
   status: string;
 }
 
+// Individual gallery image for Cover Flow
+function CoverFlowImage({ 
+  image, 
+  index, 
+  activeIndex, 
+  totalImages,
+  onClick 
+}: { 
+  image: GalleryImage; 
+  index: number; 
+  activeIndex: number;
+  totalImages: number;
+  onClick: () => void;
+}) {
+  const placeholderUrl = `https://placehold.co/600x400/1a1a2e/ffffff?text=Project+${index + 1}`;
+  const [imgSrc, setImgSrc] = useState(image.blobUrl || image.thumbnailUrl || placeholderUrl);
+  const [hasError, setHasError] = useState(false);
+
+  const handleError = () => {
+    if (!hasError) {
+      setHasError(true);
+      setImgSrc(placeholderUrl);
+    }
+  };
+
+  // Calculate position relative to active index
+  const offset = index - activeIndex;
+  const absOffset = Math.abs(offset);
+  
+  // Calculate 3D transforms for cover flow effect
+  const rotateY = offset * -45;
+  const translateX = offset * 280;
+  const translateZ = absOffset === 0 ? 0 : -150 - (absOffset * 50);
+  const scale = absOffset === 0 ? 1 : 0.75 - (absOffset * 0.1);
+  const opacity = absOffset > 3 ? 0 : 1 - (absOffset * 0.2);
+  const zIndex = totalImages - absOffset;
+
+  return (
+    <motion.div
+      className="absolute cursor-pointer"
+      style={{
+        width: '400px',
+        height: '320px',
+        transformStyle: 'preserve-3d',
+      }}
+      animate={{
+        rotateY,
+        x: translateX,
+        z: translateZ,
+        scale: Math.max(0.5, scale),
+        opacity: Math.max(0, opacity),
+        zIndex,
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 300,
+        damping: 30,
+      }}
+      onClick={onClick}
+      whileHover={absOffset === 0 ? { scale: 1.05 } : {}}
+    >
+      <div 
+        className={`relative w-full h-full rounded-xl overflow-hidden shadow-2xl ${
+          absOffset === 0 ? 'ring-4 ring-primary/50' : ''
+        }`}
+        style={{
+          boxShadow: absOffset === 0 
+            ? '0 25px 50px -12px rgba(0, 0, 0, 0.5)' 
+            : '0 10px 30px -10px rgba(0, 0, 0, 0.3)',
+        }}
+      >
+        <img
+          src={imgSrc}
+          alt={image.altText || image.title || `${siteConfig.industry.type} project`}
+          onError={handleError}
+          className="w-full h-full object-cover"
+          draggable={false}
+        />
+        
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+        
+        {/* Title overlay for active image */}
+        <AnimatePresence>
+          {absOffset === 0 && image.title && (
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent"
+            >
+              <p className="text-white font-semibold text-lg">{image.title}</p>
+              {image.description && (
+                <p className="text-white/80 text-sm">{image.description}</p>
+              )}
+              {image.category && (
+                <span className="inline-block mt-2 px-2 py-1 bg-primary/80 text-white text-xs rounded-full">
+                  {image.category}
+                </span>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+      
+      {/* Reflection effect */}
+      <div 
+        className="absolute top-full left-0 right-0 h-24 overflow-hidden rounded-xl opacity-30"
+        style={{
+          transform: 'scaleY(-1)',
+          maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0.4), transparent)',
+          WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,0.4), transparent)',
+        }}
+      >
+        <img
+          src={imgSrc}
+          alt=""
+          className="w-full h-full object-cover"
+          draggable={false}
+        />
+      </div>
+    </motion.div>
+  );
+}
+
 export default function GalleryPage() {
   const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [categories, setCategories] = useState<string[]>([]);
 
@@ -31,7 +156,6 @@ export default function GalleryPage() {
     const fetchGalleryImages = async () => {
       try {
         const apiUrl = getApiUrl();
-        // Get companyId from siteConfig if available, to filter images by company
         const companyId = (siteConfig as any).companyId;
         let queryUrl = `${apiUrl}/api/v1/gallery-images?status=active`;
         if (companyId) {
@@ -44,12 +168,14 @@ export default function GalleryPage() {
         const response = await fetch(queryUrl, { headers });
         if (response.ok) {
           const result = await response.json();
-          // API returns data directly or wrapped in data property
           const imagesData = result.data || result;
           const images = Array.isArray(imagesData) ? imagesData : [];
           setGalleryImages(images);
+          
+          if (images.length > 0) {
+            setActiveIndex(Math.floor(images.length / 2));
+          }
 
-          // Extract unique categories
           const uniqueCategories = Array.from(
             new Set(images.map((img: GalleryImage) => img.category).filter(Boolean))
           ) as string[];
@@ -69,20 +195,37 @@ export default function GalleryPage() {
     ? galleryImages.filter(img => img.category === selectedCategory)
     : galleryImages;
 
-  const openLightbox = (index: number) => setSelectedIndex(index);
-  const closeLightbox = () => setSelectedIndex(null);
+  const goToPrevious = useCallback(() => {
+    setActiveIndex((prev) => (prev > 0 ? prev - 1 : filteredImages.length - 1));
+  }, [filteredImages.length]);
 
-  const nextImage = () => {
-    if (selectedIndex !== null) {
-      setSelectedIndex((selectedIndex + 1) % filteredImages.length);
-    }
-  };
+  const goToNext = useCallback(() => {
+    setActiveIndex((prev) => (prev < filteredImages.length - 1 ? prev + 1 : 0));
+  }, [filteredImages.length]);
 
-  const prevImage = () => {
-    if (selectedIndex !== null) {
-      setSelectedIndex((selectedIndex - 1 + filteredImages.length) % filteredImages.length);
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (lightboxOpen) {
+        if (e.key === 'Escape') setLightboxOpen(false);
+        if (e.key === 'ArrowLeft') goToPrevious();
+        if (e.key === 'ArrowRight') goToNext();
+      } else {
+        if (e.key === 'ArrowLeft') goToPrevious();
+        if (e.key === 'ArrowRight') goToNext();
+        if (e.key === 'Enter') setLightboxOpen(true);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [goToPrevious, goToNext, lightboxOpen]);
+
+  // Reset active index when category changes
+  useEffect(() => {
+    if (filteredImages.length > 0) {
+      setActiveIndex(Math.floor(filteredImages.length / 2));
     }
-  };
+  }, [selectedCategory, filteredImages.length]);
 
   return (
     <PublicLayout>
@@ -125,40 +268,107 @@ export default function GalleryPage() {
         </section>
       )}
 
-      {/* Gallery Grid */}
-      <section className="section-padding bg-white">
+      {/* Cover Flow Gallery */}
+      <section className="section-padding bg-gradient-to-b from-gray-50 to-white overflow-hidden">
         <div className="container-custom">
           {isLoading ? (
             <div className="flex items-center justify-center py-16">
               <Loader2 className="w-8 h-8 animate-spin text-gray-400" />
             </div>
           ) : filteredImages.length > 0 ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {filteredImages.map((image, index) => (
+            <>
+              {/* Section Header */}
+              <div className="text-center max-w-3xl mx-auto mb-12">
                 <motion.div
-                  key={image.id}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: index * 0.05 }}
-                  className="relative aspect-square overflow-hidden rounded-xl cursor-pointer group"
-                  onClick={() => openLightbox(index)}
                 >
-                  <Image
-                    src={image.thumbnailUrl || image.blobUrl || `https://placehold.co/600x600/1a1a2e/ffffff?text=Project+${index + 1}`}
-                    alt={image.altText || image.title || `${siteConfig.industry.type} project`}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-500"
-                    unoptimized={image.blobUrl?.includes('localhost')}
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center">
-                    <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity font-medium">
-                      View Image
-                    </span>
-                  </div>
+                  <span className="text-primary font-semibold text-sm uppercase tracking-wider">
+                    Our Portfolio
+                  </span>
+                  <h2 className="text-3xl sm:text-4xl font-heading font-bold text-gray-900 mt-2 mb-4">
+                    {filteredImages.length} {siteConfig.industry.type} Project{filteredImages.length !== 1 ? 's' : ''}
+                  </h2>
+                  <p className="text-lg text-gray-600">
+                    Use the arrows to browse or click an image to view details
+                  </p>
                 </motion.div>
-              ))}
-            </div>
+              </div>
+
+              {/* Cover Flow Container */}
+              <div 
+                className="relative h-[450px] flex items-center justify-center"
+                style={{ perspective: '1000px' }}
+              >
+                {/* Navigation Arrows */}
+                <button
+                  onClick={goToPrevious}
+                  className="absolute left-4 md:left-8 z-50 p-3 rounded-full bg-white/90 shadow-lg hover:bg-white hover:scale-110 transition-all"
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft className="w-6 h-6 text-gray-800" />
+                </button>
+                
+                <button
+                  onClick={goToNext}
+                  className="absolute right-4 md:right-8 z-50 p-3 rounded-full bg-white/90 shadow-lg hover:bg-white hover:scale-110 transition-all"
+                  aria-label="Next image"
+                >
+                  <ChevronRight className="w-6 h-6 text-gray-800" />
+                </button>
+
+                {/* Images Container */}
+                <div 
+                  className="relative flex items-center justify-center"
+                  style={{ 
+                    transformStyle: 'preserve-3d',
+                    width: '100%',
+                    height: '100%',
+                  }}
+                >
+                  {filteredImages.map((image, index) => (
+                    <CoverFlowImage
+                      key={image.id || index}
+                      image={image}
+                      index={index}
+                      activeIndex={activeIndex}
+                      totalImages={filteredImages.length}
+                      onClick={() => {
+                        if (index === activeIndex) {
+                          setLightboxOpen(true);
+                        } else {
+                          setActiveIndex(index);
+                        }
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Dots Indicator */}
+              <div className="flex justify-center gap-2 mt-8 flex-wrap">
+                {filteredImages.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setActiveIndex(index)}
+                    className={`w-2 h-2 rounded-full transition-all ${
+                      index === activeIndex 
+                        ? 'w-8 bg-primary' 
+                        : 'bg-gray-300 hover:bg-gray-400'
+                    }`}
+                    aria-label={`Go to image ${index + 1}`}
+                  />
+                ))}
+              </div>
+
+              {/* Image Counter */}
+              <div className="text-center mt-6">
+                <span className="text-gray-500">
+                  {activeIndex + 1} of {filteredImages.length}
+                </span>
+              </div>
+            </>
           ) : (
             <div className="text-center py-16">
               <p className="text-gray-600 text-lg mb-4">
@@ -174,18 +384,18 @@ export default function GalleryPage() {
 
       {/* Lightbox */}
       <AnimatePresence>
-        {selectedIndex !== null && filteredImages[selectedIndex] && (
+        {lightboxOpen && filteredImages[activeIndex] && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center"
-            onClick={closeLightbox}
+            className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
+            onClick={() => setLightboxOpen(false)}
           >
             {/* Close Button */}
             <button
-              onClick={closeLightbox}
-              className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors"
+              onClick={() => setLightboxOpen(false)}
+              className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors z-50"
             >
               <X className="h-8 w-8" />
             </button>
@@ -194,50 +404,47 @@ export default function GalleryPage() {
             {filteredImages.length > 1 && (
               <>
                 <button
-                  onClick={(e) => { e.stopPropagation(); prevImage(); }}
+                  onClick={(e) => { e.stopPropagation(); goToPrevious(); }}
                   className="absolute left-4 text-white hover:text-gray-300 transition-colors"
                 >
-                  <ChevronLeft className="h-10 w-10" />
+                  <ChevronLeft className="h-12 w-12" />
                 </button>
                 <button
-                  onClick={(e) => { e.stopPropagation(); nextImage(); }}
+                  onClick={(e) => { e.stopPropagation(); goToNext(); }}
                   className="absolute right-4 text-white hover:text-gray-300 transition-colors"
                 >
-                  <ChevronRight className="h-10 w-10" />
+                  <ChevronRight className="h-12 w-12" />
                 </button>
               </>
             )}
 
             {/* Image */}
             <motion.div
-              key={selectedIndex}
+              key={activeIndex}
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="max-w-4xl max-h-[80vh] relative"
+              className="max-w-5xl max-h-[85vh] relative"
               onClick={(e) => e.stopPropagation()}
             >
-              <Image
-                src={filteredImages[selectedIndex].blobUrl || ''}
-                alt={filteredImages[selectedIndex].altText || filteredImages[selectedIndex].title || ''}
-                width={1200}
-                height={800}
-                className="max-w-full max-h-[80vh] object-contain"
-                unoptimized={filteredImages[selectedIndex].blobUrl?.includes('localhost')}
+              <img
+                src={filteredImages[activeIndex].blobUrl || ''}
+                alt={filteredImages[activeIndex].altText || filteredImages[activeIndex].title || ''}
+                className="max-w-full max-h-[85vh] object-contain rounded-lg"
               />
-              {filteredImages[selectedIndex].title && (
-                <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-white p-4">
-                  <p className="font-medium">{filteredImages[selectedIndex].title}</p>
-                  {filteredImages[selectedIndex].description && (
-                    <p className="text-sm text-white/80">{filteredImages[selectedIndex].description}</p>
+              {filteredImages[activeIndex].title && (
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent text-white p-6 rounded-b-lg">
+                  <p className="font-semibold text-xl">{filteredImages[activeIndex].title}</p>
+                  {filteredImages[activeIndex].description && (
+                    <p className="text-white/80 mt-1">{filteredImages[activeIndex].description}</p>
                   )}
                 </div>
               )}
             </motion.div>
 
             {/* Counter */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-sm">
-              {selectedIndex + 1} / {filteredImages.length}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-sm bg-black/50 px-4 py-2 rounded-full">
+              {activeIndex + 1} / {filteredImages.length}
             </div>
           </motion.div>
         )}

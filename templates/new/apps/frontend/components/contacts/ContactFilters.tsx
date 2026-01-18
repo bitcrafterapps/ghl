@@ -100,13 +100,13 @@ export function ContactFiltersBar({ filters, onFiltersChange, totalCount }: Cont
       {/* Search and Filter Toggle */}
       <div className="flex items-center gap-3">
         <form onSubmit={handleSearchSubmit} className="flex-1 relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 dark:text-gray-500" />
           <input
             type="text"
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
             placeholder="Search contacts..."
-            className="w-full pl-12 pr-4 py-3 bg-[#1C1C1C] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all"
+            className="w-full pl-12 pr-4 py-3 bg-white dark:bg-[#1C1C1C] border border-gray-200 dark:border-white/10 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all"
           />
         </form>
         
@@ -115,8 +115,8 @@ export function ContactFiltersBar({ filters, onFiltersChange, totalCount }: Cont
           className={cn(
             "inline-flex items-center gap-2 px-4 py-3 rounded-xl border transition-all",
             showFilters || activeFilterCount > 0
-              ? "bg-blue-500/20 border-blue-500/30 text-blue-400"
-              : "bg-[#1C1C1C] border-white/10 text-gray-400 hover:text-white hover:border-white/20"
+              ? "bg-blue-500/10 dark:bg-blue-500/20 border-blue-500/30 text-blue-600 dark:text-blue-400"
+              : "bg-white dark:bg-[#1C1C1C] border-gray-200 dark:border-white/10 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:border-gray-300 dark:hover:border-white/20"
           )}
         >
           <Filter className="w-5 h-5" />
@@ -135,7 +135,7 @@ export function ContactFiltersBar({ filters, onFiltersChange, totalCount }: Cont
         {hasActiveFilters && (
           <button
             onClick={clearFilters}
-            className="px-4 py-3 text-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-xl transition-colors"
+            className="px-4 py-3 text-sm text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-xl transition-colors"
           >
             Clear All
           </button>
@@ -151,10 +151,10 @@ export function ContactFiltersBar({ filters, onFiltersChange, totalCount }: Cont
       
       {/* Filter Panel */}
       {showFilters && (
-        <div className="p-5 bg-[#1C1C1C]/80 backdrop-blur-sm border border-white/10 rounded-xl space-y-5 animate-in fade-in slide-in-from-top-2 duration-200">
+        <div className="p-5 bg-white dark:bg-[#1C1C1C]/80 backdrop-blur-sm border border-gray-200 dark:border-white/10 rounded-xl space-y-5 animate-in fade-in slide-in-from-top-2 duration-200">
           {/* Status Filter */}
           <div>
-            <h4 className="text-sm font-medium text-gray-300 mb-3">Status</h4>
+            <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Status</h4>
             <div className="flex flex-wrap gap-2">
               {STATUS_OPTIONS.map(option => {
                 const isSelected = Array.isArray(filters.status)
@@ -168,8 +168,8 @@ export function ContactFiltersBar({ filters, onFiltersChange, totalCount }: Cont
                     className={cn(
                       "px-3 py-1.5 text-sm rounded-lg border transition-all",
                       isSelected
-                        ? "bg-blue-500/20 border-blue-500/50 text-blue-400"
-                        : "bg-white/5 border-white/10 text-gray-400 hover:text-white hover:bg-white/10"
+                        ? "bg-blue-500/10 dark:bg-blue-500/20 border-blue-500/50 text-blue-600 dark:text-blue-400"
+                        : "bg-gray-50 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10"
                     )}
                   >
                     {option.label}
@@ -181,7 +181,7 @@ export function ContactFiltersBar({ filters, onFiltersChange, totalCount }: Cont
           
           {/* Source Filter */}
           <div>
-            <h4 className="text-sm font-medium text-gray-300 mb-3">Source</h4>
+            <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Source</h4>
             <div className="flex flex-wrap gap-2">
               {SOURCE_OPTIONS.map(option => {
                 const isSelected = Array.isArray(filters.source)
@@ -195,8 +195,8 @@ export function ContactFiltersBar({ filters, onFiltersChange, totalCount }: Cont
                     className={cn(
                       "px-3 py-1.5 text-sm rounded-lg border transition-all",
                       isSelected
-                        ? "bg-blue-500/20 border-blue-500/50 text-blue-400"
-                        : "bg-white/5 border-white/10 text-gray-400 hover:text-white hover:bg-white/10"
+                        ? "bg-blue-500/10 dark:bg-blue-500/20 border-blue-500/50 text-blue-600 dark:text-blue-400"
+                        : "bg-gray-50 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10"
                     )}
                   >
                     {option.label}

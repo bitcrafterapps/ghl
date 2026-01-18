@@ -1,11 +1,13 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Phone, Star, Shield, Clock, CheckCircle, Sparkles, ArrowRight, User, Mail, MessageSquare } from "lucide-react";
 import { siteConfig, services } from "@/data/config";
 import { formatPhone, formatPhoneLink } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { getApiUrl, getSiteId } from "@/lib/api";
 
 export function HeroSection() {
   // Get hero gradient colors from branding, fallback to default dark gradient
@@ -29,6 +31,31 @@ export function HeroSection() {
     hexagons: `url("data:image/svg+xml,%3Csvg width='28' height='49' viewBox='0 0 28 49' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.15'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.35 11-6.35V17.9l-11-6.35L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/svg%3E")`,
     circles: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='12' stroke='%23ffffff' stroke-opacity='0.12' fill='none'/%3E%3C/svg%3E")`,
   };
+
+  const [stats, setStats] = useState<{ averageRating: number; totalReviews: number } | null>(null);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const apiUrl = getApiUrl();
+        const siteId = getSiteId();
+        const headers: HeadersInit = siteId ? { 'x-site-id': siteId } : {};
+        const response = await fetch(`${apiUrl}/api/v1/reviews/stats`, { headers });
+        if (response.ok) {
+           const result = await response.json();
+           setStats(result.data || result);
+        }
+      } catch (e) {
+         console.warn("Failed to fetch hero stats", e);
+      }
+    };
+    fetchStats();
+  }, []);
+
+  // Determine valid stats or fallback
+  const hasNoReviews = stats !== null && stats.totalReviews === 0;
+  const displayRating = stats?.averageRating?.toFixed(1) ?? siteConfig.reviews.rating;
+  const displayCount = stats?.totalReviews ?? siteConfig.reviews.count;
   
   return (
     <section 
@@ -61,16 +88,18 @@ export function HeroSection() {
             transition={{ duration: 0.6 }}
           >
             {/* Trust Badge */}
-            <div className="flex items-center gap-2 mb-6 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 w-fit">
-              <div className="flex">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                ))}
+            {!hasNoReviews && (
+              <div className="flex items-center gap-2 mb-6 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 w-fit">
+                <div className="flex">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                  ))}
+                </div>
+                <span className="text-white/90 text-sm">
+                  {displayRating} • {displayCount}+ Reviews
+                </span>
               </div>
-              <span className="text-white/90 text-sm">
-                {siteConfig.reviews.rating} • {siteConfig.reviews.count}+ Reviews
-              </span>
-            </div>
+            )}
 
             {/* Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-white mb-6 leading-tight">
@@ -104,26 +133,7 @@ export function HeroSection() {
               )}
             </div>
 
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" asChild className="text-lg">
-                <Link href="/free-estimate" className="flex items-center gap-2">
-                  <Sparkles className="h-5 w-5" />
-                  Get Your Free Estimate
-                </Link>
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="border-white text-white hover:bg-white hover:text-gray-900 text-lg" 
-                asChild
-              >
-                <a href={formatPhoneLink(siteConfig.company.phone)} className="flex items-center gap-2">
-                  <Phone className="h-5 w-5" />
-                  {formatPhone(siteConfig.company.phone)}
-                </a>
-              </Button>
-            </div>
+
           </motion.div>
 
           {/* Right Content - Compact Modern Quote Form */}

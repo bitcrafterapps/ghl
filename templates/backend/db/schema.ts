@@ -702,7 +702,7 @@ export const jobActivities = pgTable('job_activities', {
 // Service Contracts
 // ============================================
 
-export type ContractStatus = 'draft' | 'pending' | 'active' | 'paused' | 'expired' | 'cancelled';
+export type ContractStatus = 'draft' | 'pending' | 'active' | 'paused' | 'expired' | 'cancelled' | 'pending_renewal';
 export type ContractFrequency = 'one_time' | 'weekly' | 'biweekly' | 'monthly' | 'quarterly' | 'biannual' | 'annual';
 
 export const serviceContracts = pgTable('service_contracts', {

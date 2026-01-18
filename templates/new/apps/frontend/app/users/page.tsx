@@ -93,6 +93,7 @@ export default function UsersPage() {
   const { impersonateUser } = useAuth();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isSiteAdmin, setIsSiteAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
@@ -118,9 +119,11 @@ export default function UsersPage() {
         .then(res => res.json())
         .then(data => {
           const hasSiteAdminRole = data.roles?.includes('Site Admin');
+          const hasAdminRole = data.roles?.includes('Admin');
           setIsSiteAdmin(hasSiteAdminRole);
+          setIsAdmin(hasAdminRole);
           
-          if (!hasSiteAdminRole) {
+          if (!hasSiteAdminRole && !hasAdminRole) {
             router.push('/404');
             return;
           }
@@ -245,13 +248,13 @@ export default function UsersPage() {
     setRoleFilter([]);
   };
 
-  if (!isSiteAdmin) {
+  if (!isSiteAdmin && !isAdmin) {
     return null;
   }
 
   if (isLoading) {
     return (
-      <Layout isAuthenticated={isAuthenticated} isAdmin={isSiteAdmin} noPadding>
+      <Layout isAuthenticated={isAuthenticated} isAdmin={isSiteAdmin || isAdmin} noPadding>
         <div className="flex items-center justify-center h-full">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary" />
         </div>
@@ -260,7 +263,7 @@ export default function UsersPage() {
   }
 
   return (
-    <Layout isAuthenticated={isAuthenticated} isAdmin={isSiteAdmin} noPadding>
+    <Layout isAuthenticated={isAuthenticated} isAdmin={isSiteAdmin || isAdmin} noPadding>
       <div className="bg-gray-50 dark:bg-zinc-950 min-h-screen">
         <SubHeader 
           icon={Users}

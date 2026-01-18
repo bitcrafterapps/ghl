@@ -8,7 +8,7 @@ import { Building2, Search, X, Trash2, Plus, MapPin, Mail, Phone, ChevronRight }
 import { cn, formatPhone } from '@/lib/utils';
 import { useToast } from '@/components/ui/use-toast';
 import { logActivity } from '@/lib/activity';
-import { getApiUrl } from '@/lib/api';
+import { get, getApiUrl } from '@/lib/api';
 
 interface Company {
   id: number;
@@ -147,7 +147,8 @@ export default function CompaniesPage() {
                 if (!res.ok) throw new Error('Failed to fetch companies');
                 return res.json();
               })
-              .then(allCompanies => {
+              .then(payload => {
+                const allCompanies = payload.data || payload;
                 if (allCompanies && allCompanies.length > 0) {
                   return { singleCompany: true, data: [allCompanies[0]] };
                 } else {
@@ -166,8 +167,10 @@ export default function CompaniesPage() {
               if (!res.ok) {
                 return { singleCompany: true, data: [] };
               }
-              return res.json().then(companyData => {
-                return { singleCompany: true, data: [companyData] };
+              return res.json().then(payload => {
+                const companyData = payload.data || payload;
+                const company = companyData.company || companyData; 
+                return { singleCompany: true, data: [company] };
               });
             })
             .catch(err => {
@@ -182,7 +185,10 @@ export default function CompaniesPage() {
             })
             .then(res => {
               if (!res.ok) throw new Error('Failed to fetch companies');
-              return res.json().then(data => ({ singleCompany: false, data }));
+              return res.json().then(payload => {
+                const data = payload.data || payload;
+                return { singleCompany: false, data };
+              });
             });
           }
         })

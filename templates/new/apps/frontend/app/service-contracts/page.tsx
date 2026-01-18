@@ -99,8 +99,10 @@ export default function ServiceContractsPage() {
   const handleCreateContract = async (data: CreateServiceContractDTO) => {
     setFormLoading(true);
     try {
-      await createContract(data);
-      setShowCreateForm(false);
+      const result = await createContract(data);
+      if (result) {
+        setShowCreateForm(false);
+      }
     } finally {
       setFormLoading(false);
     }
@@ -110,8 +112,10 @@ export default function ServiceContractsPage() {
     if (!editingContract) return;
     setFormLoading(true);
     try {
-      await updateContract(editingContract.id, data);
-      setEditingContract(null);
+      const result = await updateContract(editingContract.id, data);
+      if (result) {
+        setEditingContract(null);
+      }
     } finally {
       setFormLoading(false);
     }
@@ -145,7 +149,7 @@ export default function ServiceContractsPage() {
   
   return (
     <Layout isAuthenticated={true} noPadding>
-      <div className="bg-[#0a0a0f] min-h-full">
+      <div className="bg-gray-50 dark:bg-[#0a0a0f] min-h-full">
       <SubHeader
         icon={FileText}
         title="Service Contracts"
@@ -158,8 +162,8 @@ export default function ServiceContractsPage() {
                 className={cn(
                   "inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
                   showExpiringOnly
-                    ? "bg-orange-500/20 text-orange-400 border border-orange-500/30"
-                    : "bg-orange-500/10 text-orange-400 border border-orange-500/20 hover:bg-orange-500/20"
+                    ? "bg-orange-500/20 text-orange-600 dark:text-orange-400 border border-orange-500/30"
+                    : "bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20 hover:bg-orange-500/20"
                 )}
               >
                 <AlertTriangle className="w-4 h-4" />
@@ -170,7 +174,7 @@ export default function ServiceContractsPage() {
             <button
               onClick={() => refresh()}
               disabled={loading}
-              className="p-2.5 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors disabled:opacity-50"
+              className="p-2.5 text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg transition-colors disabled:opacity-50"
               title="Refresh"
             >
               <RefreshCw className={cn("w-5 h-5", loading && "animate-spin")} />
@@ -199,7 +203,7 @@ export default function ServiceContractsPage() {
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
                 placeholder="Search contracts..."
-                className="w-full pl-12 pr-4 py-3 bg-[#1C1C1C] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500/50 transition-all"
+                className="w-full pl-12 pr-4 py-3 bg-white dark:bg-[#1C1C1C] border border-gray-200 dark:border-white/10 rounded-xl text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500/50 transition-all"
               />
             </form>
             
@@ -208,8 +212,8 @@ export default function ServiceContractsPage() {
               className={cn(
                 "inline-flex items-center gap-2 px-4 py-3 rounded-xl border transition-all",
                 showFilters || activeFilterCount > 0
-                  ? "bg-teal-500/20 border-teal-500/30 text-teal-400"
-                  : "bg-[#1C1C1C] border-white/10 text-gray-400 hover:text-white hover:border-white/20"
+                  ? "bg-teal-500/10 border-teal-500/30 text-teal-600 dark:text-teal-400"
+                  : "bg-white dark:bg-[#1C1C1C] border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:border-gray-300 dark:hover:border-white/20"
               )}
             >
               <Filter className="w-5 h-5" />
@@ -225,7 +229,7 @@ export default function ServiceContractsPage() {
             {hasActiveFilters && (
               <button
                 onClick={clearFilters}
-                className="px-4 py-3 text-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-xl transition-colors"
+                className="px-4 py-3 text-sm text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-xl transition-colors"
               >
                 Clear All
               </button>
@@ -234,16 +238,16 @@ export default function ServiceContractsPage() {
           
           {/* Results Count */}
           {pagination && (
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-500 dark:text-gray-400">
               {pagination.total} {pagination.total === 1 ? 'contract' : 'contracts'} found
             </p>
           )}
           
           {/* Filter Panel */}
           {showFilters && (
-            <div className="p-5 bg-[#1C1C1C]/80 backdrop-blur-sm border border-white/10 rounded-xl space-y-5 animate-in fade-in slide-in-from-top-2 duration-200">
+            <div className="p-5 bg-white/50 dark:bg-[#1C1C1C]/80 backdrop-blur-sm border border-gray-200 dark:border-white/10 rounded-xl space-y-5 animate-in fade-in slide-in-from-top-2 duration-200">
               <div>
-                <h4 className="text-sm font-medium text-gray-300 mb-3">Status</h4>
+                <h4 className="text-sm font-medium text-gray-900 dark:text-gray-300 mb-3">Status</h4>
                 <div className="flex flex-wrap gap-2">
                   {Object.entries(CONTRACT_STATUS_COLORS).map(([status, colors]) => {
                     const isSelected = Array.isArray(localFilters.status)
@@ -258,7 +262,7 @@ export default function ServiceContractsPage() {
                           "px-3 py-1.5 text-sm rounded-lg border transition-all",
                           isSelected
                             ? cn(colors.bg, colors.border, colors.text)
-                            : "bg-white/5 border-white/10 text-gray-400 hover:text-white hover:bg-white/10"
+                            : "bg-white dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10"
                         )}
                       >
                         {colors.label}
@@ -273,7 +277,7 @@ export default function ServiceContractsPage() {
         
         {/* Error State */}
         {error && (
-          <div className="mb-8 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400">
+          <div className="mb-8 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-600 dark:text-red-400">
             {error}
           </div>
         )}
@@ -288,11 +292,11 @@ export default function ServiceContractsPage() {
         {/* Empty State */}
         {!loading && contracts.length === 0 && (
           <div className="flex flex-col items-center justify-center py-20 text-center">
-            <div className="p-4 bg-gray-500/10 rounded-full mb-4">
+            <div className="p-4 bg-gray-100 dark:bg-gray-500/10 rounded-full mb-4">
               <FileText className="w-12 h-12 text-gray-500" />
             </div>
-            <h3 className="text-xl font-semibold text-white mb-2">No contracts yet</h3>
-            <p className="text-gray-500 mb-6 max-w-md">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">No contracts yet</h3>
+            <p className="text-gray-500 dark:text-gray-400 mb-6 max-w-md">
               Create service contracts to manage recurring agreements with your customers.
             </p>
             <button
@@ -338,7 +342,7 @@ export default function ServiceContractsPage() {
                   "w-10 h-10 rounded-lg text-sm font-medium transition-colors",
                   page === pagination.page
                     ? "bg-teal-600 text-white"
-                    : "bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white"
+                    : "bg-white dark:bg-white/5 text-gray-400 hover:bg-gray-100 dark:hover:bg-white/10 hover:text-gray-900 dark:hover:text-white"
                 )}
               >
                 {page}
@@ -358,23 +362,24 @@ export default function ServiceContractsPage() {
             setEditingContract(null);
           }}
           isLoading={formLoading}
+          error={error}
         />
       )}
       
       {/* Delete Confirmation Modal */}
       {deleteConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div className="w-full max-w-md p-6 bg-[#1C1C1C] border border-white/10 rounded-2xl shadow-2xl">
-            <h3 className="text-xl font-semibold text-white mb-2">Delete Contract</h3>
-            <p className="text-gray-400 mb-6">
+          <div className="w-full max-w-md p-6 bg-white dark:bg-[#1C1C1C] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Delete Contract</h3>
+            <p className="text-gray-500 dark:text-gray-400 mb-6">
               Are you sure you want to delete{' '}
-              <span className="text-white font-medium">{deleteConfirm.title}</span>?
+              <span className="text-gray-900 dark:text-white font-medium">{deleteConfirm.title}</span>?
               This action cannot be undone.
             </p>
             <div className="flex justify-end gap-3">
               <button
                 onClick={() => setDeleteConfirm(null)}
-                className="px-4 py-2 text-sm font-medium text-gray-300 bg-white/5 hover:bg-white/10 rounded-lg transition-colors"
+                className="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg transition-colors"
               >
                 Cancel
               </button>
@@ -392,24 +397,24 @@ export default function ServiceContractsPage() {
       {/* Renew Confirmation Modal */}
       {renewConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div className="w-full max-w-md p-6 bg-[#1C1C1C] border border-white/10 rounded-2xl shadow-2xl">
-            <h3 className="text-xl font-semibold text-white mb-2">Renew Contract</h3>
-            <p className="text-gray-400 mb-4">
-              Renew <span className="text-white font-medium">{renewConfirm.title}</span>
+          <div className="w-full max-w-md p-6 bg-white dark:bg-[#1C1C1C] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Renew Contract</h3>
+            <p className="text-gray-500 dark:text-gray-400 mb-4">
+              Renew <span className="text-gray-900 dark:text-white font-medium">{renewConfirm.title}</span>
             </p>
             <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-300 mb-1.5">New End Date</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">New End Date</label>
               <input
                 type="date"
                 value={renewEndDate}
                 onChange={(e) => setRenewEndDate(e.target.value)}
-                className="w-full px-4 py-2.5 bg-[#0a0a0f] border border-white/10 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-teal-500/50"
+                className="w-full px-4 py-2.5 bg-white dark:bg-[#0a0a0f] border border-gray-200 dark:border-white/10 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-teal-500/50"
               />
             </div>
             <div className="flex justify-end gap-3">
               <button
                 onClick={() => { setRenewConfirm(null); setRenewEndDate(''); }}
-                className="px-4 py-2 text-sm font-medium text-gray-300 bg-white/5 hover:bg-white/10 rounded-lg transition-colors"
+                className="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg transition-colors"
               >
                 Cancel
               </button>

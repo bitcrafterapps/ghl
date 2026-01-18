@@ -1,3 +1,4 @@
+"use client";
 
 import {
   Toast,
@@ -31,4 +32,4 @@ export function Toaster() {
       <ToastViewport />
     </ToastProvider>
   );
-} 
+}

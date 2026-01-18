@@ -280,12 +280,15 @@ exports.galleryImages = (0, pg_core_1.pgTable)('gallery_images', {
     status: (0, pg_core_1.varchar)('status', { length: 20 }).default('active').$type(),
     // Timestamps
     createdAt: (0, pg_core_1.timestamp)('created_at').defaultNow(),
-    updatedAt: (0, pg_core_1.timestamp)('updated_at').defaultNow()
+    updatedAt: (0, pg_core_1.timestamp)('updated_at').defaultNow(),
+    // Site Scoping
+    siteId: (0, pg_core_1.uuid)('site_id'),
 }, (table) => ({
     companyIdx: (0, pg_core_1.index)('gallery_images_company_idx').on(table.companyId),
     categoryIdx: (0, pg_core_1.index)('gallery_images_category_idx').on(table.category),
     statusIdx: (0, pg_core_1.index)('gallery_images_status_idx').on(table.status),
-    sortOrderIdx: (0, pg_core_1.index)('gallery_images_sort_order_idx').on(table.sortOrder)
+    sortOrderIdx: (0, pg_core_1.index)('gallery_images_sort_order_idx').on(table.sortOrder),
+    siteIdIdx: (0, pg_core_1.index)('gallery_images_site_id_idx').on(table.siteId)
 }));
 // ============================================
 // Reviews / Testimonials

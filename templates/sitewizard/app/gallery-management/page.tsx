@@ -27,7 +27,7 @@ import { Reorder } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/components/ui/use-toast';
 import { logActivity } from '@/lib/activity';
-import { getApiUrl } from '@/lib/api';
+import { getApiUrl, getSiteId } from '@/lib/api';
 
 interface GalleryImage {
   id: number;
@@ -114,6 +114,7 @@ interface UploadModalProps {
 }
 
 function UploadModal({ onClose, onUpload, categories }: UploadModalProps) {
+  const { toast } = useToast();
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -164,8 +165,13 @@ function UploadModal({ onClose, onUpload, categories }: UploadModalProps) {
       await onUpload(file, metadata);
       onClose();
     } catch (error) {
-      // Error toast is shown in handleUpload, just log here
-      console.error('Upload failed:', error);
+      // Error toast is shown in handleUpload for API errors, but we need one for Network errors that bubble up
+      console.warn('Upload failed:', error);
+      toast({
+        title: "Upload Error",
+        description: "Failed to upload image. Please check your connection.",
+        variant: "destructive"
+      });
       // Don't close modal on error so user can try again
     }
     setIsUploading(false);
@@ -323,6 +329,7 @@ interface EditModalProps {
 }
 
 function EditModal({ image, onClose, onSave, categories }: EditModalProps) {
+  const { toast } = useToast();
   const [isSaving, setIsSaving] = useState(false);
   const [formData, setFormData] = useState({
     title: image.title || '',
@@ -338,7 +345,12 @@ function EditModal({ image, onClose, onSave, categories }: EditModalProps) {
       await onSave(image.id, formData);
       onClose();
     } catch (error) {
-      console.error('Save failed:', error);
+      console.warn('Save failed:', error);
+      toast({
+        title: "Save Error",
+        description: "Failed to save changes. Please check your connection.",
+        variant: "destructive"
+      });
     } finally {
       setIsSaving(false);
     }
@@ -490,68 +502,89 @@ export default function GalleryManagementPage() {
   const [userCompanyId, setUserCompanyId] = useState<number | null>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
+    const fetchUserData = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setIsLoading(false);
+        return;
+      }
+
       setIsAuthenticated(true);
       const apiUrl = getApiUrl();
+      const siteId = getSiteId();
 
-      // Fetch user profile to check admin status and get company ID
-      fetch(`${apiUrl}/api/v1/users/profile`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      })
-        .then(res => res.json())
-        .then(data => {
-          const profileData = data.data || data;
-          const hasSiteAdminRole = profileData.roles?.includes('Site Admin');
-          const hasAdminRole = profileData.roles?.includes('Admin');
-          setIsSiteAdmin(hasSiteAdminRole);
-          setIsAdmin(hasAdminRole);
-          
-          // Store user's company ID for associating uploads
-          if (profileData.companyId) {
-            setUserCompanyId(profileData.companyId);
-          }
-
-          if (!hasSiteAdminRole && !hasAdminRole) {
-            router.push('/404');
-            return;
-          }
-
-          // Fetch gallery images - filter by company for Admin users, show all for Site Admin
-          let galleryUrl = `${apiUrl}/api/v1/gallery-images`;
-          if (hasAdminRole && !hasSiteAdminRole && profileData.companyId) {
-            galleryUrl += `?companyId=${profileData.companyId}`;
-          }
-          return fetch(galleryUrl, {
-            headers: { 'Authorization': `Bearer ${token}` }
-          });
-        })
-        .then(res => {
-          if (res) return res.json();
-        })
-        .then(result => {
-          // API returns data directly or wrapped in data property
-          const imagesData = result?.data || result;
-          if (imagesData && Array.isArray(imagesData)) {
-            setImages(imagesData);
-            // Extract unique categories
-            const uniqueCategories = Array.from(
-              new Set(imagesData.map((img: GalleryImage) => img.category).filter(Boolean))
-            ) as string[];
-            setCategories(uniqueCategories);
-          }
-          setIsLoading(false);
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          toast({
-            title: "Error",
-            description: "Failed to load gallery images. Please try again.",
-            variant: "destructive"
-          });
-          setIsLoading(false);
+      try {
+        // Fetch user profile to check admin status and get company ID
+        const profileResponse = await fetch(`${apiUrl}/api/v1/users/profile`, {
+          headers: { 'Authorization': `Bearer ${token}` }
         });
-    }
+        
+        if (!profileResponse.ok) throw new Error('Failed to fetch profile');
+        
+        const data = await profileResponse.json();
+        const profileData = data.data || data;
+        const hasSiteAdminRole = profileData.roles?.includes('Site Admin');
+        const hasAdminRole = profileData.roles?.includes('Admin');
+        
+        setIsSiteAdmin(hasSiteAdminRole);
+        setIsAdmin(hasAdminRole);
+        
+        // Store user's company ID for associating uploads
+        if (profileData.companyId) {
+          setUserCompanyId(profileData.companyId);
+        }
+
+        if (!hasSiteAdminRole && !hasAdminRole) {
+          router.push('/404');
+          return;
+        }
+
+        // Fetch gallery images - filter by company for Admin users, show all for Site Admin
+        let galleryUrl = `${apiUrl}/api/v1/gallery-images`;
+        if (hasAdminRole && !hasSiteAdminRole && profileData.companyId) {
+          galleryUrl += `?companyId=${profileData.companyId}`;
+        }
+        
+        const headers: HeadersInit = {
+          'Authorization': `Bearer ${token}`
+        };
+        if (siteId) {
+          (headers as any)['x-site-id'] = siteId;
+        }
+
+        try {
+          const galleryResponse = await fetch(galleryUrl, { headers });
+          if (galleryResponse.ok) {
+            const result = await galleryResponse.json();
+            const imagesData = result?.data || result;
+            
+            if (imagesData && Array.isArray(imagesData)) {
+              setImages(imagesData);
+              // Extract unique categories
+              const uniqueCategories = Array.from(
+                new Set(imagesData.map((img: GalleryImage) => img.category).filter(Boolean))
+              ) as string[];
+              setCategories(uniqueCategories);
+            }
+          }
+        } catch (galleryError) {
+          console.warn('Failed to fetch gallery images:', galleryError);
+          // Silently fail or show mild warning
+        }
+
+      } catch (error) {
+        console.warn('Error loading gallery management data:', error);
+        toast({
+          title: "Error",
+          description: "Failed to load management data. Please refresh.",
+          variant: "destructive"
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchUserData();
   }, [toast, router]);
 
   const handleUpload = async (file: File, metadata: Partial<GalleryImage>) => {
@@ -568,9 +601,20 @@ export default function GalleryManagementPage() {
     // Include user's company ID to associate the image with their company
     if (userCompanyId) formData.append('companyId', String(userCompanyId));
 
+    const siteId = getSiteId();
+    if (siteId) formData.append('siteId', siteId);
+    
+    // We also send in header for consistency/middleware usage
+    const headers: HeadersInit = {
+      'Authorization': `Bearer ${token}`
+    };
+    if (siteId) {
+      (headers as any)['x-site-id'] = siteId;
+    }
+
     const response = await fetch(`${apiUrl}/api/v1/gallery-images`, {
       method: 'POST',
-      headers: { 'Authorization': `Bearer ${token}` },
+      headers,
       body: formData
     });
 
@@ -612,12 +656,18 @@ export default function GalleryManagementPage() {
     const token = localStorage.getItem('token');
     const apiUrl = getApiUrl();
 
+    const siteId = getSiteId();
+    const headers: HeadersInit = {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    };
+    if (siteId) {
+      (headers as any)['x-site-id'] = siteId;
+    }
+
     const response = await fetch(`${apiUrl}/api/v1/gallery-images/${id}`, {
       method: 'PUT',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      },
+      headers,
       body: JSON.stringify(data)
     });
 
@@ -651,11 +701,17 @@ export default function GalleryManagementPage() {
   const handleDelete = async (image: GalleryImage) => {
     try {
       const apiUrl = getApiUrl();
+      const siteId = getSiteId();
+      const headers: HeadersInit = {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      };
+      if (siteId) {
+        (headers as any)['x-site-id'] = siteId;
+      }
+      
       const response = await fetch(`${apiUrl}/api/v1/gallery-images/${image.id}`, {
         method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
+        headers
       });
 
       if (!response.ok) throw new Error('Failed to delete image');
@@ -673,7 +729,7 @@ export default function GalleryManagementPage() {
         description: "Image deleted successfully",
       });
     } catch (error) {
-      console.error('Error:', error);
+      console.warn('Delete failed:', error);
       toast({
         title: "Error",
         description: "Failed to delete image. Please try again.",
@@ -696,6 +752,7 @@ export default function GalleryManagementPage() {
     try {
       const token = localStorage.getItem('token');
       const apiUrl = getApiUrl();
+      const siteId = getSiteId();
 
       // Create reorder payload with new sort orders
       const reorderData = {
@@ -705,12 +762,17 @@ export default function GalleryManagementPage() {
         }))
       };
 
+      const headers: HeadersInit = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      };
+      if (siteId) {
+        (headers as any)['x-site-id'] = siteId;
+      }
+
       const response = await fetch(`${apiUrl}/api/v1/gallery-images/reorder`, {
         method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
+        headers,
         body: JSON.stringify(reorderData)
       });
 
@@ -725,7 +787,7 @@ export default function GalleryManagementPage() {
         description: "Image order saved successfully",
       });
     } catch (error) {
-      console.error('Error saving order:', error);
+      console.warn('Order save failed:', error);
       toast({
         title: "Error",
         description: "Failed to save order. Please try again.",
@@ -743,13 +805,19 @@ export default function GalleryManagementPage() {
     try {
       const token = localStorage.getItem('token');
       const apiUrl = getApiUrl();
+      const siteId = getSiteId();
+
+      const headers: HeadersInit = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      };
+      if (siteId) {
+        (headers as any)['x-site-id'] = siteId;
+      }
 
       const response = await fetch(`${apiUrl}/api/v1/gallery-images/${image.id}`, {
         method: 'PUT',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
+        headers,
         body: JSON.stringify({ status: newStatus })
       });
 
@@ -765,7 +833,7 @@ export default function GalleryManagementPage() {
         description: `Image ${newStatus === 'active' ? 'enabled' : 'disabled'} successfully`,
       });
     } catch (error) {
-      console.error('Error toggling status:', error);
+      console.warn('Status toggle failed:', error);
       toast({
         title: "Error",
         description: "Failed to update status. Please try again.",
