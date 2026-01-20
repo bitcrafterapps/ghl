@@ -1,24 +1,48 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { 
-  Phone, 
-  Mail, 
-  MapPin, 
-  Clock, 
-  Facebook, 
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  Facebook,
   Instagram,
-  Star 
+  Star
 } from "lucide-react";
 import { siteConfig, services } from "@/data/config";
 import { formatPhone, formatPhoneLink } from "@/lib/utils";
+import { fetchApi } from "@/lib/api";
 
 export function PublicFooter() {
   const currentYear = new Date().getFullYear();
+  const [stats, setStats] = useState<{ averageRating: number; totalReviews: number } | null>(null);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        // fetchApi automatically includes x-site-id header from NEXT_PUBLIC_SITE_ID
+        const response = await fetchApi('/api/v1/reviews/stats');
+        if (response.ok) {
+          const result = await response.json();
+          setStats(result.data || result);
+        }
+      } catch (e) {
+        console.warn("Failed to fetch footer stats", e);
+      }
+    };
+    fetchStats();
+  }, []);
+
+  // Only show reviews if we have stats loaded and there are reviews for this site
+  const hasReviews = stats !== null && stats.totalReviews > 0;
+  const displayRating = stats?.averageRating?.toFixed(1) ?? "5.0";
+  const displayCount = stats?.totalReviews ?? 0;
 
   return (
-    <footer 
+    <footer
       className="text-white"
       style={{
         backgroundColor: 'var(--footer-bg)',
@@ -45,20 +69,22 @@ export function PublicFooter() {
             )}
             <p className="text-gray-400 mb-4">
               Professional {siteConfig.industry.type.toLowerCase()} services in{" "}
-              {siteConfig.serviceArea.primaryCity} and surrounding areas. 
+              {siteConfig.serviceArea.primaryCity} and surrounding areas.
               Licensed, insured, and committed to quality.
             </p>
-            
-            {/* Rating Badge */}
-            <div className="flex items-center gap-2 bg-white/10 rounded-lg px-3 py-2 inline-flex">
-              <div className="flex gap-0.5">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="h-4 w-4 text-yellow-400 fill-yellow-400" />
-                ))}
+
+            {/* Rating Badge - Only show if there are reviews for this site */}
+            {hasReviews && (
+              <div className="flex items-center gap-2 bg-white/10 rounded-lg px-3 py-2 inline-flex">
+                <div className="flex gap-0.5">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-4 w-4 text-yellow-400 fill-yellow-400" />
+                  ))}
+                </div>
+                <span className="text-sm font-medium">{displayRating}</span>
+                <span className="text-sm text-gray-400">({displayCount}+ reviews)</span>
               </div>
-              <span className="text-sm font-medium">{siteConfig.reviews.rating}</span>
-              <span className="text-sm text-gray-400">({siteConfig.reviews.count}+ reviews)</span>
-            </div>
+            )}
           </div>
 
           {/* Services */}

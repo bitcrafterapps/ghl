@@ -159,7 +159,8 @@ export function TestimonialsSection() {
         const headers: HeadersInit = siteId ? { 'x-site-id': siteId } : {};
         
         const [reviewsRes, statsRes] = await Promise.all([
-          fetch(`${apiUrl}/api/v1/reviews/featured?limit=10`, { headers }),
+          // Fetch all published reviews for this site (not just featured)
+          fetch(`${apiUrl}/api/v1/reviews?status=published&limit=10`, { headers }),
           fetch(`${apiUrl}/api/v1/reviews/stats`, { headers })
         ]);
 

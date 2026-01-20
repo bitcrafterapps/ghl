@@ -92,7 +92,10 @@ router.get('/featured', async (req: Request, res: Response) => {
 router.get('/stats', async (req: Request, res: Response) => {
   try {
     const companyId = req.query.companyId ? parseInt(req.query.companyId as string) : undefined;
-    const stats = await ReviewService.getStats(companyId);
+    const siteId = (req.headers['x-site-id'] as string) || (req.query.siteId as string);
+    logger.debug(`Stats request - siteId from header: ${siteId}, companyId: ${companyId}`);
+    const stats = await ReviewService.getStats(companyId, siteId);
+    logger.debug(`Stats response - totalReviews: ${stats.totalReviews}, averageRating: ${stats.averageRating}`);
     return res.json(createSuccessResponse(stats));
   } catch (error) {
     logger.error('Error getting review stats:', error);

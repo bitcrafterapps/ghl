@@ -251,13 +251,19 @@ export class ReviewService {
   /**
    * Get review statistics
    */
-  static async getStats(companyId?: number): Promise<ReviewStats> {
+  static async getStats(companyId?: number, siteId?: string): Promise<ReviewStats> {
     try {
-      logger.debug('Fetching review stats');
+      logger.debug(`Fetching review stats - companyId: ${companyId}, siteId: ${siteId}`);
 
       const conditions = [eq(reviews.status, 'published')];
       if (companyId) {
         conditions.push(eq(reviews.companyId, companyId));
+      }
+      if (siteId) {
+        logger.debug(`Adding siteId filter: ${siteId}`);
+        conditions.push(eq(reviews.siteId, siteId));
+      } else {
+        logger.debug('No siteId provided - returning stats for all reviews');
       }
 
       // Get total count and average

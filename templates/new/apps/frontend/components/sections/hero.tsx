@@ -7,7 +7,7 @@ import { Phone, Star, Shield, Clock, CheckCircle, Sparkles, ArrowRight, User, Ma
 import { siteConfig, services } from "@/data/config";
 import { formatPhone, formatPhoneLink } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { getApiUrl, getSiteId } from "@/lib/api";
+import { fetchApi } from "@/lib/api";
 
 export function HeroSection() {
   // Get hero gradient colors from branding, fallback to default dark gradient
@@ -37,10 +37,8 @@ export function HeroSection() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const apiUrl = getApiUrl();
-        const siteId = getSiteId();
-        const headers: HeadersInit = siteId ? { 'x-site-id': siteId } : {};
-        const response = await fetch(`${apiUrl}/api/v1/reviews/stats`, { headers });
+        // fetchApi automatically includes x-site-id header from NEXT_PUBLIC_SITE_ID
+        const response = await fetchApi('/api/v1/reviews/stats');
         if (response.ok) {
            const result = await response.json();
            setStats(result.data || result);
@@ -52,10 +50,10 @@ export function HeroSection() {
     fetchStats();
   }, []);
 
-  // Determine valid stats or fallback
-  const hasNoReviews = stats !== null && stats.totalReviews === 0;
-  const displayRating = stats?.averageRating?.toFixed(1) ?? siteConfig.reviews.rating;
-  const displayCount = stats?.totalReviews ?? siteConfig.reviews.count;
+  // Only show reviews if we have stats loaded and there are reviews for this site
+  const hasReviews = stats !== null && stats.totalReviews > 0;
+  const displayRating = stats?.averageRating?.toFixed(1) ?? "5.0";
+  const displayCount = stats?.totalReviews ?? 0;
   
   return (
     <section 
@@ -87,8 +85,8 @@ export function HeroSection() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-            {/* Trust Badge */}
-            {!hasNoReviews && (
+            {/* Trust Badge - Only show if there are reviews for this site */}
+            {hasReviews && (
               <div className="flex items-center gap-2 mb-6 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 w-fit">
                 <div className="flex">
                   {[...Array(5)].map((_, i) => (
