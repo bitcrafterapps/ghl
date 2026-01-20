@@ -4,7 +4,7 @@ import { db } from '../../db';
 import { promoCodes, promoCodeUsages } from '../../db/schema';
 import { eq, and, or, gte, lte, ilike, sql, desc, asc } from 'drizzle-orm';
 import { authenticate } from '../../middleware/v1/auth.middleware';
-import { getUserCompanyId } from '../../utils/company';
+import { getUserCompanyId, resolveCompanyId, userHasCompanyAccess } from '../../utils/company';
 
 const router = Router();
 
@@ -90,8 +90,10 @@ const updatePromoCodeSchema = z.object({
 // Get all promo codes for company
 router.get('/', authenticate, async (req, res) => {
   try {
-    const companyId = await getUserCompanyId(req.user!.userId);
-    if (!companyId) return res.status(400).json({ error: 'User not associated with a company' });
+    // Allow specifying companyId via query param (for multi-site management)
+    const targetCompanyId = req.query.companyId ? Number(req.query.companyId) : undefined;
+    const companyId = await resolveCompanyId(req.user!.userId, targetCompanyId);
+    if (!companyId) return res.status(400).json({ error: 'User not associated with a company or no access to requested company' });
 
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 20;
@@ -320,8 +322,10 @@ router.post('/validate', async (req, res) => {
 // Create promo code
 router.post('/', authenticate, async (req, res) => {
   try {
-    const companyId = await getUserCompanyId(req.user!.userId);
-    if (!companyId) return res.status(400).json({ error: 'User not associated with a company' });
+    // Allow specifying companyId in request body (for multi-site management)
+    const targetCompanyId = req.body.companyId ? Number(req.body.companyId) : undefined;
+    const companyId = await resolveCompanyId(req.user!.userId, targetCompanyId);
+    if (!companyId) return res.status(400).json({ error: 'User not associated with a company or no access to requested company' });
 
     const validatedData = createPromoCodeSchema.parse(req.body);
 

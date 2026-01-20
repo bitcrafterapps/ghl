@@ -399,7 +399,7 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
                  <span className="text-3xl sm:text-5xl">{siteConfig.branding?.icon && !siteConfig.branding.icon.startsWith('{{') ? siteConfig.branding.icon : '🔧'}</span>
               )}
               <div className="flex flex-col -space-y-1">
-                <span className="text-lg sm:text-xl font-bold text-white leading-none">{siteConfig.company?.name && !siteConfig.company.name.startsWith('{{') ? siteConfig.company.name : 'Company Name'}</span>
+                <span className="text-lg sm:text-xl font-bold leading-none" style={{ color: 'var(--header-text)' }}>{siteConfig.company?.name && !siteConfig.company.name.startsWith('{{') ? siteConfig.company.name : 'Company Name'}</span>
                 <span className="text-[10px] text-[--header-text-secondary] hidden sm:block">{siteConfig.branding?.tagline && !siteConfig.branding.tagline.startsWith('{{') ? siteConfig.branding.tagline : 'Your tagline here'}</span>
               </div>
             </Link>
@@ -411,11 +411,12 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
               <Link
                 href="/"
                 className={classNames(
-                  pathname === "/" 
-                    ? "text-white bg-white/10" 
-                    : "text-zinc-300 hover:text-white hover:bg-white/5",
+                  pathname === "/"
+                    ? "bg-[--header-text]/10"
+                    : "opacity-70 hover:opacity-100 hover:bg-[--header-text]/5",
                   "px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200"
                 )}
+                style={{ color: 'var(--header-text)' }}
               >
                 Home
               </Link>
@@ -423,11 +424,12 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
               <Menu as="div" className="relative">
                 <Menu.Button
                   className={classNames(
-                    pathname?.startsWith("/services") 
-                      ? "text-white bg-white/10" 
-                      : "text-zinc-300 hover:text-white hover:bg-white/5",
+                    pathname?.startsWith("/services")
+                      ? "bg-[--header-text]/10"
+                      : "opacity-70 hover:opacity-100 hover:bg-[--header-text]/5",
                     "px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-1"
                   )}
+                  style={{ color: 'var(--header-text)' }}
                 >
                   Services
                   <ChevronDown className="h-4 w-4" />
@@ -482,33 +484,36 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
               <Link
                 href="/gallery"
                 className={classNames(
-                  pathname === "/gallery" 
-                    ? "text-white bg-white/10" 
-                    : "text-zinc-300 hover:text-white hover:bg-white/5",
+                  pathname === "/gallery"
+                    ? "bg-[--header-text]/10"
+                    : "opacity-70 hover:opacity-100 hover:bg-[--header-text]/5",
                   "px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200"
                 )}
+                style={{ color: 'var(--header-text)' }}
               >
                 Gallery
               </Link>
               <Link
                 href="/service-areas"
                 className={classNames(
-                  pathname === "/service-areas" 
-                    ? "text-white bg-white/10" 
-                    : "text-zinc-300 hover:text-white hover:bg-white/5",
+                  pathname === "/service-areas"
+                    ? "bg-[--header-text]/10"
+                    : "opacity-70 hover:opacity-100 hover:bg-[--header-text]/5",
                   "px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200"
                 )}
+                style={{ color: 'var(--header-text)' }}
               >
                 Service Areas
               </Link>
               <Link
                 href="/about"
                 className={classNames(
-                  pathname === "/about" 
-                    ? "text-white bg-white/10" 
-                    : "text-zinc-300 hover:text-white hover:bg-white/5",
+                  pathname === "/about"
+                    ? "bg-[--header-text]/10"
+                    : "opacity-70 hover:opacity-100 hover:bg-[--header-text]/5",
                   "px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200"
                 )}
+                style={{ color: 'var(--header-text)' }}
               >
                 About
               </Link>
@@ -516,10 +521,11 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
                 href="/reviews"
                 className={classNames(
                   pathname === "/reviews"
-                    ? "text-white bg-white/10"
-                    : "text-zinc-300 hover:text-white hover:bg-white/5",
+                    ? "bg-[--header-text]/10"
+                    : "opacity-70 hover:opacity-100 hover:bg-[--header-text]/5",
                   "px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200"
                 )}
+                style={{ color: 'var(--header-text)' }}
               >
                 Reviews
               </Link>
@@ -527,10 +533,11 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
                 href="/promotions"
                 className={classNames(
                   pathname === "/promotions"
-                    ? "text-white bg-white/10"
-                    : "text-zinc-300 hover:text-white hover:bg-white/5",
+                    ? "bg-[--header-text]/10"
+                    : "opacity-70 hover:opacity-100 hover:bg-[--header-text]/5",
                   "px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200"
                 )}
+                style={{ color: 'var(--header-text)' }}
               >
                 Promotions
               </Link>
@@ -538,10 +545,11 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
                 href="/contact"
                 className={classNames(
                   pathname === "/contact"
-                    ? "text-white bg-white/10"
-                    : "text-zinc-300 hover:text-white hover:bg-white/5",
+                    ? "bg-[--header-text]/10"
+                    : "opacity-70 hover:opacity-100 hover:bg-[--header-text]/5",
                   "px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200"
                 )}
+                style={{ color: 'var(--header-text)' }}
               >
                 Contact
               </Link>
@@ -751,9 +759,10 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
               </Menu>
             ) : (
               <div className="flex items-center gap-2 sm:gap-3">
-                <a 
+                <a
                   href={formatPhoneLink(siteConfig?.company?.phone || '')}
-                  className="hidden sm:flex items-center gap-2 text-sm text-white hover:text-white/80 transition-colors"
+                  className="hidden sm:flex items-center gap-2 text-sm hover:opacity-80 transition-colors"
+                  style={{ color: 'var(--header-text)' }}
                 >
                   <Phone className="h-4 w-4" />
                   <span className="font-medium">{formatPhone(siteConfig?.company?.phone || '')}</span>
@@ -787,9 +796,10 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
               href="/"
               onClick={() => setMobileMenuOpen(false)}
               className={classNames(
-                pathname === "/" ? "bg-white/10 text-white" : "text-zinc-300 hover:bg-white/5 hover:text-white",
+                pathname === "/" ? "bg-[--header-text]/10" : "opacity-70 hover:bg-[--header-text]/5 hover:opacity-100",
                 "block rounded-lg px-3 py-2.5 text-base font-medium transition-colors"
               )}
+              style={{ color: 'var(--header-text)' }}
             >
               Home
             </Link>
@@ -797,10 +807,13 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
             <Disclosure>
               {({ open }) => (
                 <>
-                  <Disclosure.Button className={classNames(
-                    pathname?.startsWith("/services") ? "bg-white/10 text-white" : "text-zinc-300 hover:bg-white/5 hover:text-white",
-                    "flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-base font-medium transition-colors"
-                  )}>
+                  <Disclosure.Button
+                    className={classNames(
+                      pathname?.startsWith("/services") ? "bg-[--header-text]/10" : "opacity-70 hover:bg-[--header-text]/5 hover:opacity-100",
+                      "flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-base font-medium transition-colors"
+                    )}
+                    style={{ color: 'var(--header-text)' }}
+                  >
                     Services
                     <ChevronDown className={classNames(
                       open ? "rotate-180" : "",
@@ -813,7 +826,8 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
                         key={service.slug}
                         href={`/services/${service.slug}`}
                         onClick={() => setMobileMenuOpen(false)}
-                        className="block rounded-lg px-3 py-2 text-sm text-zinc-400 hover:bg-white/5 hover:text-white transition-colors"
+                        className="block rounded-lg px-3 py-2 text-sm opacity-60 hover:bg-[--header-text]/5 hover:opacity-100 transition-colors"
+                        style={{ color: 'var(--header-text)' }}
                       >
                         {service.name}
                       </Link>
@@ -821,7 +835,7 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
                     <Link
                       href="/services"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="block rounded-lg px-3 py-2 text-sm text-primary font-medium hover:bg-white/5 transition-colors"
+                      className="block rounded-lg px-3 py-2 text-sm text-primary font-medium hover:bg-[--header-text]/5 transition-colors"
                     >
                       View All Services →
                     </Link>
@@ -833,9 +847,10 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
               href="/gallery"
               onClick={() => setMobileMenuOpen(false)}
               className={classNames(
-                pathname === "/gallery" ? "bg-white/10 text-white" : "text-zinc-300 hover:bg-white/5 hover:text-white",
+                pathname === "/gallery" ? "bg-[--header-text]/10" : "opacity-70 hover:bg-[--header-text]/5 hover:opacity-100",
                 "block rounded-lg px-3 py-2.5 text-base font-medium transition-colors"
               )}
+              style={{ color: 'var(--header-text)' }}
             >
               Gallery
             </Link>
@@ -843,9 +858,10 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
               href="/service-areas"
               onClick={() => setMobileMenuOpen(false)}
               className={classNames(
-                pathname === "/service-areas" ? "bg-white/10 text-white" : "text-zinc-300 hover:bg-white/5 hover:text-white",
+                pathname === "/service-areas" ? "bg-[--header-text]/10" : "opacity-70 hover:bg-[--header-text]/5 hover:opacity-100",
                 "block rounded-lg px-3 py-2.5 text-base font-medium transition-colors"
               )}
+              style={{ color: 'var(--header-text)' }}
             >
               Service Areas
             </Link>
@@ -853,9 +869,10 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
               href="/about"
               onClick={() => setMobileMenuOpen(false)}
               className={classNames(
-                pathname === "/about" ? "bg-white/10 text-white" : "text-zinc-300 hover:bg-white/5 hover:text-white",
+                pathname === "/about" ? "bg-[--header-text]/10" : "opacity-70 hover:bg-[--header-text]/5 hover:opacity-100",
                 "block rounded-lg px-3 py-2.5 text-base font-medium transition-colors"
               )}
+              style={{ color: 'var(--header-text)' }}
             >
               About
             </Link>
@@ -863,9 +880,10 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
               href="/reviews"
               onClick={() => setMobileMenuOpen(false)}
               className={classNames(
-                pathname === "/reviews" ? "bg-white/10 text-white" : "text-zinc-300 hover:bg-white/5 hover:text-white",
+                pathname === "/reviews" ? "bg-[--header-text]/10" : "opacity-70 hover:bg-[--header-text]/5 hover:opacity-100",
                 "block rounded-lg px-3 py-2.5 text-base font-medium transition-colors"
               )}
+              style={{ color: 'var(--header-text)' }}
             >
               Reviews
             </Link>
@@ -873,9 +891,10 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
               href="/promotions"
               onClick={() => setMobileMenuOpen(false)}
               className={classNames(
-                pathname === "/promotions" ? "bg-white/10 text-white" : "text-zinc-300 hover:bg-white/5 hover:text-white",
+                pathname === "/promotions" ? "bg-[--header-text]/10" : "opacity-70 hover:bg-[--header-text]/5 hover:opacity-100",
                 "block rounded-lg px-3 py-2.5 text-base font-medium transition-colors"
               )}
+              style={{ color: 'var(--header-text)' }}
             >
               Promotions
             </Link>
@@ -883,9 +902,10 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
               href="/contact"
               onClick={() => setMobileMenuOpen(false)}
               className={classNames(
-                pathname === "/contact" ? "bg-white/10 text-white" : "text-zinc-300 hover:bg-white/5 hover:text-white",
+                pathname === "/contact" ? "bg-[--header-text]/10" : "opacity-70 hover:bg-[--header-text]/5 hover:opacity-100",
                 "block rounded-lg px-3 py-2.5 text-base font-medium transition-colors"
               )}
+              style={{ color: 'var(--header-text)' }}
             >
               Contact
             </Link>

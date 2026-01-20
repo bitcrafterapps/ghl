@@ -26,6 +26,7 @@ import { cn } from '@/lib/utils';
 import { useToast } from '@/components/ui/use-toast';
 import { logActivity } from '@/lib/activity';
 import { getApiUrl } from '@/lib/api';
+import { siteConfig } from '@/data/config';
 import {
   PromoCode,
   PromoCodeStatus,
@@ -421,8 +422,12 @@ export default function PromoCodesManagementPage() {
             return;
           }
 
-          // Fetch promo codes
-          return fetch(`${apiUrl}/api/v1/promo-codes`, {
+          // Fetch promo codes for this site's company
+          const companyId = siteConfig.companyId;
+          const url = companyId
+            ? `${apiUrl}/api/v1/promo-codes?companyId=${companyId}`
+            : `${apiUrl}/api/v1/promo-codes`;
+          return fetch(url, {
             headers: { 'Authorization': `Bearer ${token}` }
           });
         })
@@ -454,13 +459,19 @@ export default function PromoCodesManagementPage() {
     const token = localStorage.getItem('token');
     const apiUrl = getApiUrl();
 
+    // Include companyId from site config to ensure promo is created for this site's company
+    const payload = {
+      ...data,
+      companyId: siteConfig.companyId
+    };
+
     const response = await fetch(`${apiUrl}/api/v1/promo-codes`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(payload)
     });
 
     if (!response.ok) {
