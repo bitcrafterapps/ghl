@@ -49,6 +49,7 @@ Thumbs.db
 # Project specific - do not check in generated sites
 /templates/services/
 /templates/trades/
+/generated/
 /generated/trades/
 /generated/services/
 
