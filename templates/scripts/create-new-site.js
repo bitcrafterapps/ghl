@@ -23,6 +23,7 @@ const bcrypt = require('bcrypt');
 
 const TEMPLATES_DIR = path.resolve(__dirname, '..');
 const BASE_TEMPLATE = path.join(TEMPLATES_DIR, 'new', 'apps', 'frontend');
+const GENERATED_DIR = path.resolve(__dirname, '../../generated');
 
 const colors = {
   reset: '\x1b[0m',
@@ -1337,7 +1338,12 @@ async function main() {
   };
 
   // Create destination path
-  const destFolder = path.join(TEMPLATES_DIR, businessTypeInfo.folder, companySlug);
+  // Ensure generated directory exists
+  if (!fs.existsSync(GENERATED_DIR)) {
+    fs.mkdirSync(GENERATED_DIR, { recursive: true });
+  }
+
+  const destFolder = path.join(GENERATED_DIR, businessTypeInfo.folder, companySlug);
 
   // Check if folder already exists
   if (fs.existsSync(destFolder)) {

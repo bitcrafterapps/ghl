@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.serviceContractsRelations = exports.dataImports = exports.dataExports = exports.auditLogs = exports.notificationPreferences = exports.notifications = exports.jobPhotoBeforeAfterPairs = exports.jobPhotos = exports.serviceContracts = exports.jobActivities = exports.jobs = exports.calendarEvents = exports.contactActivities = exports.contacts = exports.reviews = exports.galleryImages = exports.transactions = exports.tokenUsage = exports.siteSettings = exports.pushHistory = exports.deployments = exports.chatMessages = exports.generations = exports.prdMessages = exports.prds = exports.projects = exports.emailLogs = exports.emailTemplates = exports.activityLog = exports.companyUsers = exports.companies = exports.users = void 0;
+exports.promoCodeUsages = exports.promoCodes = exports.serviceContractsRelations = exports.dataImports = exports.dataExports = exports.auditLogs = exports.notificationPreferences = exports.notifications = exports.jobPhotoBeforeAfterPairs = exports.jobPhotos = exports.serviceContracts = exports.jobActivities = exports.jobs = exports.calendarEvents = exports.contactActivities = exports.contacts = exports.reviews = exports.galleryImages = exports.transactions = exports.tokenUsage = exports.siteSettings = exports.pushHistory = exports.deployments = exports.chatMessages = exports.generations = exports.prdMessages = exports.prds = exports.projects = exports.emailLogs = exports.emailTemplates = exports.activityLog = exports.companyUsers = exports.companies = exports.users = void 0;
 const pg_core_1 = require("drizzle-orm/pg-core");
 const drizzle_orm_1 = require("drizzle-orm");
 exports.users = (0, pg_core_1.pgTable)('users', {
@@ -682,4 +682,62 @@ exports.dataImports = (0, pg_core_1.pgTable)('data_imports', {
 });
 exports.serviceContractsRelations = (0, drizzle_orm_1.relations)(exports.serviceContracts, ({ one }) => ({
     contact: one(exports.contacts),
+}));
+exports.promoCodes = (0, pg_core_1.pgTable)('promo_codes', {
+    id: (0, pg_core_1.uuid)('id').primaryKey().defaultRandom(),
+    companyId: (0, pg_core_1.integer)('company_id').references(() => exports.companies.id, { onDelete: 'cascade' }),
+    // Code details
+    code: (0, pg_core_1.varchar)('code', { length: 50 }).notNull(),
+    name: (0, pg_core_1.varchar)('name', { length: 255 }).notNull(),
+    description: (0, pg_core_1.text)('description'),
+    // Discount configuration
+    discountType: (0, pg_core_1.varchar)('discount_type', { length: 20 }).notNull().$type(),
+    discountValue: (0, pg_core_1.integer)('discount_value').notNull(), // Percentage (0-100) or cents for fixed amount
+    // Usage limits
+    maxUses: (0, pg_core_1.integer)('max_uses'), // null = unlimited
+    usedCount: (0, pg_core_1.integer)('used_count').default(0),
+    maxUsesPerCustomer: (0, pg_core_1.integer)('max_uses_per_customer').default(1),
+    // Minimum requirements
+    minimumOrderAmount: (0, pg_core_1.integer)('minimum_order_amount'), // in cents
+    // Validity period
+    startDate: (0, pg_core_1.timestamp)('start_date').notNull(),
+    endDate: (0, pg_core_1.timestamp)('end_date'),
+    // Status
+    status: (0, pg_core_1.varchar)('status', { length: 20 }).default('active').$type(),
+    // Display settings
+    isPublic: (0, pg_core_1.boolean)('is_public').default(false), // Show on public promo codes page
+    sortOrder: (0, pg_core_1.integer)('sort_order').default(0),
+    // Applicable services (null = all services)
+    applicableServices: (0, pg_core_1.jsonb)('applicable_services').$type(),
+    // Terms and conditions
+    terms: (0, pg_core_1.text)('terms'),
+    // Timestamps
+    createdAt: (0, pg_core_1.timestamp)('created_at').defaultNow(),
+    updatedAt: (0, pg_core_1.timestamp)('updated_at').defaultNow()
+}, (table) => ({
+    companyIdx: (0, pg_core_1.index)('promo_codes_company_idx').on(table.companyId),
+    codeIdx: (0, pg_core_1.index)('promo_codes_code_idx').on(table.code),
+    statusIdx: (0, pg_core_1.index)('promo_codes_status_idx').on(table.status),
+    startDateIdx: (0, pg_core_1.index)('promo_codes_start_date_idx').on(table.startDate),
+    endDateIdx: (0, pg_core_1.index)('promo_codes_end_date_idx').on(table.endDate),
+    isPublicIdx: (0, pg_core_1.index)('promo_codes_is_public_idx').on(table.isPublic),
+    companyCodeIdx: (0, pg_core_1.uniqueIndex)('promo_codes_company_code_idx').on(table.companyId, table.code)
+}));
+// Promo Code Usage Tracking
+exports.promoCodeUsages = (0, pg_core_1.pgTable)('promo_code_usages', {
+    id: (0, pg_core_1.uuid)('id').primaryKey().defaultRandom(),
+    promoCodeId: (0, pg_core_1.uuid)('promo_code_id').references(() => exports.promoCodes.id, { onDelete: 'cascade' }),
+    contactId: (0, pg_core_1.uuid)('contact_id').references(() => exports.contacts.id, { onDelete: 'set null' }),
+    jobId: (0, pg_core_1.uuid)('job_id').references(() => exports.jobs.id, { onDelete: 'set null' }),
+    // Usage details
+    discountAmount: (0, pg_core_1.integer)('discount_amount').notNull(), // in cents
+    originalAmount: (0, pg_core_1.integer)('original_amount'), // in cents
+    // Customer email (for tracking even without contact)
+    customerEmail: (0, pg_core_1.varchar)('customer_email', { length: 255 }),
+    // Timestamps
+    usedAt: (0, pg_core_1.timestamp)('used_at').defaultNow()
+}, (table) => ({
+    promoCodeIdx: (0, pg_core_1.index)('promo_code_usages_promo_code_idx').on(table.promoCodeId),
+    contactIdx: (0, pg_core_1.index)('promo_code_usages_contact_idx').on(table.contactId),
+    jobIdx: (0, pg_core_1.index)('promo_code_usages_job_idx').on(table.jobId)
 }));

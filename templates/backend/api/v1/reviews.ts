@@ -22,19 +22,21 @@ router.use((req: Request, _res: Response, next) => {
 /**
  * GET /api/v1/reviews
  * Get all reviews with optional filtering (public endpoint for displaying on frontend)
+ * Requires siteId header for multi-tenant filtering
  */
 router.get('/', async (req: Request, res: Response) => {
   try {
     logger.debug('Getting reviews');
 
+    const siteId = (req.headers['x-site-id'] as string) || (req.query.siteId as string);
+
     const params: ReviewQueryParams = {
-      siteId: (req.query.siteId as string) || (req.headers['x-site-id'] as string),  // Multi-tenant site scoping
+      siteId,  // Required for multi-tenant filtering
       status: req.query.status as any,
       source: req.query.source as any,
       featured: req.query.featured === 'true' ? true : req.query.featured === 'false' ? false : undefined,
       minRating: req.query.minRating ? parseInt(req.query.minRating as string) : undefined,
       maxRating: req.query.maxRating ? parseInt(req.query.maxRating as string) : undefined,
-      companyId: req.query.companyId ? parseInt(req.query.companyId as string) : undefined,
       limit: req.query.limit ? parseInt(req.query.limit as string) : undefined,
       offset: req.query.offset ? parseInt(req.query.offset as string) : undefined
     };
@@ -62,14 +64,15 @@ router.get('/', async (req: Request, res: Response) => {
 /**
  * GET /api/v1/reviews/featured
  * Get featured reviews for frontend display
+ * Requires siteId header for multi-tenant filtering
  */
 router.get('/featured', async (req: Request, res: Response) => {
   try {
     const limit = req.query.limit ? parseInt(req.query.limit as string) : 6;
-    const companyId = req.query.companyId ? parseInt(req.query.companyId as string) : undefined;
-    const siteId = (req.query.siteId as string) || (req.headers['x-site-id'] as string) || undefined;  // Multi-tenant site scoping
+    const siteId = (req.headers['x-site-id'] as string) || (req.query.siteId as string);
 
-    const reviews = await ReviewService.getFeaturedReviews(limit, companyId, siteId);
+    // Pass siteId for multi-tenant filtering - only reviews with matching siteId will show
+    const reviews = await ReviewService.getFeaturedReviews(limit, undefined, siteId);
     return res.json(createSuccessResponse(reviews));
   } catch (error) {
     logger.error('Error getting featured reviews:', error);

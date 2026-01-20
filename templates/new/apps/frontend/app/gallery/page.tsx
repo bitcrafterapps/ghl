@@ -156,16 +156,11 @@ export default function GalleryPage() {
     const fetchGalleryImages = async () => {
       try {
         const apiUrl = getApiUrl();
-        const companyId = (siteConfig as any).companyId;
-        let queryUrl = `${apiUrl}/api/v1/gallery-images?status=active`;
-        if (companyId) {
-          queryUrl += `&companyId=${companyId}`;
-        }
-        
         const siteId = getSiteId();
         const headers: HeadersInit = siteId ? { 'x-site-id': siteId } : {};
-        
-        const response = await fetch(queryUrl, { headers });
+
+        // Fetch gallery images - siteId header handles multi-tenant filtering
+        const response = await fetch(`${apiUrl}/api/v1/gallery-images?status=active`, { headers });
         if (response.ok) {
           const result = await response.json();
           const imagesData = result.data || result;

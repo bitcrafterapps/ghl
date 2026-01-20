@@ -123,16 +123,15 @@ class DashboardService {
                     stats.totalContacts = Number((contactsCount === null || contactsCount === void 0 ? void 0 : contactsCount.count) || 0);
                     stats.newContacts = Number((newContactsCount === null || newContactsCount === void 0 ? void 0 : newContactsCount.count) || 0);
                     // --- REVIEWS ---
-                    // Count reviews that have this companyId, or all reviews if using siteId-based storage
-                    // Note: Some reviews may have companyId=null but are still valid (siteId-based multi-tenant)
+                    // Only count reviews that belong to this company
                     const [reviewsCount] = yield db_1.db
                         .select({ count: (0, drizzle_orm_1.sql) `count(*)` })
                         .from(schema_1.reviews)
-                        .where((0, drizzle_orm_1.sql) `${schema_1.reviews.companyId} = ${companyId} OR ${schema_1.reviews.companyId} IS NULL`);
+                        .where((0, drizzle_orm_1.eq)(schema_1.reviews.companyId, companyId));
                     const [avgRatingResult] = yield db_1.db
                         .select({ avg: (0, drizzle_orm_1.sql) `avg(${schema_1.reviews.rating})` })
                         .from(schema_1.reviews)
-                        .where((0, drizzle_orm_1.sql) `${schema_1.reviews.companyId} = ${companyId} OR ${schema_1.reviews.companyId} IS NULL`);
+                        .where((0, drizzle_orm_1.eq)(schema_1.reviews.companyId, companyId));
                     stats.totalReviews = Number((reviewsCount === null || reviewsCount === void 0 ? void 0 : reviewsCount.count) || 0);
                     stats.averageRating = Number((avgRatingResult === null || avgRatingResult === void 0 ? void 0 : avgRatingResult.avg) || 0);
                     // --- GALLERY ---

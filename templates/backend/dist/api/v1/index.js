@@ -27,6 +27,7 @@ const jobs_1 = __importDefault(require("./jobs"));
 const calendar_1 = __importDefault(require("./calendar"));
 const service_contracts_1 = __importDefault(require("./service-contracts"));
 const job_photos_1 = __importDefault(require("./job-photos"));
+const promo_codes_1 = __importDefault(require("./promo-codes"));
 const stats_middleware_1 = require("../../middleware/v1/stats.middleware");
 const logger_1 = require("../../logger");
 const auth_middleware_1 = require("../../middleware/v1/auth.middleware");
@@ -59,14 +60,14 @@ router.use('/payments', payments_1.default);
 // Skip auth middleware for auth routes
 router.use((req, res, next) => {
     logger.debug(`[Middleware] Path check: ${req.path}, OriginalUrl: ${req.originalUrl}`);
-    if (req.path.startsWith('/auth') || req.path.startsWith('/signup') || req.originalUrl.includes('/site-settings/public') || req.path.startsWith('/google/callback') || req.path.startsWith('/google/status') || req.path.startsWith('/payments')) {
+    if (req.path.startsWith('/auth') || req.path.startsWith('/signup') || req.originalUrl.includes('/site-settings/public') || req.path.startsWith('/google/callback') || req.path.startsWith('/google/status') || req.path.startsWith('/payments') || req.path === '/promo-codes/public' || req.path === '/promo-codes/validate') {
         return next();
     }
     (0, auth_middleware_1.validateSession)(req, res, next);
 });
 // Add middleware to load user data
 router.use((req, res, next) => {
-    if (req.path.startsWith('/auth') || req.path.startsWith('/signup') || req.originalUrl.includes('/site-settings/public') || req.path.startsWith('/google/callback') || req.path.startsWith('/google/status') || req.path.startsWith('/payments')) {
+    if (req.path.startsWith('/auth') || req.path.startsWith('/signup') || req.originalUrl.includes('/site-settings/public') || req.path.startsWith('/google/callback') || req.path.startsWith('/google/status') || req.path.startsWith('/payments') || req.path === '/promo-codes/public' || req.path === '/promo-codes/validate') {
         return next();
     }
     (0, auth_middleware_1.loadUserData)(req, res, next);
@@ -132,6 +133,8 @@ logger.debug('Mounting service-contracts routes at /service-contracts');
 router.use('/service-contracts', service_contracts_1.default);
 logger.debug('Mounting job-photos routes at /job-photos');
 router.use('/job-photos', job_photos_1.default);
+logger.debug('Mounting promo-codes routes at /promo-codes');
+router.use('/promo-codes', promo_codes_1.default);
 // Add API error tracking middleware
 router.use(stats_middleware_1.trackApiErrors);
 logger.info('All API routes mounted successfully');

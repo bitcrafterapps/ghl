@@ -742,7 +742,7 @@ export default function SiteBuilderPage() {
         const result = await response.json();
 
         // Calculate path for instructions
-        const destPath = `templates/${config.businessType === 'services' ? 'services' : 'trades'}/${config.slug}`;
+        const destPath = `generated/${config.businessType === 'services' ? 'services' : 'trades'}/${config.slug}`;
         setGenerationResult({
           path: destPath,
           url: '',
