@@ -974,3 +974,83 @@ export const dataImports = pgTable('data_imports', {
 export const serviceContractsRelations = relations(serviceContracts, ({ one }) => ({
   contact: one(contacts),
 }));
+
+// ============================================
+// Promo Codes
+// ============================================
+
+export type PromoCodeStatus = 'active' | 'inactive' | 'expired';
+export type PromoCodeDiscountType = 'percentage' | 'fixed_amount';
+
+export const promoCodes = pgTable('promo_codes', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  companyId: integer('company_id').references(() => companies.id, { onDelete: 'cascade' }),
+
+  // Code details
+  code: varchar('code', { length: 50 }).notNull(),
+  name: varchar('name', { length: 255 }).notNull(),
+  description: text('description'),
+
+  // Discount configuration
+  discountType: varchar('discount_type', { length: 20 }).notNull().$type<PromoCodeDiscountType>(),
+  discountValue: integer('discount_value').notNull(), // Percentage (0-100) or cents for fixed amount
+
+  // Usage limits
+  maxUses: integer('max_uses'), // null = unlimited
+  usedCount: integer('used_count').default(0),
+  maxUsesPerCustomer: integer('max_uses_per_customer').default(1),
+
+  // Minimum requirements
+  minimumOrderAmount: integer('minimum_order_amount'), // in cents
+
+  // Validity period
+  startDate: timestamp('start_date').notNull(),
+  endDate: timestamp('end_date'),
+
+  // Status
+  status: varchar('status', { length: 20 }).default('active').$type<PromoCodeStatus>(),
+
+  // Display settings
+  isPublic: boolean('is_public').default(false), // Show on public promo codes page
+  sortOrder: integer('sort_order').default(0),
+
+  // Applicable services (null = all services)
+  applicableServices: jsonb('applicable_services').$type<string[]>(),
+
+  // Terms and conditions
+  terms: text('terms'),
+
+  // Timestamps
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow()
+}, (table) => ({
+  companyIdx: index('promo_codes_company_idx').on(table.companyId),
+  codeIdx: index('promo_codes_code_idx').on(table.code),
+  statusIdx: index('promo_codes_status_idx').on(table.status),
+  startDateIdx: index('promo_codes_start_date_idx').on(table.startDate),
+  endDateIdx: index('promo_codes_end_date_idx').on(table.endDate),
+  isPublicIdx: index('promo_codes_is_public_idx').on(table.isPublic),
+  companyCodeIdx: uniqueIndex('promo_codes_company_code_idx').on(table.companyId, table.code)
+}));
+
+// Promo Code Usage Tracking
+export const promoCodeUsages = pgTable('promo_code_usages', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  promoCodeId: uuid('promo_code_id').references(() => promoCodes.id, { onDelete: 'cascade' }),
+  contactId: uuid('contact_id').references(() => contacts.id, { onDelete: 'set null' }),
+  jobId: uuid('job_id').references(() => jobs.id, { onDelete: 'set null' }),
+
+  // Usage details
+  discountAmount: integer('discount_amount').notNull(), // in cents
+  originalAmount: integer('original_amount'), // in cents
+
+  // Customer email (for tracking even without contact)
+  customerEmail: varchar('customer_email', { length: 255 }),
+
+  // Timestamps
+  usedAt: timestamp('used_at').defaultNow()
+}, (table) => ({
+  promoCodeIdx: index('promo_code_usages_promo_code_idx').on(table.promoCodeId),
+  contactIdx: index('promo_code_usages_contact_idx').on(table.contactId),
+  jobIdx: index('promo_code_usages_job_idx').on(table.jobId)
+}));

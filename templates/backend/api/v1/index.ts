@@ -25,6 +25,7 @@ import jobsRouter from './jobs';
 import calendarRouter from './calendar';
 import serviceContractsRouter from './service-contracts';
 import jobPhotosRouter from './job-photos';
+import promoCodesRouter from './promo-codes';
 import { trackApiUsage, trackApiErrors } from '../../middleware/v1/stats.middleware';
 import { LoggerFactory } from '../../logger';
 import { validateSession, loadUserData } from '../../middleware/v1/auth.middleware';
@@ -68,7 +69,7 @@ router.use('/payments', paymentsRouter);
 // Skip auth middleware for auth routes
 router.use((req: Request, res: Response, next: NextFunction) => {
   logger.debug(`[Middleware] Path check: ${req.path}, OriginalUrl: ${req.originalUrl}`);
-  if (req.path.startsWith('/auth') || req.path.startsWith('/signup') || req.originalUrl.includes('/site-settings/public') || req.path.startsWith('/google/callback') || req.path.startsWith('/google/status') || req.path.startsWith('/payments')) {
+  if (req.path.startsWith('/auth') || req.path.startsWith('/signup') || req.originalUrl.includes('/site-settings/public') || req.path.startsWith('/google/callback') || req.path.startsWith('/google/status') || req.path.startsWith('/payments') || req.path === '/promo-codes/public' || req.path === '/promo-codes/validate') {
     return next();
   }
   validateSession(req, res, next);
@@ -76,7 +77,7 @@ router.use((req: Request, res: Response, next: NextFunction) => {
 
 // Add middleware to load user data
 router.use((req: Request, res: Response, next: NextFunction) => {
-  if (req.path.startsWith('/auth') || req.path.startsWith('/signup') || req.originalUrl.includes('/site-settings/public') || req.path.startsWith('/google/callback') || req.path.startsWith('/google/status') || req.path.startsWith('/payments')) {
+  if (req.path.startsWith('/auth') || req.path.startsWith('/signup') || req.originalUrl.includes('/site-settings/public') || req.path.startsWith('/google/callback') || req.path.startsWith('/google/status') || req.path.startsWith('/payments') || req.path === '/promo-codes/public' || req.path === '/promo-codes/validate') {
     return next();
   }
   loadUserData(req, res, next);
@@ -166,6 +167,9 @@ router.use('/service-contracts', serviceContractsRouter);
 
 logger.debug('Mounting job-photos routes at /job-photos');
 router.use('/job-photos', jobPhotosRouter);
+
+logger.debug('Mounting promo-codes routes at /promo-codes');
+router.use('/promo-codes', promoCodesRouter);
 
 // Add API error tracking middleware
 router.use(trackApiErrors);

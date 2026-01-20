@@ -85,7 +85,7 @@ const industryPresets = {
     type: 'HVAC',
     slug: 'hvac',
     serviceNoun: 'Services',
-    serviceVerb: 'repair',
+    serviceVerb: 'installation',
     emergencyService: true,
     schemaType: 'HVACBusiness',
     services: [
@@ -139,7 +139,7 @@ const industryPresets = {
     type: 'Plumbing',
     slug: 'plumbing',
     serviceNoun: 'Services',
-    serviceVerb: 'repair',
+    serviceVerb: 'installation',
     emergencyService: true,
     schemaType: 'Plumber',
     services: [
@@ -193,7 +193,7 @@ const industryPresets = {
     type: 'Electrical',
     slug: 'electrical',
     serviceNoun: 'Services',
-    serviceVerb: 'repair',
+    serviceVerb: 'installation',
     emergencyService: true,
     schemaType: 'Electrician',
     services: [
@@ -247,7 +247,7 @@ const industryPresets = {
     type: 'Roofing',
     slug: 'roofing',
     serviceNoun: 'Services',
-    serviceVerb: 'repair',
+    serviceVerb: 'installation',
     emergencyService: true,
     schemaType: 'RoofingContractor',
     services: [
@@ -963,6 +963,8 @@ function configToTokenMap(config) {
   tokenMap['EMERGENCY_NOTE'] = config.hours?.emergencyNote || '';
   tokenMap['EMERGENCY_HOURS_NOTE'] = config.hours?.emergencyNote || '';
   tokenMap['EMERGENCY_SERVICE'] = String(config.industry?.emergencyService || false);
+  tokenMap['SERVICE_VERB'] = config.industry?.serviceVerb || 'repair';
+  tokenMap['SERVICE_NOUN'] = config.industry?.serviceNoun || 'Services';
 
   // Company tokens
   tokenMap['COMPANY_NAME'] = config.company?.name || 'Company Name';

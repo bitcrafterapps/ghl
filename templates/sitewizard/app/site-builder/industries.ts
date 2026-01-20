@@ -1,6 +1,7 @@
 export const INDUSTRIES_DATA = {
   hvac: {
     type: 'HVAC',
+    serviceVerb: 'installation',
     services: [
       {
         name: 'AC Repair',
@@ -45,6 +46,7 @@ export const INDUSTRIES_DATA = {
   },
   plumbing: {
     type: 'Plumbing',
+    serviceVerb: 'repairs',
     services: [
       {
         name: 'Drain Cleaning',
@@ -89,6 +91,7 @@ export const INDUSTRIES_DATA = {
   },
   electrical: {
     type: 'Electrical',
+    serviceVerb: 'installation',
     services: [
       {
         name: 'Electrical Repairs',
@@ -133,6 +136,7 @@ export const INDUSTRIES_DATA = {
   },
   roofing: {
     type: 'Roofing',
+    serviceVerb: 'repairs',
     services: [
       {
         name: 'Roof Repair',
@@ -177,6 +181,7 @@ export const INDUSTRIES_DATA = {
   },
   'general-contractor': {
     type: 'General Contractor',
+    serviceVerb: 'design',
     services: [
       {
         name: 'Home Remodeling',
@@ -221,6 +226,7 @@ export const INDUSTRIES_DATA = {
   },
   'mold-remediation': {
     type: 'Mold Remediation',
+    serviceVerb: 'inspection',
     services: [
       {
         name: 'Mold Inspection',
@@ -253,6 +259,7 @@ export const INDUSTRIES_DATA = {
   },
   restoration: {
     type: 'Restoration',
+    serviceVerb: 'assessment',
     services: [
       {
         name: 'Water Damage Restoration',
@@ -285,6 +292,7 @@ export const INDUSTRIES_DATA = {
   },
   'carpet-cleaning': {
     type: 'Carpet & Tile Cleaning',
+    serviceVerb: 'deep cleaning',
     services: [
       {
         name: 'Carpet Cleaning',
@@ -317,6 +325,7 @@ export const INDUSTRIES_DATA = {
   },
   'pool-service': {
     type: 'Pool Service',
+    serviceVerb: 'cleaning',
     services: [
       {
         name: 'Weekly Pool Maintenance',
@@ -349,6 +358,7 @@ export const INDUSTRIES_DATA = {
   },
   landscaping: {
     type: 'Landscaping',
+    serviceVerb: 'design',
     services: [
       {
         name: 'Landscape Design',
@@ -387,6 +397,7 @@ export const INDUSTRIES_DATA = {
   },
   'pest-control': {
     type: 'Pest Control',
+    serviceVerb: 'inspection',
     services: [
       {
         name: 'General Pest Control',
@@ -419,6 +430,7 @@ export const INDUSTRIES_DATA = {
   },
   cleaning: {
     type: 'Cleaning',
+    serviceVerb: 'routine cleaning',
     services: [
       {
         name: 'House Cleaning',
@@ -451,6 +463,7 @@ export const INDUSTRIES_DATA = {
   },
   painting: {
     type: 'Painting',
+    serviceVerb: 'preparation',
     services: [
       {
         name: 'Interior Painting',
@@ -483,6 +496,7 @@ export const INDUSTRIES_DATA = {
   },
   flooring: {
     type: 'Flooring',
+    serviceVerb: 'installation',
     services: [
       {
         name: 'Hardwood Flooring',
@@ -515,6 +529,7 @@ export const INDUSTRIES_DATA = {
   },
   fencing: {
     type: 'Fencing',
+    serviceVerb: 'installation',
     services: [
       {
         name: 'Wood Fencing',

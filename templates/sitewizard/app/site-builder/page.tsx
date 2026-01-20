@@ -24,6 +24,337 @@ import { INDUSTRIES_DATA } from './industries';
 
 import { EMOJI_LIST, EMOJI_CATEGORIES } from './emojis';
 
+// Design Presets - Curated color combinations
+const DESIGN_PRESETS = [
+  {
+    id: 'professional-blue',
+    name: 'Professional Blue',
+    description: 'Classic corporate look',
+    primaryColor: '#2563eb',
+    secondaryColor: '#f1f5f9',
+    accentColor: '#10b981',
+    headerFooterBg: '#0f172a',
+    headerFooterText: '#ffffff',
+    heroBgFrom: '#1e3a8a',
+    heroBgTo: '#0f172a',
+    heroPattern: 'grid',
+  },
+  {
+    id: 'emerald-fresh',
+    name: 'Emerald Fresh',
+    description: 'Clean and eco-friendly',
+    primaryColor: '#059669',
+    secondaryColor: '#ecfdf5',
+    accentColor: '#0ea5e9',
+    headerFooterBg: '#064e3b',
+    headerFooterText: '#ffffff',
+    heroBgFrom: '#065f46',
+    heroBgTo: '#022c22',
+    heroPattern: 'dots',
+  },
+  {
+    id: 'sunset-orange',
+    name: 'Sunset Orange',
+    description: 'Warm and energetic',
+    primaryColor: '#ea580c',
+    secondaryColor: '#fff7ed',
+    accentColor: '#0891b2',
+    headerFooterBg: '#7c2d12',
+    headerFooterText: '#ffffff',
+    heroBgFrom: '#9a3412',
+    heroBgTo: '#431407',
+    heroPattern: 'diagonal',
+  },
+  {
+    id: 'royal-purple',
+    name: 'Royal Purple',
+    description: 'Elegant and luxurious',
+    primaryColor: '#7c3aed',
+    secondaryColor: '#f5f3ff',
+    accentColor: '#f59e0b',
+    headerFooterBg: '#3b0764',
+    headerFooterText: '#ffffff',
+    heroBgFrom: '#581c87',
+    heroBgTo: '#1e1b4b',
+    heroPattern: 'hexagons',
+  },
+  {
+    id: 'crimson-bold',
+    name: 'Crimson Bold',
+    description: 'Strong and impactful',
+    primaryColor: '#dc2626',
+    secondaryColor: '#fef2f2',
+    accentColor: '#2563eb',
+    headerFooterBg: '#7f1d1d',
+    headerFooterText: '#ffffff',
+    heroBgFrom: '#991b1b',
+    heroBgTo: '#450a0a',
+    heroPattern: 'crosses',
+  },
+  {
+    id: 'ocean-teal',
+    name: 'Ocean Teal',
+    description: 'Calm and trustworthy',
+    primaryColor: '#0891b2',
+    secondaryColor: '#ecfeff',
+    accentColor: '#8b5cf6',
+    headerFooterBg: '#134e4a',
+    headerFooterText: '#ffffff',
+    heroBgFrom: '#115e59',
+    heroBgTo: '#042f2e',
+    heroPattern: 'waves',
+  },
+  {
+    id: 'slate-modern',
+    name: 'Slate Modern',
+    description: 'Sleek and minimal',
+    primaryColor: '#3b82f6',
+    secondaryColor: '#f8fafc',
+    accentColor: '#f97316',
+    headerFooterBg: '#1e293b',
+    headerFooterText: '#ffffff',
+    heroBgFrom: '#334155',
+    heroBgTo: '#0f172a',
+    heroPattern: 'none',
+  },
+  {
+    id: 'amber-warmth',
+    name: 'Amber Warmth',
+    description: 'Friendly and inviting',
+    primaryColor: '#d97706',
+    secondaryColor: '#fffbeb',
+    accentColor: '#0d9488',
+    headerFooterBg: '#78350f',
+    headerFooterText: '#ffffff',
+    heroBgFrom: '#92400e',
+    heroBgTo: '#451a03',
+    heroPattern: 'dots',
+  },
+  {
+    id: 'forest-green',
+    name: 'Forest Green',
+    description: 'Natural and grounded',
+    primaryColor: '#15803d',
+    secondaryColor: '#f0fdf4',
+    accentColor: '#be185d',
+    headerFooterBg: '#14532d',
+    headerFooterText: '#ffffff',
+    heroBgFrom: '#166534',
+    heroBgTo: '#052e16',
+    heroPattern: 'circles',
+  },
+  {
+    id: 'navy-gold',
+    name: 'Navy & Gold',
+    description: 'Premium and distinguished',
+    primaryColor: '#1e40af',
+    secondaryColor: '#eff6ff',
+    accentColor: '#ca8a04',
+    headerFooterBg: '#172554',
+    headerFooterText: '#fef3c7',
+    heroBgFrom: '#1e3a8a',
+    heroBgTo: '#0c1929',
+    heroPattern: 'grid',
+  },
+  {
+    id: 'rose-elegant',
+    name: 'Rose Elegant',
+    description: 'Sophisticated and soft',
+    primaryColor: '#e11d48',
+    secondaryColor: '#fff1f2',
+    accentColor: '#6366f1',
+    headerFooterBg: '#4c0519',
+    headerFooterText: '#ffffff',
+    heroBgFrom: '#881337',
+    heroBgTo: '#1c0413',
+    heroPattern: 'diagonal',
+  },
+  {
+    id: 'sky-light',
+    name: 'Sky Light',
+    description: 'Airy and approachable',
+    primaryColor: '#0284c7',
+    secondaryColor: '#f0f9ff',
+    accentColor: '#22c55e',
+    headerFooterBg: '#0c4a6e',
+    headerFooterText: '#ffffff',
+    heroBgFrom: '#075985',
+    heroBgTo: '#0a1929',
+    heroPattern: 'waves',
+  },
+  {
+    id: 'clean-white',
+    name: 'Clean White',
+    description: 'Light and professional',
+    primaryColor: '#2563eb',
+    secondaryColor: '#f8fafc',
+    accentColor: '#16a34a',
+    headerFooterBg: '#ffffff',
+    headerFooterText: '#1e293b',
+    heroBgFrom: '#1e3a8a',
+    heroBgTo: '#0f172a',
+    heroPattern: 'none',
+  },
+  {
+    id: 'soft-cream',
+    name: 'Soft Cream',
+    description: 'Warm and welcoming',
+    primaryColor: '#b45309',
+    secondaryColor: '#fef3c7',
+    accentColor: '#059669',
+    headerFooterBg: '#fefce8',
+    headerFooterText: '#713f12',
+    heroBgFrom: '#92400e',
+    heroBgTo: '#451a03',
+    heroPattern: 'dots',
+  },
+  // Light Mode Presets
+  {
+    id: 'light-minimal',
+    name: 'Light Minimal',
+    description: 'Clean white aesthetic',
+    primaryColor: '#0f172a',
+    secondaryColor: '#f8fafc',
+    accentColor: '#3b82f6',
+    headerFooterBg: '#ffffff',
+    headerFooterText: '#0f172a',
+    heroBgFrom: '#1e293b',
+    heroBgTo: '#0f172a',
+    heroPattern: 'none',
+  },
+  {
+    id: 'light-blue',
+    name: 'Light Blue',
+    description: 'Bright and trustworthy',
+    primaryColor: '#2563eb',
+    secondaryColor: '#eff6ff',
+    accentColor: '#f59e0b',
+    headerFooterBg: '#f8fafc',
+    headerFooterText: '#1e3a8a',
+    heroBgFrom: '#1d4ed8',
+    heroBgTo: '#1e40af',
+    heroPattern: 'none',
+  },
+  {
+    id: 'light-green',
+    name: 'Light Green',
+    description: 'Fresh and natural',
+    primaryColor: '#16a34a',
+    secondaryColor: '#f0fdf4',
+    accentColor: '#0891b2',
+    headerFooterBg: '#ffffff',
+    headerFooterText: '#166534',
+    heroBgFrom: '#15803d',
+    heroBgTo: '#14532d',
+    heroPattern: 'none',
+  },
+  {
+    id: 'light-warm',
+    name: 'Light Warm',
+    description: 'Soft and inviting',
+    primaryColor: '#c2410c',
+    secondaryColor: '#fffbeb',
+    accentColor: '#0d9488',
+    headerFooterBg: '#fefce8',
+    headerFooterText: '#78350f',
+    heroBgFrom: '#ea580c',
+    heroBgTo: '#9a3412',
+    heroPattern: 'none',
+  },
+  {
+    id: 'light-gray',
+    name: 'Light Gray',
+    description: 'Modern and neutral',
+    primaryColor: '#6366f1',
+    secondaryColor: '#f9fafb',
+    accentColor: '#ec4899',
+    headerFooterBg: '#f3f4f6',
+    headerFooterText: '#374151',
+    heroBgFrom: '#4f46e5',
+    heroBgTo: '#3730a3',
+    heroPattern: 'none',
+  },
+  // Dark Mode Presets
+  {
+    id: 'dark-minimal',
+    name: 'Dark Minimal',
+    description: 'Sleek black aesthetic',
+    primaryColor: '#ffffff',
+    secondaryColor: '#18181b',
+    accentColor: '#3b82f6',
+    headerFooterBg: '#09090b',
+    headerFooterText: '#fafafa',
+    heroBgFrom: '#18181b',
+    heroBgTo: '#09090b',
+    heroPattern: 'none',
+  },
+  {
+    id: 'dark-blue',
+    name: 'Dark Blue',
+    description: 'Deep and professional',
+    primaryColor: '#60a5fa',
+    secondaryColor: '#1e293b',
+    accentColor: '#fbbf24',
+    headerFooterBg: '#0f172a',
+    headerFooterText: '#e2e8f0',
+    heroBgFrom: '#1e3a8a',
+    heroBgTo: '#0f172a',
+    heroPattern: 'none',
+  },
+  {
+    id: 'dark-emerald',
+    name: 'Dark Emerald',
+    description: 'Rich and luxurious',
+    primaryColor: '#34d399',
+    secondaryColor: '#1a2e2a',
+    accentColor: '#f472b6',
+    headerFooterBg: '#022c22',
+    headerFooterText: '#d1fae5',
+    heroBgFrom: '#065f46',
+    heroBgTo: '#022c22',
+    heroPattern: 'none',
+  },
+  {
+    id: 'dark-purple',
+    name: 'Dark Purple',
+    description: 'Bold and creative',
+    primaryColor: '#a78bfa',
+    secondaryColor: '#1e1b2e',
+    accentColor: '#fb923c',
+    headerFooterBg: '#0f0a1e',
+    headerFooterText: '#e9d5ff',
+    heroBgFrom: '#581c87',
+    heroBgTo: '#0f0a1e',
+    heroPattern: 'none',
+  },
+  {
+    id: 'dark-charcoal',
+    name: 'Dark Charcoal',
+    description: 'Sophisticated gray',
+    primaryColor: '#f97316',
+    secondaryColor: '#27272a',
+    accentColor: '#22d3ee',
+    headerFooterBg: '#18181b',
+    headerFooterText: '#d4d4d8',
+    heroBgFrom: '#3f3f46',
+    heroBgTo: '#18181b',
+    heroPattern: 'none',
+  },
+  {
+    id: 'midnight-gold',
+    name: 'Midnight Gold',
+    description: 'Premium dark theme',
+    primaryColor: '#fbbf24',
+    secondaryColor: '#1c1917',
+    accentColor: '#f472b6',
+    headerFooterBg: '#0c0a09',
+    headerFooterText: '#fef3c7',
+    heroBgFrom: '#292524',
+    heroBgTo: '#0c0a09',
+    heroPattern: 'none',
+  },
+];
+
 // Data derived from create-new-site.js
 const BUSINESS_TYPES = [
   { value: 'trades', label: 'Trades / Subcontractors' },
@@ -147,6 +478,8 @@ export default function SiteBuilderPage() {
   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
   const [emojiSearch, setEmojiSearch] = useState('');
   const [emojiCategory, setEmojiCategory] = useState('All');
+  const [presetViewMode, setPresetViewMode] = useState<'grid' | 'coverflow'>('grid');
+  const [coverflowIndex, setCoverflowIndex] = useState(0);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -182,6 +515,39 @@ export default function SiteBuilderPage() {
         router.push('/login');
       });
   }, [router]);
+
+  // Coverflow keyboard navigation
+  useEffect(() => {
+    if (presetViewMode !== 'coverflow') return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') {
+        setCoverflowIndex(prev => prev === 0 ? DESIGN_PRESETS.length - 1 : prev - 1);
+      } else if (e.key === 'ArrowRight') {
+        setCoverflowIndex(prev => prev === DESIGN_PRESETS.length - 1 ? 0 : prev + 1);
+      } else if (e.key === 'Enter') {
+        const preset = DESIGN_PRESETS[coverflowIndex];
+        setConfig({
+          ...config,
+          primaryColor: preset.primaryColor,
+          secondaryColor: preset.secondaryColor,
+          accentColor: preset.accentColor,
+          headerFooterBg: preset.headerFooterBg,
+          headerFooterText: preset.headerFooterText,
+          heroBgFrom: preset.heroBgFrom,
+          heroBgTo: preset.heroBgTo,
+          heroPattern: 'none',
+        });
+        toast({
+          title: `${preset.name} Applied`,
+          description: "Color scheme has been updated",
+        });
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [presetViewMode, coverflowIndex, config, toast]);
 
   // Generate slug/project from company name if empty
   useEffect(() => {
@@ -272,6 +638,7 @@ export default function SiteBuilderPage() {
           yearsInBusiness: config.yearsInBusiness,
         },
         branding: {
+          logoType: config.logoType,
           logoUrl: config.logoType === 'image' ? (config.logoAbsolutePath || config.logoUrl) : '',
           faviconUrl: config.faviconAbsolutePath || config.faviconUrl,
           primaryColor: config.primaryColor,
@@ -284,14 +651,15 @@ export default function SiteBuilderPage() {
           heroPattern: config.heroPattern,
           fontHeading: config.fontHeading,
           fontBody: config.fontBody,
-          icon: config.icon,
+          icon: config.logoType === 'emoji' ? config.icon : '',
           tagline: config.tagline,
         },
         industry: {
           slug: config.industry,
           type: industryTypeLabel,
+          serviceVerb: industryData?.serviceVerb || 'repair',
           emergencyService: config.emergencyService,
-          services: resolvedServices, 
+          services: resolvedServices,
           faq: [] // Placeholder
         },
         serviceArea: {
@@ -506,8 +874,309 @@ export default function SiteBuilderPage() {
                   <Card>
                     <CardHeader>
                       <CardTitle>Branding</CardTitle>
+                      <CardDescription>Choose a preset or customize colors manually</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
+                      {/* Design Presets */}
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <label className="text-sm font-medium">Design Presets</label>
+                          <div className="flex items-center gap-1 bg-muted rounded-lg p-1">
+                            <button
+                              type="button"
+                              onClick={() => setPresetViewMode('grid')}
+                              className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${
+                                presetViewMode === 'grid'
+                                  ? 'bg-background shadow-sm text-foreground'
+                                  : 'text-muted-foreground hover:text-foreground'
+                              }`}
+                            >
+                              Grid
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setPresetViewMode('coverflow')}
+                              className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${
+                                presetViewMode === 'coverflow'
+                                  ? 'bg-background shadow-sm text-foreground'
+                                  : 'text-muted-foreground hover:text-foreground'
+                              }`}
+                            >
+                              Coverflow
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Grid View */}
+                        {presetViewMode === 'grid' && (
+                          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                            {DESIGN_PRESETS.map((preset) => (
+                              <button
+                                key={preset.id}
+                                type="button"
+                                onClick={() => {
+                                  setConfig({
+                                    ...config,
+                                    primaryColor: preset.primaryColor,
+                                    secondaryColor: preset.secondaryColor,
+                                    accentColor: preset.accentColor,
+                                    headerFooterBg: preset.headerFooterBg,
+                                    headerFooterText: preset.headerFooterText,
+                                    heroBgFrom: preset.heroBgFrom,
+                                    heroBgTo: preset.heroBgTo,
+                                    heroPattern: 'none',
+                                  });
+                                  toast({
+                                    title: `${preset.name} Applied`,
+                                    description: "Color scheme has been updated",
+                                  });
+                                }}
+                                className={`relative group rounded-lg border-2 p-3 transition-all hover:shadow-md ${
+                                  config.primaryColor === preset.primaryColor &&
+                                  config.headerFooterBg === preset.headerFooterBg
+                                    ? 'border-primary ring-2 ring-primary/20'
+                                    : 'border-border hover:border-muted-foreground/50'
+                                }`}
+                              >
+                                {/* Color Preview */}
+                                <div className="flex gap-1 mb-2">
+                                  <div
+                                    className="h-6 w-6 rounded-full border border-white/20 shadow-sm"
+                                    style={{ backgroundColor: preset.primaryColor }}
+                                    title="Primary"
+                                  />
+                                  <div
+                                    className="h-6 w-6 rounded-full border border-black/10 shadow-sm"
+                                    style={{ backgroundColor: preset.secondaryColor }}
+                                    title="Secondary"
+                                  />
+                                  <div
+                                    className="h-6 w-6 rounded-full border border-white/20 shadow-sm"
+                                    style={{ backgroundColor: preset.accentColor }}
+                                    title="Accent"
+                                  />
+                                  <div
+                                    className="h-6 w-6 rounded-full border border-white/20 shadow-sm"
+                                    style={{ backgroundColor: preset.headerFooterBg }}
+                                    title="Header/Footer"
+                                  />
+                                </div>
+                                {/* Hero Gradient Preview */}
+                                <div
+                                  className="h-4 rounded mb-2 border border-white/10"
+                                  style={{
+                                    background: `linear-gradient(to right, ${preset.heroBgFrom}, ${preset.heroBgTo})`
+                                  }}
+                                />
+                                <div className="text-left">
+                                  <p className="text-xs font-medium truncate">{preset.name}</p>
+                                  <p className="text-[10px] text-muted-foreground truncate">{preset.description}</p>
+                                </div>
+                                {config.primaryColor === preset.primaryColor &&
+                                 config.headerFooterBg === preset.headerFooterBg && (
+                                  <div className="absolute -top-1 -right-1 w-5 h-5 bg-primary rounded-full flex items-center justify-center">
+                                    <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                    </svg>
+                                  </div>
+                                )}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+
+                        {/* Coverflow View */}
+                        {presetViewMode === 'coverflow' && (
+                          <div className="relative min-h-[580px]">
+                            <div className="flex items-center justify-center pt-24 pb-16 overflow-visible h-[500px]" style={{ perspective: '1200px' }}>
+                              <div className="relative flex items-center justify-center h-full" style={{ transformStyle: 'preserve-3d' }}>
+                                {DESIGN_PRESETS.map((preset, index) => {
+                                  const offset = index - coverflowIndex;
+                                  const absOffset = Math.abs(offset);
+                                  const isCenter = offset === 0;
+                                  const isVisible = absOffset <= 4;
+
+                                  if (!isVisible) return null;
+
+                                  return (
+                                    <button
+                                      key={preset.id}
+                                      type="button"
+                                      onClick={() => {
+                                        if (isCenter) {
+                                          setConfig({
+                                            ...config,
+                                            primaryColor: preset.primaryColor,
+                                            secondaryColor: preset.secondaryColor,
+                                            accentColor: preset.accentColor,
+                                            headerFooterBg: preset.headerFooterBg,
+                                            headerFooterText: preset.headerFooterText,
+                                            heroBgFrom: preset.heroBgFrom,
+                                            heroBgTo: preset.heroBgTo,
+                                            heroPattern: 'none',
+                                          });
+                                          toast({
+                                            title: `${preset.name} Applied`,
+                                            description: "Color scheme has been updated",
+                                          });
+                                        } else {
+                                          setCoverflowIndex(index);
+                                        }
+                                      }}
+                                      className={`absolute rounded-2xl border-2 p-5 transition-all duration-300 ease-out ${
+                                        isCenter
+                                          ? 'border-primary ring-4 ring-primary/20'
+                                          : 'border-border/50'
+                                      }`}
+                                      style={{
+                                        width: '260px',
+                                        backgroundColor: isCenter ? 'hsl(var(--background))' : 'hsl(var(--card))',
+                                        boxShadow: isCenter
+                                          ? '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 0, 0, 0.3)'
+                                          : `0 ${10 + absOffset * 5}px ${20 + absOffset * 10}px -5px rgba(0, 0, 0, ${0.4 - absOffset * 0.05})`,
+                                        transform: `
+                                          translateX(${offset * 140}px)
+                                          translateZ(${isCenter ? 80 : -absOffset * 60}px)
+                                          rotateY(${offset * -30}deg)
+                                          scale(${isCenter ? 1.15 : 1 - absOffset * 0.08})
+                                        `,
+                                        opacity: 1,
+                                        zIndex: 20 - absOffset,
+                                      }}
+                                    >
+                                      {/* Mini Site Preview */}
+                                      <div className="rounded-xl overflow-hidden border-2 border-black/10 mb-4 shadow-inner">
+                                        <div
+                                          className="h-8 flex items-center justify-between px-3"
+                                          style={{ backgroundColor: preset.headerFooterBg, color: preset.headerFooterText }}
+                                        >
+                                          <div className="flex items-center gap-2">
+                                            <div className="w-3 h-3 rounded bg-current opacity-70" />
+                                            <div className="h-1.5 w-12 rounded bg-current opacity-50" />
+                                          </div>
+                                          <div className="flex gap-2">
+                                            <div className="h-1.5 w-6 rounded bg-current opacity-30" />
+                                            <div className="h-1.5 w-6 rounded bg-current opacity-30" />
+                                          </div>
+                                        </div>
+                                        <div
+                                          className="h-24 flex flex-col items-center justify-center"
+                                          style={{ background: `linear-gradient(135deg, ${preset.heroBgFrom}, ${preset.heroBgTo})` }}
+                                        >
+                                          <div className="h-2 w-24 rounded bg-white/80 mb-2" />
+                                          <div className="h-1.5 w-32 rounded bg-white/50 mb-3" />
+                                          <div
+                                            className="h-6 w-16 rounded text-[8px] flex items-center justify-center font-semibold"
+                                            style={{ backgroundColor: preset.primaryColor, color: '#fff' }}
+                                          >
+                                            CTA
+                                          </div>
+                                        </div>
+                                        <div className="h-16 p-2" style={{ backgroundColor: preset.secondaryColor }}>
+                                          <div className="h-1 w-8 rounded bg-gray-400 mx-auto mb-2" />
+                                          <div className="grid grid-cols-3 gap-1.5 h-8">
+                                            {[1, 2, 3].map((i) => (
+                                              <div key={i} className="bg-white rounded shadow-sm" />
+                                            ))}
+                                          </div>
+                                        </div>
+                                        <div
+                                          className="h-6 flex items-center justify-center"
+                                          style={{ backgroundColor: preset.headerFooterBg, color: preset.headerFooterText }}
+                                        >
+                                          <div className="h-1 w-16 rounded bg-current opacity-30" />
+                                        </div>
+                                      </div>
+                                      {/* Name and Colors */}
+                                      <div className="text-center">
+                                        <p className="text-base font-bold mb-1">{preset.name}</p>
+                                        <p className="text-xs text-muted-foreground mb-3">{preset.description}</p>
+                                        <div className="flex justify-center gap-1.5">
+                                          <div className="w-6 h-6 rounded-full border-2 shadow-sm" style={{ backgroundColor: preset.primaryColor }} title="Primary" />
+                                          <div className="w-6 h-6 rounded-full border-2 shadow-sm" style={{ backgroundColor: preset.secondaryColor }} title="Secondary" />
+                                          <div className="w-6 h-6 rounded-full border-2 shadow-sm" style={{ backgroundColor: preset.accentColor }} title="Accent" />
+                                          <div className="w-6 h-6 rounded-full border-2 shadow-sm" style={{ backgroundColor: preset.headerFooterBg }} title="Header/Footer" />
+                                        </div>
+                                      </div>
+                                      {isCenter && (
+                                        <>
+                                          {/* Hover zones for navigation */}
+                                          <div
+                                            className="absolute left-0 top-0 w-1/3 h-full cursor-w-resize z-10 group/left"
+                                            onClick={(e) => {
+                                              e.stopPropagation();
+                                              setCoverflowIndex(prev => prev === 0 ? DESIGN_PRESETS.length - 1 : prev - 1);
+                                            }}
+                                          >
+                                            <div className="absolute left-2 top-1/2 -translate-y-1/2 opacity-0 group-hover/left:opacity-100 transition-opacity">
+                                              <svg className="w-6 h-6 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                              </svg>
+                                            </div>
+                                          </div>
+                                          <div
+                                            className="absolute right-0 top-0 w-1/3 h-full cursor-e-resize z-10 group/right"
+                                            onClick={(e) => {
+                                              e.stopPropagation();
+                                              setCoverflowIndex(prev => prev === DESIGN_PRESETS.length - 1 ? 0 : prev + 1);
+                                            }}
+                                          >
+                                            <div className="absolute right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover/right:opacity-100 transition-opacity">
+                                              <svg className="w-6 h-6 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                              </svg>
+                                            </div>
+                                          </div>
+                                          <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-medium px-3 py-1 rounded-full shadow-lg">
+                                            Press Enter or Click to Apply
+                                          </div>
+                                        </>
+                                      )}
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                            {/* Navigation */}
+                            <div className="flex items-center justify-center gap-6 mt-2">
+                              <button
+                                type="button"
+                                onClick={() => setCoverflowIndex(prev => prev === 0 ? DESIGN_PRESETS.length - 1 : prev - 1)}
+                                className="p-3 rounded-full border-2 hover:bg-muted transition-all hover:scale-110"
+                              >
+                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                </svg>
+                              </button>
+                              <span className="text-base font-medium text-muted-foreground min-w-[80px] text-center">
+                                {coverflowIndex + 1} / {DESIGN_PRESETS.length}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => setCoverflowIndex(prev => prev === DESIGN_PRESETS.length - 1 ? 0 : prev + 1)}
+                                className="p-3 rounded-full border-2 hover:bg-muted transition-all hover:scale-110"
+                              >
+                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                </svg>
+                              </button>
+                            </div>
+                            <p className="text-sm text-muted-foreground text-center mt-3">
+                              Use <kbd className="px-2 py-0.5 bg-muted rounded text-xs font-mono">←</kbd> <kbd className="px-2 py-0.5 bg-muted rounded text-xs font-mono">→</kbd> arrow keys to navigate
+                            </p>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="relative">
+                        <div className="absolute inset-0 flex items-center">
+                          <span className="w-full border-t" />
+                        </div>
+                        <div className="relative flex justify-center text-xs uppercase">
+                          <span className="bg-card px-2 text-muted-foreground">Or customize manually</span>
+                        </div>
+                      </div>
+
                       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                           <div className="space-y-2">
                             <label className="text-sm font-medium">Primary</label>
@@ -525,7 +1194,11 @@ export default function SiteBuilderPage() {
                             <label className="text-sm font-medium">Header/Footer Bg</label>
                             <Input type="color" className="h-10 w-full" value={config.headerFooterBg} onChange={e => setConfig({...config, headerFooterBg: e.target.value})} />
                           </div>
-                          <div className="space-y-2 col-span-2">
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium">Footer Text</label>
+                            <Input type="color" className="h-10 w-full" value={config.headerFooterText} onChange={e => setConfig({...config, headerFooterText: e.target.value})} />
+                          </div>
+                          <div className="space-y-2 col-span-2 md:col-span-4">
                             <label className="text-sm font-medium">Hero Gradient</label>
                             <div className="flex gap-3 items-center">
                               <div className="flex-1 space-y-1">
@@ -628,6 +1301,7 @@ export default function SiteBuilderPage() {
                              <Select value={config.logoType} onValueChange={(val) => setConfig({...config, logoType: val})}>
                                 <SelectTrigger><SelectValue /></SelectTrigger>
                                 <SelectContent>
+                                    <SelectItem value="none">No Logo</SelectItem>
                                     <SelectItem value="emoji">Emoji Icon</SelectItem>
                                     <SelectItem value="image">Image Logo</SelectItem>
                                 </SelectContent>
@@ -635,7 +1309,14 @@ export default function SiteBuilderPage() {
                           </div>
                        </div>
                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                           {config.logoType === 'emoji' ? (
+                           {config.logoType === 'none' ? (
+                             <div className="space-y-2">
+                                 <label className="text-sm font-medium">Logo</label>
+                                 <div className="flex items-center text-sm text-muted-foreground px-3 py-2 bg-muted/50 rounded border">
+                                    No logo will be displayed - company name only
+                                 </div>
+                             </div>
+                           ) : config.logoType === 'emoji' ? (
                              <div className="space-y-2">
                                  <label className="text-sm font-medium">Icon Emoji</label>
                                  <div className="flex gap-2">
@@ -940,18 +1621,123 @@ export default function SiteBuilderPage() {
             </div>
 
             {/* Sticky Preview Sidebar */}
-            <div className="space-y-6">
+            <div className="space-y-4">
+              {/* Live Site Preview */}
               <Card className="sticky top-6">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-lg">Site Preview</CardTitle>
+                </CardHeader>
+                <CardContent className="pt-0">
+                  <div className="border rounded-lg overflow-hidden shadow-sm bg-white">
+                    {/* Mini Header */}
+                    <div
+                      className="h-7 flex items-center justify-between px-2"
+                      style={{ backgroundColor: config.headerFooterBg, color: config.headerFooterText }}
+                    >
+                      <div className="flex items-center gap-1.5">
+                        <div className="w-3 h-3 rounded bg-current opacity-80" />
+                        <div className="h-1.5 w-12 rounded bg-current opacity-60" />
+                      </div>
+                      <div className="flex gap-1.5">
+                        <div className="h-1.5 w-6 rounded bg-current opacity-40" />
+                        <div className="h-1.5 w-6 rounded bg-current opacity-40" />
+                        <div className="h-1.5 w-6 rounded bg-current opacity-40" />
+                      </div>
+                      <div
+                        className="h-3 w-10 rounded text-[5px] flex items-center justify-center font-medium"
+                        style={{ backgroundColor: config.primaryColor, color: '#fff' }}
+                      >
+                        CTA
+                      </div>
+                    </div>
+
+                    {/* Mini Hero */}
+                    <div
+                      className="h-20 flex flex-col items-center justify-center relative overflow-hidden"
+                      style={{
+                        background: config.heroBgFrom && config.heroBgTo
+                          ? `linear-gradient(135deg, ${config.heroBgFrom}, ${config.heroBgTo})`
+                          : `linear-gradient(135deg, ${config.primaryColor}, ${config.headerFooterBg})`
+                      }}
+                    >
+                      {config.heroPattern && config.heroPattern !== 'none' && (
+                        <div className="absolute inset-0 opacity-10" style={{
+                          backgroundImage: config.heroPattern === 'dots'
+                            ? 'radial-gradient(circle, white 1px, transparent 1px)'
+                            : config.heroPattern === 'grid'
+                            ? 'linear-gradient(white 1px, transparent 1px), linear-gradient(90deg, white 1px, transparent 1px)'
+                            : 'none',
+                          backgroundSize: config.heroPattern === 'dots' ? '6px 6px' : '10px 10px'
+                        }} />
+                      )}
+                      <div className="h-2.5 w-28 rounded bg-white/90 mb-1.5" />
+                      <div className="h-1.5 w-40 rounded bg-white/60 mb-2" />
+                      <div className="flex gap-1.5">
+                        <div
+                          className="h-4 w-12 rounded text-[5px] flex items-center justify-center font-medium"
+                          style={{ backgroundColor: config.primaryColor, color: '#fff' }}
+                        >
+                          Button
+                        </div>
+                        <div
+                          className="h-4 w-12 rounded text-[5px] flex items-center justify-center font-medium border"
+                          style={{ borderColor: 'white', color: 'white' }}
+                        >
+                          Button
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Mini Content Section */}
+                    <div className="p-2" style={{ backgroundColor: config.secondaryColor }}>
+                      <div className="text-center mb-1.5">
+                        <div className="h-1 w-10 rounded mx-auto mb-0.5" style={{ backgroundColor: config.primaryColor }} />
+                        <div className="h-1.5 w-20 rounded bg-gray-800 mx-auto mb-0.5" />
+                        <div className="h-1 w-28 rounded bg-gray-400 mx-auto" />
+                      </div>
+                      <div className="grid grid-cols-3 gap-1.5">
+                        {[1, 2, 3].map((i) => (
+                          <div key={i} className="bg-white rounded p-1.5 shadow-sm">
+                            <div className="h-4 rounded mb-0.5" style={{ backgroundColor: config.secondaryColor }} />
+                            <div className="h-1 w-full rounded bg-gray-300 mb-0.5" />
+                            <div className="h-0.5 w-3/4 rounded bg-gray-200" />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Mini CTA Section */}
+                    <div className="p-1.5 flex items-center justify-center" style={{ backgroundColor: config.primaryColor }}>
+                      <div className="h-4 w-16 rounded bg-white text-[5px] flex items-center justify-center font-medium" style={{ color: config.primaryColor }}>
+                        Get Quote
+                      </div>
+                    </div>
+
+                    {/* Mini Footer */}
+                    <div
+                      className="h-5 flex items-center justify-center gap-2 px-2"
+                      style={{ backgroundColor: config.headerFooterBg, color: config.headerFooterText }}
+                    >
+                      <div className="h-1 w-8 rounded bg-current opacity-40" />
+                      <div className="h-1 w-8 rounded bg-current opacity-40" />
+                      <div className="h-1 w-8 rounded bg-current opacity-40" />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* JSON Preview */}
+              <Card>
                 <CardHeader className="pb-3 border-b">
                   <div className="flex items-center justify-between">
-                     <CardTitle className="text-lg">Live JSON Preview</CardTitle>
+                     <CardTitle className="text-lg">JSON Preview</CardTitle>
                      <Button variant="ghost" size="sm" onClick={handleCopyJson}>
                         {copied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
                      </Button>
                   </div>
                 </CardHeader>
                 <CardContent className="p-0">
-                  <div className="bg-zinc-950 text-zinc-50 p-4 font-mono text-xs overflow-x-auto h-[calc(100vh-250px)] overflow-y-auto custom-scrollbar">
+                  <div className="bg-zinc-950 text-zinc-50 p-4 font-mono text-xs overflow-x-auto max-h-[400px] overflow-y-auto custom-scrollbar">
                     <pre>{JSON.stringify(constructedConfig, null, 2)}</pre>
                   </div>
                 </CardContent>

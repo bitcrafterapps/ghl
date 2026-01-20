@@ -38,7 +38,7 @@
     /* Theme Variables - Light Mode Defaults - uses branding colors */
     --header-bg: __HEADER_FOOTER_BG__;
     --header-text: __HEADER_FOOTER_TEXT__;
-    --header-border: __SECONDARY_COLOR__;
+    --header-border: rgba(30, 64, 175, 0.3);
     --header-text-secondary: #bfdbfe;
 
     /* Footer uses same colors as header */

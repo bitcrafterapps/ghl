@@ -515,8 +515,8 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
               <Link
                 href="/reviews"
                 className={classNames(
-                  pathname === "/reviews" 
-                    ? "text-white bg-white/10" 
+                  pathname === "/reviews"
+                    ? "text-white bg-white/10"
                     : "text-zinc-300 hover:text-white hover:bg-white/5",
                   "px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200"
                 )}
@@ -524,10 +524,21 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
                 Reviews
               </Link>
               <Link
+                href="/promotions"
+                className={classNames(
+                  pathname === "/promotions"
+                    ? "text-white bg-white/10"
+                    : "text-zinc-300 hover:text-white hover:bg-white/5",
+                  "px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200"
+                )}
+              >
+                Promotions
+              </Link>
+              <Link
                 href="/contact"
                 className={classNames(
-                  pathname === "/contact" 
-                    ? "text-white bg-white/10" 
+                  pathname === "/contact"
+                    ? "text-white bg-white/10"
                     : "text-zinc-300 hover:text-white hover:bg-white/5",
                   "px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200"
                 )}
@@ -857,6 +868,16 @@ export function Header({ userProfile, onLogout }: HeaderProps) {
               )}
             >
               Reviews
+            </Link>
+            <Link
+              href="/promotions"
+              onClick={() => setMobileMenuOpen(false)}
+              className={classNames(
+                pathname === "/promotions" ? "bg-white/10 text-white" : "text-zinc-300 hover:bg-white/5 hover:text-white",
+                "block rounded-lg px-3 py-2.5 text-base font-medium transition-colors"
+              )}
+            >
+              Promotions
             </Link>
             <Link
               href="/contact"

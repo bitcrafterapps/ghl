@@ -1,13 +1,13 @@
 import { post } from './api';
 
-export type ActivityType = 'proposal' | 'template' | 'company' | 'user' | 'gallery' | 'review';
+export type ActivityType = 'proposal' | 'template' | 'company' | 'user' | 'gallery' | 'review' | 'promo_code';
 export type ActivityAction = 'created' | 'updated' | 'deleted';
 
 interface LogActivityOptions {
   type: ActivityType;
   action: ActivityAction;
   title: string;
-  entityId: number;
+  entityId: number | string;
 }
 
 export async function logActivity({ type, action, title, entityId }: LogActivityOptions): Promise<void> {

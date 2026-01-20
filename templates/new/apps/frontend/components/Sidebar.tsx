@@ -27,7 +27,8 @@ import {
   Contact2,
   Camera,
   ScrollText,
-  Shield
+  Shield,
+  Tag
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -122,6 +123,7 @@ export function Sidebar({
       { name: 'Users', href: '/users', icon: Users },
       { name: 'Gallery Items', href: '/gallery-management', icon: Image },
       { name: 'Reviews', href: '/reviews-management', icon: Star },
+      { name: 'Promo Codes', href: '/promo-codes-management', icon: Tag },
       { name: 'System Admin', href: '/system-admin', icon: Shield }
     );
   } else if (userProfile?.roles?.includes('Admin')) {
@@ -129,7 +131,8 @@ export function Sidebar({
       { name: 'Companies', href: '/companies', icon: Building2 },
       { name: 'Users', href: '/users', icon: Users },
       { name: 'Gallery Items', href: '/gallery-management', icon: Image },
-      { name: 'Reviews', href: '/reviews-management', icon: Star }
+      { name: 'Reviews', href: '/reviews-management', icon: Star },
+      { name: 'Promo Codes', href: '/promo-codes-management', icon: Tag }
     );
   } else if (userProfile?.companyId) {
     // Regular users with a company can access their company page

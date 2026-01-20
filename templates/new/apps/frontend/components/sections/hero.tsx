@@ -117,10 +117,17 @@ export function HeroSection() {
 
             {/* Trust Points */}
             <div className="flex flex-wrap gap-4 mb-8">
-              <div className="flex items-center gap-2 text-white/90 bg-white/5 px-4 py-2 rounded-full">
-                <Shield className="h-5 w-5 text-green-400" />
-                <span>Licensed & Insured</span>
-              </div>
+              {siteConfig.company.license ? (
+                <div className="flex items-center gap-2 text-white/90 bg-white/5 px-4 py-2 rounded-full">
+                  <Shield className="h-5 w-5 text-green-400" />
+                  <span>Licensed & Insured • Lic# {siteConfig.company.license}</span>
+                </div>
+              ) : (
+                <div className="flex items-center gap-2 text-white/90 bg-white/5 px-4 py-2 rounded-full">
+                  <Shield className="h-5 w-5 text-green-400" />
+                  <span>Dependable & Reliable</span>
+                </div>
+              )}
               <div className="flex items-center gap-2 text-white/90 bg-white/5 px-4 py-2 rounded-full">
                 <CheckCircle className="h-5 w-5 text-green-400" />
                 <span>Free Estimates</span>

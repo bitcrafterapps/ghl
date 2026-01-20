@@ -12,8 +12,8 @@ export function TrustBar() {
     },
     {
       icon: Shield,
-      label: "Licensed & Insured",
-      sublabel: siteConfig.company.license ? `Lic# ${siteConfig.company.license}` : "Fully Bonded",
+      label: siteConfig.company.license ? "Licensed & Insured" : "Dependable & Reliable",
+      sublabel: siteConfig.company.license ? `Lic# ${siteConfig.company.license}` : "Trusted Service",
     },
     {
       icon: Award,
