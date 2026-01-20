@@ -1,0 +1,135 @@
+{
+  "company": {
+    "name": "DAmazon",
+    "slug": "damazon",
+    "phone": "9492923136",
+    "email": "sandyrfriedman@gmail.com",
+    "address": "15 Las Castanetas",
+    "city": "Rancho Santa Margarita",
+    "state": "CA",
+    "stateFullName": "CA",
+    "zip": "92688",
+    "license": "sddsdds",
+    "yearsInBusiness": "10"
+  },
+  "branding": {
+    "logoType": "emoji",
+    "logoUrl": "",
+    "faviconUrl": "",
+    "primaryColor": "#0891b2",
+    "secondaryColor": "#ecfeff",
+    "accentColor": "#8b5cf6",
+    "headerFooterBg": "#134e4a",
+    "headerFooterText": "#ffffff",
+    "heroBgFrom": "#115e59",
+    "heroBgTo": "#042f2e",
+    "heroPattern": "none",
+    "fontHeading": "Poppins",
+    "fontBody": "Inter",
+    "icon": "🔧",
+    "tagline": "Your tagline here"
+  },
+  "industry": {
+    "slug": "pest-control",
+    "type": "Pest Control",
+    "serviceVerb": "inspection",
+    "emergencyService": true,
+    "services": [
+      {
+        "name": "General Pest Control",
+        "slug": "general-pest-control",
+        "shortDescription": "Comprehensive pest elimination.",
+        "longDescription": "Protect your home from unwanted guests. Our comprehensive pest control eliminates ants, spiders, roaches, and more, creating a bug-free environment.",
+        "featured": true
+      },
+      {
+        "name": "Rodent Control",
+        "slug": "rodent-control",
+        "shortDescription": "Mouse and rat elimination services.",
+        "longDescription": "Eliminate mice and rats with our effective rodent control. We seal entry points and remove pests to prevent contamination and damage to your home.",
+        "featured": true
+      },
+      {
+        "name": "Termite Treatment",
+        "slug": "termite-treatment",
+        "shortDescription": "Complete termite inspection and treatment.",
+        "longDescription": "Termites cause billions in damage. Our termite inspections and treatments detect colonies early and provide long-lasting protection for your home's structure.",
+        "featured": true
+      }
+    ],
+    "faq": []
+  },
+  "serviceArea": {
+    "areas": [
+      "Irvine"
+    ],
+    "radius": "25",
+    "primaryCity": "South Orange County"
+  },
+  "social": {
+    "facebook": "",
+    "instagram": "",
+    "google": "",
+    "yelp": "",
+    "bbb": "",
+    "nextdoor": ""
+  },
+  "ghl": {
+    "calendarEmbed": "",
+    "formEmbed": "",
+    "chatWidget": "",
+    "webhookUrl": "",
+    "trackingId": ""
+  },
+  "seo": {
+    "googleAnalyticsId": "",
+    "googleTagManagerId": "",
+    "facebookPixelId": "",
+    "metaDescription": "DAmazon provides professional pest control services in Rancho Santa Margarita, CA. 10+ years experience. Licensed & insured. Call for a free estimate!",
+    "metaKeywords": "pest control, Rancho Santa Margarita, CA, general pest control, rodent control, termite treatment"
+  },
+  "siteUrl": "",
+  "reviews": {
+    "rating": "5.0",
+    "count": "100",
+    "googleReviewLink": ""
+  },
+  "hours": {
+    "weekdays": "8:00 AM - 6:00 PM",
+    "saturday": "9:00 AM - 4:00 PM",
+    "sunday": "Closed",
+    "emergencyNote": "24/7 Emergency Service Available"
+  },
+  "services": [
+    {
+      "name": "General Pest Control",
+      "slug": "general-pest-control",
+      "shortDescription": "Comprehensive pest elimination.",
+      "longDescription": "Protect your home from unwanted guests. Our comprehensive pest control eliminates ants, spiders, roaches, and more, creating a bug-free environment.",
+      "featured": true
+    },
+    {
+      "name": "Rodent Control",
+      "slug": "rodent-control",
+      "shortDescription": "Mouse and rat elimination services.",
+      "longDescription": "Eliminate mice and rats with our effective rodent control. We seal entry points and remove pests to prevent contamination and damage to your home.",
+      "featured": true
+    },
+    {
+      "name": "Termite Treatment",
+      "slug": "termite-treatment",
+      "shortDescription": "Complete termite inspection and treatment.",
+      "longDescription": "Termites cause billions in damage. Our termite inspections and treatments detect colonies early and provide long-lasting protection for your home's structure.",
+      "featured": true
+    }
+  ],
+  "testimonials": [],
+  "faq": [],
+  "gallery": [],
+  "team": [],
+  "_generator": {
+    "projectName": "damazon",
+    "businessType": "services",
+    "iconEmoji": "🔧"
+  }
+}

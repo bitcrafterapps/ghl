@@ -1,0 +1,119 @@
+{
+  "company": {
+    "name": "Amazondd",
+    "slug": "amazondd",
+    "phone": "9492923136",
+    "email": "sandyrfriedman@gmail.com",
+    "address": "15 Las Castanetas",
+    "city": "Rancho Santa Margarita",
+    "state": "CA",
+    "stateFullName": "CA",
+    "zip": "92688",
+    "license": "ddd",
+    "yearsInBusiness": "10"
+  },
+  "branding": {
+    "logoType": "emoji",
+    "logoUrl": "",
+    "faviconUrl": "",
+    "primaryColor": "#0891b2",
+    "secondaryColor": "#ecfeff",
+    "accentColor": "#8b5cf6",
+    "headerFooterBg": "#134e4a",
+    "headerFooterText": "#ffffff",
+    "heroBgFrom": "#115e59",
+    "heroBgTo": "#042f2e",
+    "heroPattern": "none",
+    "fontHeading": "Poppins",
+    "fontBody": "Inter",
+    "icon": "🔧",
+    "tagline": "Your tagline here"
+  },
+  "industry": {
+    "slug": "plumbing",
+    "type": "Plumbing",
+    "serviceVerb": "repairs",
+    "emergencyService": false,
+    "services": [
+      {
+        "name": "Water Heater Repair",
+        "slug": "water-heater-repair",
+        "shortDescription": "Expert water heater repair and maintenance.",
+        "longDescription": "Experiencing water heater issues? Our technicians repair all makes and models, restoring hot water quickly. We address leaks, heating element failures, and thermostat issues.",
+        "featured": true
+      },
+      {
+        "name": "Water Heater Installation",
+        "slug": "water-heater-installation",
+        "shortDescription": "New water heater installation services.",
+        "longDescription": "Upgrade to a new, efficient water heater. We install traditional tank and tankless systems, ensuring reliable hot water and energy savings for your home.",
+        "featured": true
+      }
+    ],
+    "faq": []
+  },
+  "serviceArea": {
+    "areas": [],
+    "radius": "25",
+    "primaryCity": "RSM"
+  },
+  "social": {
+    "facebook": "",
+    "instagram": "",
+    "google": "",
+    "yelp": "",
+    "bbb": "",
+    "nextdoor": ""
+  },
+  "ghl": {
+    "calendarEmbed": "",
+    "formEmbed": "",
+    "chatWidget": "",
+    "webhookUrl": "",
+    "trackingId": ""
+  },
+  "seo": {
+    "googleAnalyticsId": "",
+    "googleTagManagerId": "",
+    "facebookPixelId": "",
+    "metaDescription": "Amazondd provides professional plumbing services in Rancho Santa Margarita, CA. 10+ years experience. Licensed & insured. Call for a free estimate!",
+    "metaKeywords": "plumbing, Rancho Santa Margarita, CA, water heater repair, water heater installation"
+  },
+  "siteUrl": "",
+  "reviews": {
+    "rating": "5.0",
+    "count": "100",
+    "googleReviewLink": ""
+  },
+  "hours": {
+    "weekdays": "8:00 AM - 6:00 PM",
+    "saturday": "9:00 AM - 4:00 PM",
+    "sunday": "Closed",
+    "emergencyNote": ""
+  },
+  "services": [
+    {
+      "name": "Water Heater Repair",
+      "slug": "water-heater-repair",
+      "shortDescription": "Expert water heater repair and maintenance.",
+      "longDescription": "Experiencing water heater issues? Our technicians repair all makes and models, restoring hot water quickly. We address leaks, heating element failures, and thermostat issues.",
+      "featured": true
+    },
+    {
+      "name": "Water Heater Installation",
+      "slug": "water-heater-installation",
+      "shortDescription": "New water heater installation services.",
+      "longDescription": "Upgrade to a new, efficient water heater. We install traditional tank and tankless systems, ensuring reliable hot water and energy savings for your home.",
+      "featured": true
+    }
+  ],
+  "testimonials": [],
+  "faq": [],
+  "gallery": [],
+  "team": [],
+  "_generator": {
+    "projectName": "amazondd",
+    "businessType": "trades",
+    "iconEmoji": "🔧"
+  }
+}

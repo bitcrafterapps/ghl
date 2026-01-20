@@ -1,0 +1,119 @@
+{
+  "company": {
+    "name": "DdssdAmazon",
+    "slug": "ddssdamazon",
+    "phone": "9492923136",
+    "email": "sandyrfriedman@gmail.com",
+    "address": "15 Las Castanetas",
+    "city": "Rancho Santa Margarita",
+    "state": "CA",
+    "stateFullName": "CA",
+    "zip": "92688",
+    "license": "dsdsdsd",
+    "yearsInBusiness": "10"
+  },
+  "branding": {
+    "logoType": "emoji",
+    "logoUrl": "",
+    "faviconUrl": "",
+    "primaryColor": "#0891b2",
+    "secondaryColor": "#ecfeff",
+    "accentColor": "#8b5cf6",
+    "headerFooterBg": "#134e4a",
+    "headerFooterText": "#ffffff",
+    "heroBgFrom": "#115e59",
+    "heroBgTo": "#042f2e",
+    "heroPattern": "none",
+    "fontHeading": "Poppins",
+    "fontBody": "Inter",
+    "icon": "🔧",
+    "tagline": "Your tagline here"
+  },
+  "industry": {
+    "slug": "carpet-cleaning",
+    "type": "Carpet & Tile Cleaning",
+    "serviceVerb": "deep cleaning",
+    "emergencyService": false,
+    "services": [
+      {
+        "name": "Upholstery Cleaning",
+        "slug": "upholstery-cleaning",
+        "shortDescription": "Professional furniture cleaning.",
+        "longDescription": "Extend the life of your furniture with professional upholstery cleaning. We safely clean all fabric types, removing stains and odors to refresh your living space.",
+        "featured": true
+      },
+      {
+        "name": "Tile & Grout Cleaning",
+        "slug": "tile-grout-cleaning",
+        "shortDescription": "Restore your tile and grout to like-new condition.",
+        "longDescription": "Restore the shine to your floors. Our specialized tile and grout cleaning removes embedded dirt and grime that regular mopping can't reach, making surfaces look new again.",
+        "featured": true
+      }
+    ],
+    "faq": []
+  },
+  "serviceArea": {
+    "areas": [],
+    "radius": "25",
+    "primaryCity": "Rancho Santa Margarita"
+  },
+  "social": {
+    "facebook": "",
+    "instagram": "",
+    "google": "",
+    "yelp": "",
+    "bbb": "",
+    "nextdoor": ""
+  },
+  "ghl": {
+    "calendarEmbed": "",
+    "formEmbed": "",
+    "chatWidget": "",
+    "webhookUrl": "",
+    "trackingId": ""
+  },
+  "seo": {
+    "googleAnalyticsId": "",
+    "googleTagManagerId": "",
+    "facebookPixelId": "",
+    "metaDescription": "DdssdAmazon provides professional carpet & tile cleaning services in Rancho Santa Margarita, CA. 10+ years experience. Licensed & insured. Call for a free estimate!",
+    "metaKeywords": "carpet & tile cleaning, Rancho Santa Margarita, CA, upholstery cleaning, tile & grout cleaning"
+  },
+  "siteUrl": "",
+  "reviews": {
+    "rating": "5.0",
+    "count": "100",
+    "googleReviewLink": ""
+  },
+  "hours": {
+    "weekdays": "8:00 AM - 6:00 PM",
+    "saturday": "9:00 AM - 4:00 PM",
+    "sunday": "Closed",
+    "emergencyNote": ""
+  },
+  "services": [
+    {
+      "name": "Upholstery Cleaning",
+      "slug": "upholstery-cleaning",
+      "shortDescription": "Professional furniture cleaning.",
+      "longDescription": "Extend the life of your furniture with professional upholstery cleaning. We safely clean all fabric types, removing stains and odors to refresh your living space.",
+      "featured": true
+    },
+    {
+      "name": "Tile & Grout Cleaning",
+      "slug": "tile-grout-cleaning",
+      "shortDescription": "Restore your tile and grout to like-new condition.",
+      "longDescription": "Restore the shine to your floors. Our specialized tile and grout cleaning removes embedded dirt and grime that regular mopping can't reach, making surfaces look new again.",
+      "featured": true
+    }
+  ],
+  "testimonials": [],
+  "faq": [],
+  "gallery": [],
+  "team": [],
+  "_generator": {
+    "projectName": "ddssdamazon",
+    "businessType": "services",
+    "iconEmoji": "🔧"
+  }
+}

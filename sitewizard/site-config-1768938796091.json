@@ -1,0 +1,148 @@
+{
+  "company": {
+    "name": "MAmazon",
+    "slug": "mamazon",
+    "phone": "9492923136",
+    "email": "sandyrfriedman@gmail.com",
+    "address": "15 Las Castanetas",
+    "city": "Rancho Santa Margarita",
+    "state": "CA",
+    "stateFullName": "CA",
+    "zip": "92688",
+    "license": "343434",
+    "yearsInBusiness": "10"
+  },
+  "branding": {
+    "logoType": "emoji",
+    "logoUrl": "",
+    "faviconUrl": "",
+    "primaryColor": "#0891b2",
+    "secondaryColor": "#ecfeff",
+    "accentColor": "#8b5cf6",
+    "headerFooterBg": "#134e4a",
+    "headerFooterText": "#ffffff",
+    "heroBgFrom": "#115e59",
+    "heroBgTo": "#042f2e",
+    "heroPattern": "none",
+    "fontHeading": "Poppins",
+    "fontBody": "Inter",
+    "icon": "🔧",
+    "tagline": "Your tagline here"
+  },
+  "industry": {
+    "slug": "pool-service",
+    "type": "Pool Service",
+    "serviceVerb": "cleaning",
+    "emergencyService": true,
+    "services": [
+      {
+        "name": "Weekly Pool Maintenance",
+        "slug": "weekly-maintenance",
+        "shortDescription": "Complete weekly pool care service.",
+        "longDescription": "Enjoy a pristine pool without the work. Our weekly maintenance includes skimming, vacuuming, chemical balancing, and equipment checks for a sparkling clean pool.",
+        "featured": true
+      },
+      {
+        "name": "Pool Opening & Closing",
+        "slug": "opening-closing",
+        "shortDescription": "Seasonal pool preparation.",
+        "longDescription": "Make seasonal transitions easy. We handle professional pool opening in spring and winterization in fall, protecting your investment year-round.",
+        "featured": true
+      },
+      {
+        "name": "Pool Equipment Repair",
+        "slug": "equipment-repair",
+        "shortDescription": "Pump, filter, and heater repairs.",
+        "longDescription": "Keep your pool running smoothly with our equipment repair services. We fix pumps, filters, heaters, and automation systems to ensure optimal performance.",
+        "featured": true
+      },
+      {
+        "name": "Pool Remodeling",
+        "slug": "pool-remodeling",
+        "shortDescription": "Pool renovation and resurfacing.",
+        "longDescription": "Transform your pool with our remodeling services. From resurfacing and tile replacement to adding water features, we upgrade your pool's aesthetics and functionality."
+      }
+    ],
+    "faq": []
+  },
+  "serviceArea": {
+    "areas": [
+      "RSM",
+      "Mission Viejo"
+    ],
+    "radius": "25",
+    "primaryCity": "South Orange County"
+  },
+  "social": {
+    "facebook": "",
+    "instagram": "",
+    "google": "",
+    "yelp": "",
+    "bbb": "",
+    "nextdoor": ""
+  },
+  "ghl": {
+    "calendarEmbed": "",
+    "formEmbed": "",
+    "chatWidget": "",
+    "webhookUrl": "",
+    "trackingId": ""
+  },
+  "seo": {
+    "googleAnalyticsId": "",
+    "googleTagManagerId": "",
+    "facebookPixelId": "",
+    "metaDescription": "MAmazon provides professional pool service services in Rancho Santa Margarita, CA. 10+ years experience. Licensed & insured. Call for a free estimate!",
+    "metaKeywords": "pool service, Rancho Santa Margarita, CA, weekly pool maintenance, pool opening & closing, pool equipment repair, pool remodeling"
+  },
+  "siteUrl": "",
+  "reviews": {
+    "rating": "5.0",
+    "count": "100",
+    "googleReviewLink": ""
+  },
+  "hours": {
+    "weekdays": "8:00 AM - 6:00 PM",
+    "saturday": "9:00 AM - 4:00 PM",
+    "sunday": "Closed",
+    "emergencyNote": "24/7 Emergency Service Available"
+  },
+  "services": [
+    {
+      "name": "Weekly Pool Maintenance",
+      "slug": "weekly-maintenance",
+      "shortDescription": "Complete weekly pool care service.",
+      "longDescription": "Enjoy a pristine pool without the work. Our weekly maintenance includes skimming, vacuuming, chemical balancing, and equipment checks for a sparkling clean pool.",
+      "featured": true
+    },
+    {
+      "name": "Pool Opening & Closing",
+      "slug": "opening-closing",
+      "shortDescription": "Seasonal pool preparation.",
+      "longDescription": "Make seasonal transitions easy. We handle professional pool opening in spring and winterization in fall, protecting your investment year-round.",
+      "featured": true
+    },
+    {
+      "name": "Pool Equipment Repair",
+      "slug": "equipment-repair",
+      "shortDescription": "Pump, filter, and heater repairs.",
+      "longDescription": "Keep your pool running smoothly with our equipment repair services. We fix pumps, filters, heaters, and automation systems to ensure optimal performance.",
+      "featured": true
+    },
+    {
+      "name": "Pool Remodeling",
+      "slug": "pool-remodeling",
+      "shortDescription": "Pool renovation and resurfacing.",
+      "longDescription": "Transform your pool with our remodeling services. From resurfacing and tile replacement to adding water features, we upgrade your pool's aesthetics and functionality."
+    }
+  ],
+  "testimonials": [],
+  "faq": [],
+  "gallery": [],
+  "team": [],
+  "_generator": {
+    "projectName": "mamazon",
+    "businessType": "services",
+    "iconEmoji": "🔧"
+  }
+}

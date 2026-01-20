@@ -22,7 +22,7 @@ const { Pool } = require('pg');
 const bcrypt = require('bcrypt');
 
 const TEMPLATES_DIR = path.resolve(__dirname, '..');
-const BASE_TEMPLATE = path.join(TEMPLATES_DIR, 'new', 'apps', 'frontend');
+const BASE_TEMPLATE = path.join(TEMPLATES_DIR, 'frontend');
 const GENERATED_DIR = path.resolve(__dirname, '../../generated');
 
 const colors = {

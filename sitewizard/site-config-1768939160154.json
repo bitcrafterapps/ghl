@@ -1,0 +1,117 @@
+{
+  "company": {
+    "name": "Amazonssss",
+    "slug": "amazonssss",
+    "phone": "9492923136",
+    "email": "sandyrfriedman@gmail.com",
+    "address": "15 Las Castanetas",
+    "city": "Rancho Santa Margarita",
+    "state": "CA",
+    "stateFullName": "CA",
+    "zip": "92688",
+    "license": "ssss",
+    "yearsInBusiness": "10"
+  },
+  "branding": {
+    "logoType": "emoji",
+    "logoUrl": "",
+    "faviconUrl": "",
+    "primaryColor": "#2563eb",
+    "secondaryColor": "#f1f5f9",
+    "accentColor": "#10b981",
+    "headerFooterBg": "#0f172a",
+    "headerFooterText": "#ffffff",
+    "heroBgFrom": "",
+    "heroBgTo": "",
+    "heroPattern": "none",
+    "fontHeading": "Poppins",
+    "fontBody": "Inter",
+    "icon": "🔧",
+    "tagline": "Your tagline here"
+  },
+  "industry": {
+    "slug": "plumbing",
+    "type": "Plumbing",
+    "serviceVerb": "repairs",
+    "emergencyService": false,
+    "services": [
+      {
+        "name": "Sewer Line Services",
+        "slug": "sewer-line-services",
+        "shortDescription": "Complete sewer line inspection and repair.",
+        "longDescription": "We offer complete sewer line inspection, repair, and replacement. Using camera inspections, we identify issues and provide effective solutions for your sewer system."
+      },
+      {
+        "name": "Water Heater Repair",
+        "slug": "water-heater-repair",
+        "shortDescription": "Expert water heater repair and maintenance.",
+        "longDescription": "Experiencing water heater issues? Our technicians repair all makes and models, restoring hot water quickly. We address leaks, heating element failures, and thermostat issues.",
+        "featured": true
+      }
+    ],
+    "faq": []
+  },
+  "serviceArea": {
+    "areas": [],
+    "radius": "25",
+    "primaryCity": "Rancho Santa Margarita"
+  },
+  "social": {
+    "facebook": "",
+    "instagram": "",
+    "google": "",
+    "yelp": "",
+    "bbb": "",
+    "nextdoor": ""
+  },
+  "ghl": {
+    "calendarEmbed": "",
+    "formEmbed": "",
+    "chatWidget": "",
+    "webhookUrl": "",
+    "trackingId": ""
+  },
+  "seo": {
+    "googleAnalyticsId": "",
+    "googleTagManagerId": "",
+    "facebookPixelId": "",
+    "metaDescription": "Amazonssss provides professional plumbing services in Rancho Santa Margarita, CA. 10+ years experience. Licensed & insured. Call for a free estimate!",
+    "metaKeywords": "plumbing, Rancho Santa Margarita, CA, sewer line services, water heater repair"
+  },
+  "siteUrl": "",
+  "reviews": {
+    "rating": "5.0",
+    "count": "100",
+    "googleReviewLink": ""
+  },
+  "hours": {
+    "weekdays": "8:00 AM - 6:00 PM",
+    "saturday": "9:00 AM - 4:00 PM",
+    "sunday": "Closed",
+    "emergencyNote": ""
+  },
+  "services": [
+    {
+      "name": "Sewer Line Services",
+      "slug": "sewer-line-services",
+      "shortDescription": "Complete sewer line inspection and repair.",
+      "longDescription": "We offer complete sewer line inspection, repair, and replacement. Using camera inspections, we identify issues and provide effective solutions for your sewer system."
+    },
+    {
+      "name": "Water Heater Repair",
+      "slug": "water-heater-repair",
+      "shortDescription": "Expert water heater repair and maintenance.",
+      "longDescription": "Experiencing water heater issues? Our technicians repair all makes and models, restoring hot water quickly. We address leaks, heating element failures, and thermostat issues.",
+      "featured": true
+    }
+  ],
+  "testimonials": [],
+  "faq": [],
+  "gallery": [],
+  "team": [],
+  "_generator": {
+    "projectName": "amazonssss",
+    "businessType": "trades",
+    "iconEmoji": "🔧"
+  }
+}
