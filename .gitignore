@@ -46,6 +46,11 @@ coverage/
 # OS files
 Thumbs.db
 
-# Project specific - do not check in
-services/
-trades/
+# Project specific - do not check in generated sites
+/templates/services/
+/templates/trades/
+/generated/trades/
+/generated/services/
+
+# But DO track backend services
+!/templates/backend/services/
