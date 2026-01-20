@@ -25,18 +25,19 @@ router.use((req, _res, next) => {
 /**
  * GET /api/v1/reviews
  * Get all reviews with optional filtering (public endpoint for displaying on frontend)
+ * Requires siteId header for multi-tenant filtering
  */
 router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         logger.debug('Getting reviews');
+        const siteId = req.headers['x-site-id'] || req.query.siteId;
         const params = {
-            siteId: req.query.siteId || req.headers['x-site-id'], // Multi-tenant site scoping
+            siteId, // Required for multi-tenant filtering
             status: req.query.status,
             source: req.query.source,
             featured: req.query.featured === 'true' ? true : req.query.featured === 'false' ? false : undefined,
             minRating: req.query.minRating ? parseInt(req.query.minRating) : undefined,
             maxRating: req.query.maxRating ? parseInt(req.query.maxRating) : undefined,
-            companyId: req.query.companyId ? parseInt(req.query.companyId) : undefined,
             limit: req.query.limit ? parseInt(req.query.limit) : undefined,
             offset: req.query.offset ? parseInt(req.query.offset) : undefined
         };
@@ -56,13 +57,14 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 /**
  * GET /api/v1/reviews/featured
  * Get featured reviews for frontend display
+ * Requires siteId header for multi-tenant filtering
  */
 router.get('/featured', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const limit = req.query.limit ? parseInt(req.query.limit) : 6;
-        const companyId = req.query.companyId ? parseInt(req.query.companyId) : undefined;
-        const siteId = req.query.siteId || req.headers['x-site-id'] || undefined; // Multi-tenant site scoping
-        const reviews = yield review_service_1.ReviewService.getFeaturedReviews(limit, companyId, siteId);
+        const siteId = req.headers['x-site-id'] || req.query.siteId;
+        // Pass siteId for multi-tenant filtering - only reviews with matching siteId will show
+        const reviews = yield review_service_1.ReviewService.getFeaturedReviews(limit, undefined, siteId);
         return res.json((0, response_types_1.createSuccessResponse)(reviews));
     }
     catch (error) {
@@ -77,7 +79,10 @@ router.get('/featured', (req, res) => __awaiter(void 0, void 0, void 0, function
 router.get('/stats', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const companyId = req.query.companyId ? parseInt(req.query.companyId) : undefined;
-        const stats = yield review_service_1.ReviewService.getStats(companyId);
+        const siteId = req.headers['x-site-id'] || req.query.siteId;
+        logger.debug(`Stats request - siteId from header: ${siteId}, companyId: ${companyId}`);
+        const stats = yield review_service_1.ReviewService.getStats(companyId, siteId);
+        logger.debug(`Stats response - totalReviews: ${stats.totalReviews}, averageRating: ${stats.averageRating}`);
         return res.json((0, response_types_1.createSuccessResponse)(stats));
     }
     catch (error) {
