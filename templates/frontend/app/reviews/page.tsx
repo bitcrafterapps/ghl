@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { formatPhone, formatPhoneLink } from "@/lib/utils";
 import { getApiUrl, getSiteId } from "@/lib/api";
 import { PageHero } from "@/components/sections/PageHero";
+import { useSiteContent, stripHtml } from "@/lib/use-site-content";
 
 interface Review {
   id: number;
@@ -164,6 +165,12 @@ export default function ReviewsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
 
+  // Fetch dynamic content for each section
+  const { content: heroContent } = useSiteContent('reviews', 'hero');
+  const { content: testimonialsContent } = useSiteContent('reviews', 'testimonials');
+  const { content: leaveReviewContent } = useSiteContent('reviews', 'leave-review');
+  const { content: ctaContent } = useSiteContent('reviews', 'cta');
+
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -231,12 +238,12 @@ export default function ReviewsPage() {
           className="text-center max-w-3xl mx-auto"
         >
           <h1 className="text-4xl sm:text-5xl font-heading font-bold text-white mb-6">
-            {hasNoReviews ? "Reviews Coming Soon" : "Customer Reviews"}
+            {hasNoReviews ? "Reviews Coming Soon" : (heroContent.headline ? stripHtml(heroContent.headline) : "Customer Reviews")}
           </h1>
           <p className="text-xl text-white/80 mb-8">
-            {hasNoReviews 
-              ? `We are currently collecting reviews for ${siteConfig.company.name}. Check back soon!` 
-              : `See what our customers are saying about ${siteConfig.company.name}. We're proud of our ${displayRating}-star rating!`
+            {hasNoReviews
+              ? `We are currently collecting reviews for ${siteConfig.company.name}. Check back soon!`
+              : (heroContent.description ? stripHtml(heroContent.description) : `See what our customers are saying about ${siteConfig.company.name}. We're proud of our ${displayRating}-star rating!`)
             }
           </p>
 
@@ -312,13 +319,13 @@ export default function ReviewsPage() {
                   viewport={{ once: true }}
                 >
                   <span className="text-primary font-semibold text-sm uppercase tracking-wider">
-                    Testimonials
+                    {testimonialsContent.badge ? stripHtml(testimonialsContent.badge) : 'Testimonials'}
                   </span>
                   <h2 className="text-3xl sm:text-4xl font-heading font-bold text-gray-900 mt-2 mb-4">
-                    {reviews.length} Customer Review{reviews.length !== 1 ? 's' : ''}
+                    {reviews.length} {testimonialsContent.headline ? stripHtml(testimonialsContent.headline) : 'Customer Review'}{reviews.length !== 1 ? 's' : ''}
                   </h2>
                   <p className="text-lg text-gray-600">
-                    Use the arrows to browse what our customers have to say
+                    {testimonialsContent.description ? stripHtml(testimonialsContent.description) : 'Use the arrows to browse what our customers have to say'}
                   </p>
                 </motion.div>
               </div>
@@ -398,11 +405,10 @@ export default function ReviewsPage() {
       <section className="section-padding bg-gray-50">
         <div className="container-custom text-center">
           <h2 className="text-2xl font-heading font-bold text-gray-900 mb-4">
-            Had a Great Experience?
+            {leaveReviewContent.headline ? stripHtml(leaveReviewContent.headline) : 'Had a Great Experience?'}
           </h2>
           <p className="text-gray-600 mb-6 max-w-xl mx-auto">
-            We'd love to hear from you! Leave us a review and let others know about
-            your experience with {siteConfig.company.name}.
+            {leaveReviewContent.description ? stripHtml(leaveReviewContent.description) : `We'd love to hear from you! Leave us a review and let others know about your experience with ${siteConfig.company.name}.`}
           </p>
           {siteConfig.reviews.googleReviewLink && (
             <Button asChild>
@@ -424,10 +430,10 @@ export default function ReviewsPage() {
       <section className="bg-primary py-16">
         <div className="container-custom text-center">
           <h2 className="text-3xl font-heading font-bold text-white mb-4">
-            Join Our Happy Customers
+            {ctaContent.headline ? stripHtml(ctaContent.headline) : 'Join Our Happy Customers'}
           </h2>
           <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            Experience the quality service that's earned us {displayCount}+ 5-star reviews.
+            {ctaContent.description ? stripHtml(ctaContent.description) : `Experience the quality service that's earned us ${displayCount}+ 5-star reviews.`}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button size="lg" className="bg-white text-primary hover:bg-white/90" asChild>

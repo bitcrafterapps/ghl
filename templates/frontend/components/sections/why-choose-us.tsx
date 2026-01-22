@@ -1,16 +1,17 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { 
-  Shield, 
-  Clock, 
-  Award, 
-  ThumbsUp, 
-  Users, 
+import {
+  Shield,
+  Clock,
+  Award,
+  ThumbsUp,
+  Users,
   Wrench,
-  CheckCircle 
+  CheckCircle
 } from "lucide-react";
 import { siteConfig } from "@/data/config";
+import { useSiteContent, renderHtmlContent } from "@/lib/use-site-content";
 
 const features = [
   {
@@ -46,6 +47,14 @@ const features = [
 ];
 
 export function WhyChooseUs() {
+  // Fetch dynamic content for why-choose-us section
+  const { content: dynamicContent } = useSiteContent("landing", "why-choose-us");
+
+  // Default content
+  const defaultBadge = "Why Choose Us";
+  const defaultHeadline = `Why ${siteConfig.serviceArea.primaryCity} Trusts ${siteConfig.company.name}`;
+  const defaultDescription = `We're committed to providing exceptional ${siteConfig.industry.type.toLowerCase()} services with integrity, professionalism, and outstanding results.`;
+
   return (
     <section className="section-padding bg-gray-50">
       <div className="container-custom">
@@ -56,16 +65,36 @@ export function WhyChooseUs() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <span className="text-primary font-semibold text-sm uppercase tracking-wider">
-              Why Choose Us
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-heading font-bold text-gray-900 mt-2 mb-4">
-              Why {siteConfig.serviceArea.primaryCity} Trusts {siteConfig.company.name}
-            </h2>
-            <p className="text-lg text-gray-600">
-              We're committed to providing exceptional {siteConfig.industry.type.toLowerCase()} services 
-              with integrity, professionalism, and outstanding results.
-            </p>
+            {dynamicContent.badge ? (
+              <span
+                className="text-primary font-semibold text-sm uppercase tracking-wider"
+                dangerouslySetInnerHTML={renderHtmlContent(dynamicContent.badge)}
+              />
+            ) : (
+              <span className="text-primary font-semibold text-sm uppercase tracking-wider">
+                {defaultBadge}
+              </span>
+            )}
+            {dynamicContent.headline ? (
+              <h2
+                className="text-3xl sm:text-4xl font-heading font-bold text-gray-900 mt-2 mb-4"
+                dangerouslySetInnerHTML={renderHtmlContent(dynamicContent.headline)}
+              />
+            ) : (
+              <h2 className="text-3xl sm:text-4xl font-heading font-bold text-gray-900 mt-2 mb-4">
+                {defaultHeadline}
+              </h2>
+            )}
+            {dynamicContent.description ? (
+              <div
+                className="text-lg text-gray-600"
+                dangerouslySetInnerHTML={renderHtmlContent(dynamicContent.description)}
+              />
+            ) : (
+              <p className="text-lg text-gray-600">
+                {defaultDescription}
+              </p>
+            )}
           </motion.div>
         </div>
 

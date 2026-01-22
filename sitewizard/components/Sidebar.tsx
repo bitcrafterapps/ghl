@@ -23,7 +23,8 @@ import {
   ClipboardList,
   Image,
   Star,
-  Hammer
+  Hammer,
+  FileEdit
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -119,6 +120,7 @@ export function Sidebar({
       { name: 'Users', href: '/users', icon: Users },
       { name: 'Gallery Items', href: '/gallery-management', icon: Image },
       { name: 'Reviews', href: '/reviews-management', icon: Star },
+      { name: 'Content', href: '/content-management', icon: FileEdit },
       { name: 'Site Settings', href: '/site-settings', icon: Settings },
       { name: 'Site Status', href: '/site-status', icon: Activity },
       { name: 'Email Templates', href: '/email-templates', icon: Mail },
@@ -130,7 +132,8 @@ export function Sidebar({
     navigation.push(
       { name: 'Companies', href: '/companies', icon: Building2 },
       { name: 'Gallery Items', href: '/gallery-management', icon: Image },
-      { name: 'Reviews', href: '/reviews-management', icon: Star }
+      { name: 'Reviews', href: '/reviews-management', icon: Star },
+      { name: 'Content', href: '/content-management', icon: FileEdit }
     );
   } else if (userProfile?.companyId) {
     // Regular users with a company can access their company page

@@ -7,14 +7,20 @@ import { siteConfig } from "@/data/config";
 import { Button } from "@/components/ui/button";
 import { formatPhone, formatPhoneLink } from "@/lib/utils";
 import { PageHero } from "@/components/sections/PageHero";
+import { useSiteContent, stripHtml } from "@/lib/use-site-content";
 
 export default function ContactPage() {
+  // Fetch dynamic content for each section
+  const { content: heroContent } = useSiteContent('contact', 'hero');
+  const { content: getInTouchContent } = useSiteContent('contact', 'get-in-touch');
+  const { content: formContent } = useSiteContent('contact', 'form');
+
   return (
     <PublicLayout>
       {/* Hero Section */}
       <PageHero
-        title="Contact Us"
-        description="Have questions or need a quote? We're here to help. Reach out to us today!"
+        title={heroContent.headline ? stripHtml(heroContent.headline) : "Contact Us"}
+        description={heroContent.description ? stripHtml(heroContent.description) : "Have questions or need a quote? We're here to help. Reach out to us today!"}
       />
 
       {/* Contact Section */}
@@ -28,11 +34,10 @@ export default function ContactPage() {
               viewport={{ once: true }}
             >
               <h2 className="text-2xl font-heading font-bold text-gray-900 mb-6">
-                Get in Touch
+                {getInTouchContent.headline ? stripHtml(getInTouchContent.headline) : 'Get in Touch'}
               </h2>
               <p className="text-gray-600 mb-8">
-                We'd love to hear from you. Whether you have a question about our services, 
-                need a quote, or want to schedule an appointment, our team is ready to help.
+                {getInTouchContent.description ? stripHtml(getInTouchContent.description) : "We'd love to hear from you. Whether you have a question about our services, need a quote, or want to schedule an appointment, our team is ready to help."}
               </p>
 
               <div className="space-y-6">
@@ -114,7 +119,7 @@ export default function ContactPage() {
             >
               <div className="bg-gray-50 rounded-xl p-8">
                 <h2 className="text-2xl font-heading font-bold text-gray-900 mb-6">
-                  Send Us a Message
+                  {formContent.headline ? stripHtml(formContent.headline) : 'Send Us a Message'}
                 </h2>
 
                 {siteConfig.ghl.formEmbed ? (

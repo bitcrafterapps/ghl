@@ -1033,6 +1033,32 @@ export const promoCodes = pgTable('promo_codes', {
   companyCodeIdx: uniqueIndex('promo_codes_company_code_idx').on(table.companyId, table.code)
 }));
 
+// ============================================
+// Site Content (Self-Publishing)
+// ============================================
+
+export const siteContent = pgTable('site_content', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  siteId: uuid('site_id').notNull(),
+
+  // Content location
+  page: varchar('page', { length: 50 }).notNull(), // e.g., 'landing', 'about', 'services'
+  section: varchar('section', { length: 50 }).notNull(), // e.g., 'hero', 'services', 'why-choose-us'
+  contentKey: varchar('content_key', { length: 50 }).notNull(), // e.g., 'headline', 'description', 'features'
+
+  // Content (HTML from WYSIWYG editor)
+  content: text('content').notNull(),
+
+  // Timestamps
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow()
+}, (table) => ({
+  siteIdx: index('site_content_site_idx').on(table.siteId),
+  pageIdx: index('site_content_page_idx').on(table.siteId, table.page),
+  sectionIdx: index('site_content_section_idx').on(table.siteId, table.page, table.section),
+  uniqueContentKey: uniqueIndex('site_content_unique_key_idx').on(table.siteId, table.page, table.section, table.contentKey)
+}));
+
 // Promo Code Usage Tracking
 export const promoCodeUsages = pgTable('promo_code_usages', {
   id: uuid('id').primaryKey().defaultRandom(),

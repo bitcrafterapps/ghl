@@ -9,14 +9,22 @@ import { siteConfig, teamMembers } from "@/data/config";
 import { Button } from "@/components/ui/button";
 import { formatPhone, formatPhoneLink } from "@/lib/utils";
 import { PageHero } from "@/components/sections/PageHero";
+import { useSiteContent, stripHtml, renderHtmlContent } from "@/lib/use-site-content";
 
 export default function AboutPage() {
+  // Fetch dynamic content for each section
+  const { content: heroContent } = useSiteContent('about', 'hero');
+  const { content: storyContent } = useSiteContent('about', 'story');
+  const { content: valuesContent } = useSiteContent('about', 'values');
+  const { content: teamContent } = useSiteContent('about', 'team');
+  const { content: ctaContent } = useSiteContent('about', 'cta');
+
   return (
     <PublicLayout>
       {/* Hero Section */}
       <PageHero
-        title={`About ${siteConfig.company.name}`}
-        description={`Your trusted ${siteConfig.industry.type.toLowerCase()} professionals in ${siteConfig.serviceArea.primaryCity} with over ${siteConfig.company.yearsInBusiness} years of experience.`}
+        title={heroContent.headline ? stripHtml(heroContent.headline) : `About ${siteConfig.company.name}`}
+        description={heroContent.description ? stripHtml(heroContent.description) : `Your trusted ${siteConfig.industry.type.toLowerCase()} professionals in ${siteConfig.serviceArea.primaryCity} with over ${siteConfig.company.yearsInBusiness} years of experience.`}
       />
 
       {/* About Content */}
@@ -29,25 +37,32 @@ export default function AboutPage() {
               viewport={{ once: true }}
             >
               <h2 className="text-3xl font-heading font-bold text-gray-900 mb-6">
-                Committed to Excellence in {siteConfig.industry.type}
+                {storyContent.headline ? stripHtml(storyContent.headline) : `Committed to Excellence in ${siteConfig.industry.type}`}
               </h2>
-              <div className="prose prose-lg text-gray-600">
-                <p>
-                  {siteConfig.company.name} has been proudly serving {siteConfig.serviceArea.primaryCity} and 
-                  surrounding communities for over {siteConfig.company.yearsInBusiness} years. Our commitment 
-                  to quality workmanship and exceptional customer service has made us a trusted name in 
-                  {siteConfig.industry.type.toLowerCase()} services.
-                </p>
-                <p>
-                  We understand that {siteConfig.industry.type.toLowerCase()} issues can be stressful. 
-                  That's why our team works diligently to provide prompt, reliable service with transparent 
-                  pricing and no hidden fees.
-                </p>
-                <p>
-                  As a locally owned and operated business, we take pride in our community and treat every 
-                  customer's home or business as if it were our own.
-                </p>
-              </div>
+              {storyContent.content ? (
+                <div
+                  className="prose prose-lg text-gray-600"
+                  dangerouslySetInnerHTML={renderHtmlContent(storyContent.content)}
+                />
+              ) : (
+                <div className="prose prose-lg text-gray-600">
+                  <p>
+                    {siteConfig.company.name} has been proudly serving {siteConfig.serviceArea.primaryCity} and
+                    surrounding communities for over {siteConfig.company.yearsInBusiness} years. Our commitment
+                    to quality workmanship and exceptional customer service has made us a trusted name in
+                    {siteConfig.industry.type.toLowerCase()} services.
+                  </p>
+                  <p>
+                    We understand that {siteConfig.industry.type.toLowerCase()} issues can be stressful.
+                    That's why our team works diligently to provide prompt, reliable service with transparent
+                    pricing and no hidden fees.
+                  </p>
+                  <p>
+                    As a locally owned and operated business, we take pride in our community and treat every
+                    customer's home or business as if it were our own.
+                  </p>
+                </div>
+              )}
 
               <div className="grid grid-cols-2 gap-6 mt-8">
                 <div className="text-center p-6 bg-gray-50 rounded-xl">
@@ -86,10 +101,10 @@ export default function AboutPage() {
         <div className="container-custom">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="text-3xl font-heading font-bold text-gray-900 mb-4">
-              Our Values
+              {valuesContent.headline ? stripHtml(valuesContent.headline) : 'Our Values'}
             </h2>
             <p className="text-lg text-gray-600">
-              These core principles guide everything we do at {siteConfig.company.name}.
+              {valuesContent.description ? stripHtml(valuesContent.description) : `These core principles guide everything we do at ${siteConfig.company.name}.`}
             </p>
           </div>
 
@@ -143,10 +158,10 @@ export default function AboutPage() {
           <div className="container-custom">
             <div className="text-center max-w-3xl mx-auto mb-12">
               <h2 className="text-3xl font-heading font-bold text-gray-900 mb-4">
-                Meet Our Team
+                {teamContent.headline ? stripHtml(teamContent.headline) : 'Meet Our Team'}
               </h2>
               <p className="text-lg text-gray-600">
-                Expert professionals dedicated to delivering exceptional service.
+                {teamContent.description ? stripHtml(teamContent.description) : 'Expert professionals dedicated to delivering exceptional service.'}
               </p>
             </div>
 
@@ -183,10 +198,10 @@ export default function AboutPage() {
       <section className="bg-primary py-16">
         <div className="container-custom text-center">
           <h2 className="text-3xl font-heading font-bold text-white mb-4">
-            Ready to Work With Us?
+            {ctaContent.headline ? stripHtml(ctaContent.headline) : 'Ready to Work With Us?'}
           </h2>
           <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            Experience the {siteConfig.company.name} difference. Contact us today for a free estimate.
+            {ctaContent.description ? stripHtml(ctaContent.description) : `Experience the ${siteConfig.company.name} difference. Contact us today for a free estimate.`}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button size="lg" className="bg-white text-primary hover:bg-white/90" asChild>

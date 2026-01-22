@@ -8,8 +8,12 @@ import { siteConfig, services } from "@/data/config";
 import { formatPhone, formatPhoneLink } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { fetchApi } from "@/lib/api";
+import { useSiteContent, stripHtml, renderHtmlContent } from "@/lib/use-site-content";
 
 export function HeroSection() {
+  // Fetch dynamic content for hero section
+  const { content: dynamicContent } = useSiteContent("landing", "hero");
+
   // Get hero gradient colors from branding, fallback to default dark gradient
   const heroBgFrom = siteConfig.branding.heroBgFrom || '';
   const heroBgTo = siteConfig.branding.heroBgTo || '';
@@ -100,18 +104,32 @@ export function HeroSection() {
             )}
 
             {/* Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-white mb-6 leading-tight">
-              {siteConfig.serviceArea.primaryCity}&apos;s Most Trusted{" "}
-              <span className="text-primary">{siteConfig.industry.type}</span>{" "}
-              Experts
-            </h1>
+            {dynamicContent.headline ? (
+              <h1
+                className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-white mb-6 leading-tight"
+                dangerouslySetInnerHTML={renderHtmlContent(dynamicContent.headline)}
+              />
+            ) : (
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-white mb-6 leading-tight">
+                {siteConfig.serviceArea.primaryCity}&apos;s Most Trusted{" "}
+                <span className="text-primary">{siteConfig.industry.type}</span>{" "}
+                Experts
+              </h1>
+            )}
 
             {/* Subheadline */}
-            <p className="text-xl text-white/80 mb-8 max-w-xl">
-              Professional {siteConfig.industry.type.toLowerCase()} services with{" "}
-              {siteConfig.company.yearsInBusiness}+ years of experience. Licensed,
-              insured, and committed to your satisfaction.
-            </p>
+            {dynamicContent.subheadline ? (
+              <div
+                className="text-xl text-white/80 mb-8 max-w-xl"
+                dangerouslySetInnerHTML={renderHtmlContent(dynamicContent.subheadline)}
+              />
+            ) : (
+              <p className="text-xl text-white/80 mb-8 max-w-xl">
+                Professional {siteConfig.industry.type.toLowerCase()} services with{" "}
+                {siteConfig.company.yearsInBusiness}+ years of experience. Licensed,
+                insured, and committed to your satisfaction.
+              </p>
+            )}
 
             {/* Trust Points */}
             <div className="flex flex-wrap gap-4 mb-8">

@@ -5,10 +5,19 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { services, siteConfig } from "@/data/config";
+import { useSiteContent, renderHtmlContent } from "@/lib/use-site-content";
 
 export function ServicesSection() {
+  // Fetch dynamic content for services section
+  const { content: dynamicContent } = useSiteContent("landing", "services");
+
   // Show only featured services on homepage (typically 3)
   const featuredServices = services.filter((s: any) => s.featured);
+
+  // Default content
+  const defaultBadge = "Our Services";
+  const defaultHeadline = `Professional ${siteConfig.industry.type} Solutions`;
+  const defaultDescription = `From ${siteConfig.industry.serviceVerb} to maintenance, we provide comprehensive ${siteConfig.industry.type.toLowerCase()} services for residential and commercial properties.`;
 
   return (
     <section className="section-padding bg-white">
@@ -20,17 +29,36 @@ export function ServicesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <span className="text-primary font-semibold text-sm uppercase tracking-wider">
-              Our Services
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-heading font-bold text-gray-900 mt-2 mb-4">
-              Professional {siteConfig.industry.type} Solutions
-            </h2>
-            <p className="text-lg text-gray-600">
-              From {siteConfig.industry.serviceVerb} to maintenance, we provide 
-              comprehensive {siteConfig.industry.type.toLowerCase()} services for 
-              residential and commercial properties.
-            </p>
+            {dynamicContent.badge ? (
+              <span
+                className="text-primary font-semibold text-sm uppercase tracking-wider"
+                dangerouslySetInnerHTML={renderHtmlContent(dynamicContent.badge)}
+              />
+            ) : (
+              <span className="text-primary font-semibold text-sm uppercase tracking-wider">
+                {defaultBadge}
+              </span>
+            )}
+            {dynamicContent.headline ? (
+              <h2
+                className="text-3xl sm:text-4xl font-heading font-bold text-gray-900 mt-2 mb-4"
+                dangerouslySetInnerHTML={renderHtmlContent(dynamicContent.headline)}
+              />
+            ) : (
+              <h2 className="text-3xl sm:text-4xl font-heading font-bold text-gray-900 mt-2 mb-4">
+                {defaultHeadline}
+              </h2>
+            )}
+            {dynamicContent.description ? (
+              <div
+                className="text-lg text-gray-600"
+                dangerouslySetInnerHTML={renderHtmlContent(dynamicContent.description)}
+              />
+            ) : (
+              <p className="text-lg text-gray-600">
+                {defaultDescription}
+              </p>
+            )}
           </motion.div>
         </div>
 

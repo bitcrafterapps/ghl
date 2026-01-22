@@ -9,6 +9,7 @@ import { services, siteConfig } from "@/data/config";
 import { Button } from "@/components/ui/button";
 import { formatPhone, formatPhoneLink } from "@/lib/utils";
 import { PageHero } from "@/components/sections/PageHero";
+import { useSiteContent, stripHtml, renderHtmlContent } from "@/lib/use-site-content";
 
 // Individual service card for Cover Flow
 function CoverFlowServiceCard({ 
@@ -169,6 +170,11 @@ function CoverFlowServiceCard({
 export default function ServicesPage() {
   const [activeIndex, setActiveIndex] = useState(0);
 
+  // Fetch dynamic content for each section
+  const { content: heroContent } = useSiteContent('services', 'hero');
+  const { content: servicesListContent } = useSiteContent('services', 'services-list');
+  const { content: ctaContent } = useSiteContent('services', 'cta');
+
   useEffect(() => {
     // Start in middle of services
     if (services.length > 0) {
@@ -204,12 +210,10 @@ export default function ServicesPage() {
             animate={{ opacity: 1, y: 0 }}
           >
             <h1 className="text-4xl sm:text-5xl font-heading font-bold text-white mb-6">
-              Our {siteConfig.industry.type} Services
+              {heroContent.headline ? stripHtml(heroContent.headline) : `Our ${siteConfig.industry.type} Services`}
             </h1>
             <p className="text-xl text-white/80 mb-8">
-              Professional {siteConfig.industry.type.toLowerCase()} solutions for
-              residential and commercial properties in {siteConfig.serviceArea.primaryCity}{" "}
-              and surrounding areas.
+              {heroContent.description ? stripHtml(heroContent.description) : `Professional ${siteConfig.industry.type.toLowerCase()} solutions for residential and commercial properties in ${siteConfig.serviceArea.primaryCity} and surrounding areas.`}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button size="lg" asChild>
@@ -237,13 +241,13 @@ export default function ServicesPage() {
               viewport={{ once: true }}
             >
               <span className="text-primary font-semibold text-sm uppercase tracking-wider">
-                What We Offer
+                {servicesListContent.badge ? stripHtml(servicesListContent.badge) : 'What We Offer'}
               </span>
               <h2 className="text-3xl sm:text-4xl font-heading font-bold text-gray-900 mt-2 mb-4">
-                Browse Our Services
+                {servicesListContent.headline ? stripHtml(servicesListContent.headline) : 'Browse Our Services'}
               </h2>
               <p className="text-lg text-gray-600">
-                Use the arrows or click on a service to explore what we offer
+                {servicesListContent.description ? stripHtml(servicesListContent.description) : 'Use the arrows or click on a service to explore what we offer'}
               </p>
             </motion.div>
           </div>
@@ -328,11 +332,10 @@ export default function ServicesPage() {
       <section className="bg-primary py-16">
         <div className="container-custom text-center">
           <h2 className="text-3xl font-heading font-bold text-white mb-4">
-            Need {siteConfig.industry.type} Help?
+            {ctaContent.headline ? stripHtml(ctaContent.headline) : `Need ${siteConfig.industry.type} Help?`}
           </h2>
           <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            Contact us today for a free estimate. Our expert team is ready to help
-            with all your {siteConfig.industry.type.toLowerCase()} needs.
+            {ctaContent.description ? stripHtml(ctaContent.description) : `Contact us today for a free estimate. Our expert team is ready to help with all your ${siteConfig.industry.type.toLowerCase()} needs.`}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button size="lg" className="bg-white text-primary hover:bg-white/90" asChild>

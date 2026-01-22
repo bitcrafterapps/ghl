@@ -7,6 +7,7 @@ import { PublicLayout } from "@/components/PublicLayout";
 import { siteConfig } from "@/data/config";
 import { getApiUrl, getSiteId } from "@/lib/api";
 import { PageHero } from "@/components/sections/PageHero";
+import { useSiteContent, stripHtml } from "@/lib/use-site-content";
 
 interface GalleryImage {
   id: number;
@@ -152,6 +153,10 @@ export default function GalleryPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [categories, setCategories] = useState<string[]>([]);
 
+  // Fetch dynamic content for each section
+  const { content: heroContent } = useSiteContent('gallery', 'hero');
+  const { content: portfolioContent } = useSiteContent('gallery', 'portfolio');
+
   useEffect(() => {
     const fetchGalleryImages = async () => {
       try {
@@ -226,8 +231,8 @@ export default function GalleryPage() {
     <PublicLayout>
       {/* Hero Section */}
       <PageHero
-        title="Our Work Gallery"
-        description={`Browse our portfolio of completed ${siteConfig.industry.type.toLowerCase()} projects. Quality workmanship you can trust.`}
+        title={heroContent.headline ? stripHtml(heroContent.headline) : "Our Work Gallery"}
+        description={heroContent.description ? stripHtml(heroContent.description) : `Browse our portfolio of completed ${siteConfig.industry.type.toLowerCase()} projects. Quality workmanship you can trust.`}
       />
 
       {/* Category Filter */}
@@ -280,13 +285,13 @@ export default function GalleryPage() {
                   viewport={{ once: true }}
                 >
                   <span className="text-primary font-semibold text-sm uppercase tracking-wider">
-                    Our Portfolio
+                    {portfolioContent.badge ? stripHtml(portfolioContent.badge) : 'Our Portfolio'}
                   </span>
                   <h2 className="text-3xl sm:text-4xl font-heading font-bold text-gray-900 mt-2 mb-4">
-                    {filteredImages.length} {siteConfig.industry.type} Project{filteredImages.length !== 1 ? 's' : ''}
+                    {filteredImages.length} {portfolioContent.headline ? stripHtml(portfolioContent.headline) : `${siteConfig.industry.type} Project`}{filteredImages.length !== 1 ? 's' : ''}
                   </h2>
                   <p className="text-lg text-gray-600">
-                    Use the arrows to browse or click an image to view details
+                    {portfolioContent.description ? stripHtml(portfolioContent.description) : 'Use the arrows to browse or click an image to view details'}
                   </p>
                 </motion.div>
               </div>

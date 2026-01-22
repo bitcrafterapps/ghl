@@ -15,6 +15,7 @@ import {
   formatDiscount,
   getPromoCodeExpiryText,
 } from "@/types/promo-codes";
+import { useSiteContent, stripHtml } from "@/lib/use-site-content";
 
 function PromoCodeCard({ promoCode, index }: { promoCode: PromoCode; index: number }) {
   const [copied, setCopied] = useState(false);
@@ -129,6 +130,11 @@ export default function PromotionsPage() {
   const [promoCodes, setPromoCodes] = useState<PromoCode[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Fetch dynamic content for each section
+  const { content: heroContent } = useSiteContent('promotions', 'hero');
+  const { content: promosContent } = useSiteContent('promotions', 'promos');
+  const { content: ctaContent } = useSiteContent('promotions', 'cta');
+
   useEffect(() => {
     const fetchPromoCodes = async () => {
       try {
@@ -174,11 +180,11 @@ export default function PromotionsPage() {
             <span className="text-white/90 font-medium">Special Offers</span>
           </div>
           <h1 className="text-4xl sm:text-5xl font-heading font-bold text-white mb-6">
-            {hasPromoCodes ? "Current Promotions" : "Promotions Coming Soon"}
+            {hasPromoCodes ? (heroContent.headline ? stripHtml(heroContent.headline) : "Current Promotions") : "Promotions Coming Soon"}
           </h1>
           <p className="text-xl text-white/80 mb-8">
             {hasPromoCodes
-              ? `Save on your next service with ${siteConfig.company.name}! Use these exclusive promo codes at checkout.`
+              ? (heroContent.description ? stripHtml(heroContent.description) : `Save on your next service with ${siteConfig.company.name}! Use these exclusive promo codes at checkout.`)
               : `We are preparing some great deals for you. Check back soon for exclusive offers from ${siteConfig.company.name}!`
             }
           </p>
@@ -227,13 +233,13 @@ export default function PromotionsPage() {
                   viewport={{ once: true }}
                 >
                   <span className="text-primary font-semibold text-sm uppercase tracking-wider">
-                    Limited Time Offers
+                    {promosContent.badge ? stripHtml(promosContent.badge) : 'Limited Time Offers'}
                   </span>
                   <h2 className="text-3xl sm:text-4xl font-heading font-bold text-gray-900 mt-2 mb-4">
-                    Use These Codes & Save
+                    {promosContent.headline ? stripHtml(promosContent.headline) : 'Use These Codes & Save'}
                   </h2>
                   <p className="text-lg text-gray-600">
-                    Click on any code to copy it. Mention the code when booking or enter it during checkout.
+                    {promosContent.description ? stripHtml(promosContent.description) : 'Click on any code to copy it. Mention the code when booking or enter it during checkout.'}
                   </p>
                 </motion.div>
               </div>
@@ -290,10 +296,10 @@ export default function PromotionsPage() {
       <section className="bg-primary py-16">
         <div className="container-custom text-center">
           <h2 className="text-3xl font-heading font-bold text-white mb-4">
-            Ready to Save?
+            {ctaContent.headline ? stripHtml(ctaContent.headline) : 'Ready to Save?'}
           </h2>
           <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            Book your service today and use one of our promo codes to save on quality service.
+            {ctaContent.description ? stripHtml(ctaContent.description) : 'Book your service today and use one of our promo codes to save on quality service.'}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button size="lg" className="bg-white text-primary hover:bg-white/90" asChild>
