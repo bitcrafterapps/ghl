@@ -99,11 +99,6 @@ export function RichTextEditor({
         }
         return false;
       },
-      handleDragOver: (view, event) => {
-        // Allow drop
-        event.preventDefault();
-        return false;
-      }
     },
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML());
